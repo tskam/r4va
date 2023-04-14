@@ -1,0 +1,58 @@
+project:
+  type: book
+
+book:
+  title: "R for Visual Analytics"
+  author: "Dr. Kam Tin Seong"
+  date: "12/4/2023"
+  chapters:
+    - index.qmd
+    - part: "The Building Block"
+      chapters: 
+      - chap01.qmd
+      - chap02.qmd
+      - chap03.qmd
+    - part: "Visualising and Analysing Univariate Data"
+      chapters:
+      - chap04.qmd
+      - chap05.qmd
+      - chap06.qmd
+      - chap07.qmd
+    - part: "Visualising and Analysing Multivariate Data" 
+      chapters:
+      - chap08.qmd
+      - chap09.qmd
+      - chap10.qmd
+    - part: "Visualising and Analysing Time-series Data"
+      chapters:
+      - chap11.qmd
+      - chap12.qmd
+    - part: "Visualising and Analysing Geographical Data"
+      chapters:
+      - chap13.qmd
+      - chap14.qmd
+    - part: "Visualising and Analysing Spatio-temporal Data"
+      chapters:
+      - chap15.qmd
+      - chap16.qmd
+    - part: "Visualising and Analysing Networtk Data"
+      chapters:
+      - chap15.qmd
+      - chap16.qmd
+    - part: "Visualising and Analysing Text Data"
+      chapters:
+      - chap15.qmd
+      - chap16.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

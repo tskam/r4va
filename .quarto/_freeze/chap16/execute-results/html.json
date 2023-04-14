@@ -1,0 +1,14 @@
+{
+  "hash": "80acb7a63f15b8021e8b1be6ca746dbb",
+  "result": {
+    "markdown": "---\ntitle: \"R for Data Science: Tidyverse principles and methods\"\ndate: \"12/4/2023\"\ndate-modified: \"2023-04-14\"\nformat: html\nexecute: \n  echo: true\n  eval: true\n  warning: false\n---\n\n\n## Learning Outcome\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
