@@ -12,37 +12,53 @@ book:
       - chap01.qmd
       - chap02.qmd
       - chap03.qmd
-    - part: "Visualising and Analysing Univariate Data"
-      chapters:
       - chap04.qmd
+    - part: "Not So Common Chart"
+      chapters:
       - chap05.qmd
       - chap06.qmd
       - chap07.qmd
-    - part: "Visualising and Analysing Multivariate Data" 
-      chapters:
       - chap08.qmd
+    - part: "Visual Analytics"
+      chapters:
       - chap09.qmd
       - chap10.qmd
-    - part: "Visualising and Analysing Time-series Data"
-      chapters:
       - chap11.qmd
       - chap12.qmd
-    - part: "Visualising and Analysing Geographical Data"
+    - part: "Visualising and Analysing Multivariate Data" 
       chapters:
       - chap13.qmd
       - chap14.qmd
+      - chap15.qmd
+      - chap16.qmd
+    - part: "Visualising and Analysing Time-series Data"
+      chapters:
+      - chap17.qmd
+      - chap18.qmd
+      - chap19.qmd
+      - chap20.qmd
+    - part: "Visualising and Analysing Geographical Data"
+      chapters:
+      - chap21.qmd
+      - chap22.qmd
+      - chap23.qmd
+      - chap24.qmd
     - part: "Visualising and Analysing Spatio-temporal Data"
       chapters:
-      - chap15.qmd
-      - chap16.qmd
-    - part: "Visualising and Analysing Networtk Data"
+      - chap25.qmd
+      - chap26.qmd
+    - part: "Visualising and Analysing Network Data"
       chapters:
-      - chap15.qmd
-      - chap16.qmd
+      - chap27.qmd
+      - chap28.qmd
     - part: "Visualising and Analysing Text Data"
       chapters:
-      - chap15.qmd
-      - chap16.qmd
+      - chap29.qmd
+      - chap30.qmd
+    - part: "Information Dashboard Design with R"
+      chapters:
+      - chap31.qmd
+      - chap32.qmd
     - summary.qmd
     - references.qmd
 

@@ -1,0 +1,13 @@
+---
+title: "R for Data Science: Tidyverse principles and methods"
+date: "12/4/2023"
+date-modified: "`r Sys.Date()`"
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+---
+
+## Learning Outcome
+
