@@ -11,13 +11,11 @@ execute:
 
 ## Learning Outcome
 
-## Content
+In this chapter, you will be introduced to several ggplot2 extensions for creating more elegent and effective statistical graphics.  By the eand of this exercise, you will be able to:
 
--   Beyond ggplot2 Themes
-
--   Beyond ggplot2 Annotation
-
--   Beyond ggplot2 facet
+-   control the placement of annotation on a graph by using functions provided in ggrepel package,
+- create professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,
+- plot composite figure by combining ggplot2 graphs by using patchwork package.
 
 ## Getting started
 
@@ -29,9 +27,9 @@ The code chunk below will do the trick.
 
 ::: {style="font-size: 1.4em"}
 ```{r}
-pacman::p_load(tidyverse, patchwork, 
+pacman::p_load(ggrepel, patchwork, 
                ggthemes, hrbrthemes,
-               ggrepel) 
+               tidyverse) 
 ```
 :::
 
@@ -477,7 +475,6 @@ We can plot more complex composite by using appropriate operators.  For example,
 :::
 
 To learn more about, refer to [Plot Assembly](https://patchwork.data-imaginist.com/articles/guides/assembly.html).
-
 
 ### Creating a composite figure with tag
 
