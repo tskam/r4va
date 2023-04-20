@@ -214,7 +214,7 @@
     "href": "chap02.html#getting-started",
     "title": "2  Beyond ggplot2 Fundamentals",
     "section": "2.2 Getting started",
-    "text": "2.2 Getting started\n\n2.2.1 Installing and loading the required libraries\nBefore we get started, it is important for us to ensure that the required R packages have been installed. If yes, we will load the R packages. If they have yet to be installed, we will install the R packages and load them onto R environment.\nThe code chunk below will do the trick.\n\n\npacman::p_load(ggrepel, patchwork, \n               ggthemes, hrbrthemes,\n               tidyverse) \n\n\n\n\n2.2.2 Importing data\nFor the purpose of this exercise, a data file called Exam_data will be used. It consists of year end examination grades of a cohort of primary 3 students from a local school. It is in csv file format.\nThe code chunk below imports exam_data.csv into R environment by using read_csv() function of readr package. readr is one of the tidyverse package.\n\n\nexam_data <- read_csv(\"chap02/data/Exam_data.csv\")\n\n\nThere are a total of seven attributes in the exam_data tibble data frame. Four of them are categorical data type and the other three are in continuous data type.\n-   The categorical attributes are: ID, CLASS, GENDER and RACE.\n-   The continuous attributes are: MATHS, ENGLISH and SCIENCE."
+    "text": "2.2 Getting started\n\n2.2.1 Installing and loading the required libraries\nIn this exercise, beside tidyverse, four R packages will be used. They are:\n\nggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.\nggthemes: an R package provides some extra themes, geoms, and scales for ‘ggplot2’.\nhrbrthemes: an R package provides typography-centric themes and theme components for ggplot2.\npatchwork: an R package for preparing composite figure created using ggplot2.\n\nCode chunk below will be used to check if these packages have been installed and also will load them onto your working R environment.\n\n\npacman::p_load(ggrepel, patchwork, \n               ggthemes, hrbrthemes,\n               tidyverse) \n\n\n\n\n2.2.2 Importing data\nFor the purpose of this exercise, a data file called Exam_data will be used. It consists of year end examination grades of a cohort of primary 3 students from a local school. It is in csv file format.\nThe code chunk below imports exam_data.csv into R environment by using read_csv() function of readr package. readr is one of the tidyverse package.\n\n\nexam_data <- read_csv(\"chap02/data/Exam_data.csv\")\n\n\nThere are a total of seven attributes in the exam_data tibble data frame. Four of them are categorical data type and the other three are in continuous data type.\n\nThe categorical attributes are: ID, CLASS, GENDER and RACE.\nThe continuous attributes are: MATHS, ENGLISH and SCIENCE."
   },
   {
     "objectID": "chap02.html#beyond-ggplot2-annotation",
@@ -1006,5 +1006,12 @@
     "title": "2  Beyond ggplot2 Fundamentals",
     "section": "2.7 The code",
     "text": "2.7 The code\n\n\npatchwork <- (p1 / p2) | p3\npatchwork & theme_economist()"
+  },
+  {
+    "objectID": "chap02.html#overview",
+    "href": "chap02.html#overview",
+    "title": "2  Beyond ggplot2 Fundamentals",
+    "section": "2.1 Overview",
+    "text": "2.1 Overview\nIn this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics. By the end of this exercise, you will be able to:\n\ncontrol the placement of annotation on a graph by using functions provided in ggrepel package,\ncreate professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,\nplot composite figure by combining ggplot2 graphs by using patchwork package."
   }
 ]

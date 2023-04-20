@@ -9,9 +9,9 @@ execute:
   warning: false
 ---
 
-## Learning Outcome
+## Overview
 
-In this chapter, you will be introduced to several ggplot2 extensions for creating more elegent and effective statistical graphics.  By the eand of this exercise, you will be able to:
+In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics.  By the end of this exercise, you will be able to:
 
 -   control the placement of annotation on a graph by using functions provided in ggrepel package,
 - create professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,
@@ -21,9 +21,14 @@ In this chapter, you will be introduced to several ggplot2 extensions for creati
 
 ### Installing and loading the required libraries
 
-Before we get started, it is important for us to ensure that the required R packages have been installed. If yes, we will load the R packages. If they have yet to be installed, we will install the R packages and load them onto R environment.
+In this exercise, beside tidyverse, four R packages will be used.  They are:
 
-The code chunk below will do the trick.
+- ggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.
+- ggthemes: an R package provides some extra themes, geoms, and scales for 'ggplot2'. 
+- hrbrthemes: an R package provides typography-centric themes and theme components for ggplot2.
+- patchwork: an R package for preparing composite figure created using ggplot2.
+
+Code chunk below will be used to check if these packages have been installed and also will load them onto your working R environment.
 
 ::: {style="font-size: 1.4em"}
 ```{r}
@@ -35,7 +40,7 @@ pacman::p_load(ggrepel, patchwork,
 
 ### Importing data
 
-For the purpose of this exercise, a data file called Exam_data will be used. It consists of year end examination grades of a cohort of primary 3 students from a local school. It is in csv file format.
+For the purpose of this exercise, a data file called *Exam_data* will be used. It consists of year end examination grades of a cohort of primary 3 students from a local school. It is in csv file format.
 
 The code chunk below imports *exam_data.csv* into R environment by using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) function of [**readr**](https://readr.tidyverse.org/) package. **readr** is one of the tidyverse package.
 
@@ -47,10 +52,8 @@ exam_data <- read_csv("chap02/data/Exam_data.csv")
 
 There are a total of seven attributes in the exam_data tibble data frame. Four of them are categorical data type and the other three are in continuous data type.
 
-```         
 -   The categorical attributes are: ID, CLASS, GENDER and RACE.
 -   The continuous attributes are: MATHS, ENGLISH and SCIENCE.
-```
 
 ## Beyond ggplot2 Annotation: ggrepel
 
