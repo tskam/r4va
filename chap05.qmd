@@ -141,6 +141,7 @@ Below are the code chunk used to create the basic diverging stacked bar charts f
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 likert(Measure ~ ., 
@@ -158,6 +159,7 @@ likert(Measure ~ .,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 likert(Measure ~ ., 
@@ -191,6 +193,7 @@ The output should look similar to the figure below:
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 likert(Measure ~ ., data=Nov_df, ylab=NULL,
@@ -204,6 +207,7 @@ likert(Measure ~ ., data=Nov_df, ylab=NULL,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 likert(Measure ~ ., 
@@ -228,6 +232,7 @@ We try out the option of splitting the questions into Meal and Services categori
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 Type <-c("Meal", "Service", "Service","Service",
@@ -256,6 +261,7 @@ likert(Measure ~ .| Type,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 Type <-c("Meal", "Service", "Service","Service",
@@ -288,6 +294,7 @@ likert(Measure ~ .| Type,
 
 ::: panel-tabset
 ## The plot
+
 The output should look similar to the figure below:
 
 ```{r}
@@ -311,6 +318,7 @@ likert(Measure ~ .| Type, data=Nov_df2,
 ```
 
 ## The code chunk
+
 The code chunk should look similar to the print below:
 
 ```{r}
@@ -336,3 +344,9 @@ likert(Measure ~ .| Type, data=Nov_df2,
 :::
 
 **Credit:** This hands-on exercise was created base on DataViz Makeover 3 submission by David Ten Kao Yuan (ISSS608 AY2016-17T3).
+
+```{r}
+#| eval: false
+#| echo: false
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap05.html")
+```

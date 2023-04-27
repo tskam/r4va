@@ -11,22 +11,22 @@ execute:
 
 ## Overview
 
-In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics.  By the end of this exercise, you will be able to:
+In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics. By the end of this exercise, you will be able to:
 
 -   control the placement of annotation on a graph by using functions provided in ggrepel package,
-- create professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,
-- plot composite figure by combining ggplot2 graphs by using patchwork package.
+-   create professional publication quality figure by using functions provided in ggthemes and hrbrthemes packages,
+-   plot composite figure by combining ggplot2 graphs by using patchwork package.
 
 ## Getting started
 
 ### Installing and loading the required libraries
 
-In this exercise, beside tidyverse, four R packages will be used.  They are:
+In this exercise, beside tidyverse, four R packages will be used. They are:
 
-- ggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.
-- ggthemes: an R package provides some extra themes, geoms, and scales for 'ggplot2'. 
-- hrbrthemes: an R package provides typography-centric themes and theme components for ggplot2.
-- patchwork: an R package for preparing composite figure created using ggplot2.
+-   ggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.
+-   ggthemes: an R package provides some extra themes, geoms, and scales for 'ggplot2'.
+-   hrbrthemes: an R package provides typography-centric themes and theme components for ggplot2.
+-   patchwork: an R package for preparing composite figure created using ggplot2.
 
 Code chunk below will be used to check if these packages have been installed and also will load them onto your working R environment.
 
@@ -430,10 +430,11 @@ Patchwork package has a very simple syntax where we can create layouts super eas
 
 ### Combining two ggplot2 graphs
 
-Figure in the tabset below shows a composite of two histograms created using patchwork.  Note how simple the syntax used to create the plot!
+Figure in the tabset below shows a composite of two histograms created using patchwork. Note how simple the syntax used to create the plot!
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 #| fig-width: 12
@@ -442,6 +443,7 @@ p1 + p2
 ```
 
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
@@ -452,11 +454,11 @@ p1 + p2
 
 ### Combining three ggplot2 graphs
 
-We can plot more complex composite by using appropriate operators.  For example, the composite figure below is plotted by using:
+We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using:
 
-- "|" operator to stack two ggplot2 graphs,
-- "/" operator to place the plots beside each other, 
-- "()" operator the define the sequence of the plotting.
+-   "\|" operator to stack two ggplot2 graphs,
+-   "/" operator to place the plots beside each other,
+-   "()" operator the define the sequence of the plotting.
 
 ::: panel-tabset
 ## The plot
@@ -469,6 +471,7 @@ We can plot more complex composite by using appropriate operators.  For example,
 ```
 
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
@@ -495,6 +498,7 @@ In order to identify subplots in text, **patchwork** also provides auto-tagging 
 ```
 
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
@@ -520,8 +524,8 @@ p3 + inset_element(p2,
                    top = 1)
 ```
 
-
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
@@ -537,7 +541,7 @@ p3 + inset_element(p2,
 
 ### Creating a composite figure by using patchwork and ggtheme
 
-Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.  
+Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.
 
 ::: panel-tabset
 ## The plot
@@ -551,6 +555,7 @@ patchwork & theme_economist()
 ```
 
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
@@ -559,7 +564,6 @@ patchwork & theme_economist()
 ```
 :::
 :::
-
 
 ## Reference
 
@@ -574,5 +578,5 @@ patchwork & theme_economist()
 ```{r}
 #| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://isss608-ay2022-23jan.netlify.app/hands-on_ex/Hands-on_Ex02/Hands-on_Ex02-Beyond_ggplot2.html")
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap02.html")
 ```

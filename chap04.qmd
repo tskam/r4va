@@ -11,7 +11,7 @@ execute:
 
 ## Overview
 
-When telling a visually-driven data story, animated graphics tends to attract the interest of the audience and make deeper impression than static graphics.  In this hands-on exercise, you will learn how to create animated data visualisation by using **gganimate** and **plotly r** packages.  At the same time, you will also learn how to (i) reshape data by using **tidyr** package, and (ii) process, wrangle and transform data by using **dplyr** package.
+When telling a visually-driven data story, animated graphics tends to attract the interest of the audience and make deeper impression than static graphics. In this hands-on exercise, you will learn how to create animated data visualisation by using **gganimate** and **plotly r** packages. At the same time, you will also learn how to (i) reshape data by using **tidyr** package, and (ii) process, wrangle and transform data by using **dplyr** package.
 
 ### Basic concepts of animation
 
@@ -151,7 +151,7 @@ ggplot(globalPop, aes(x = Old, y = Young,
 
 ## Animated Data Visualisation: plotly
 
-In **Plotly R** package, both `ggplotly()` and `plot_ly()` support key frame animations through the `frame` argument/aesthetic. They also support an `ids` argument/aesthetic to ensure smooth transitions between objects with the same id (which helps facilitate object constancy).  
+In **Plotly R** package, both `ggplotly()` and `plot_ly()` support key frame animations through the `frame` argument/aesthetic. They also support an `ids` argument/aesthetic to ensure smooth transitions between objects with the same id (which helps facilitate object constancy).
 
 ### Building an animated bubble plot: `ggplotly()` method
 
@@ -177,8 +177,9 @@ ggplotly(gg)
 
 ::: callout-note
 ### Things to learn from the code chunk above
-- Appropriate ggplot2 functions are used to create a static bubble plot. The output is then saved as an R object called *gg*.
-- `ggplotly()` is then used to convert the R graphic object into an animated svg object.
+
+-   Appropriate ggplot2 functions are used to create a static bubble plot. The output is then saved as an R object called *gg*.
+-   `ggplotly()` is then used to convert the R graphic object into an animated svg object.
 :::
 
 ### Building an animated bubble plot: `plot_ly()` method
@@ -210,5 +211,5 @@ bp
 ```{r}
 #| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex03/hands-on_ex03-programming%20interactive%20visualisation.html")
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap04.html")
 ```

@@ -15,7 +15,7 @@ execute:
 
 ## Learning Outcome
 
-In this chapter, you will learn the basic principles and essential components of ggplot2.  At the same time, you will gain hands-on experience on using these components to plot statistical graphics based on the principle of Layered Grammar of Graphics.  By then end of this chapter you will be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics.  
+In this chapter, you will learn the basic principles and essential components of ggplot2. At the same time, you will gain hands-on experience on using these components to plot statistical graphics based on the principle of Layered Grammar of Graphics. By then end of this chapter you will be able to apply the essential graphical elements provided by ggplot2 to create elegant and yet functional statistical graphics.
 
 ## Getting started
 
@@ -83,7 +83,7 @@ ggplot(data=exam_data, aes(x = MATHS)) +
 ```
 :::
 
-As you can see that the code chunk is relatively simple if R Graphics is used.  Then, the question is why ggplot2 is recommended?
+As you can see that the code chunk is relatively simple if R Graphics is used. Then, the question is why ggplot2 is recommended?
 
 As pointed out by [Hadley Wickham](http://varianceexplained.org/r/teach_ggplot2_to_beginners/#comment-1745406157)
 
@@ -117,7 +117,7 @@ ggplot2 is an implementation of Leland Wilkinson's Grammar of Graphics. Figure b
 ![](chap01/img/image4.jpg)
 
 ::: {style="font-size: 0.8em"}
-Reference: Hadley Wickham (2010) ["A layered grammar of graphics."](https://vita.had.co.nz/papers/layered-grammar.html) *Journal of Computational and Graphical Statistics*, vol. 19, no. 1, pp. 3--28. 
+Reference: Hadley Wickham (2010) ["A layered grammar of graphics."](https://vita.had.co.nz/papers/layered-grammar.html) *Journal of Computational and Graphical Statistics*, vol. 19, no. 1, pp. 3--28.
 :::
 
 A short description of each building block are as follows:
@@ -198,7 +198,6 @@ ggplot(data=exam_data,
   geom_bar()
 ```
 
-
 ### Geometric Objects: geom_dotplot
 
 In a dot plot, the width of a dot corresponds to the bin width (or maximum width, depending on the binning algorithm), and dots are stacked, with each dot representing one observation.
@@ -213,9 +212,9 @@ ggplot(data=exam_data,
 
 ::: callout-warning
 ### Be warned
+
 The y scale is not very useful, in fact it is very misleading.
 :::
-
 
 ::: callout-note
 The code chunk below performs the following two steps:
@@ -376,7 +375,6 @@ ggplot(data=exam_data,
              size = 0.5)        
 ```
 
-
 ## Essential Grammatical Elements in ggplot2: stat
 
 The [Statistics functions](https://ggplot2.tidyverse.org/reference/index.html#stats) statistically transform data, usually as some form of summary. For example:
@@ -469,11 +467,11 @@ ggplot(data=exam_data,
 
 ## Essential Grammatical Elements in ggplot2: Facets
 
-Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data. They are an alternative to aesthetics for displaying additional discrete variables.  ggplot2 supports two types of factes, namely: [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) and [`facet_wrap`](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
+Facetting generates small multiples (sometimes also called trellis plot), each displaying a different subset of the data. They are an alternative to aesthetics for displaying additional discrete variables. ggplot2 supports two types of factes, namely: [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) and [`facet_wrap`](https://ggplot2.tidyverse.org/reference/facet_wrap.html).
 
 ### Working with `facet_wrap()`
 
-[`facet_wrap`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) wraps a 1d sequence of panels into 2d.  This is generally a better use of screen space than facet_grid because most displays are roughly rectangular.
+[`facet_wrap`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) wraps a 1d sequence of panels into 2d. This is generally a better use of screen space than facet_grid because most displays are roughly rectangular.
 
 The code chunk below plots a trellis plot using `facet-wrap()`.
 
@@ -503,10 +501,12 @@ ggplot(data=exam_data,
 
 The *Coordinates* functions map the position of objects onto the plane of the plot. There are a number of different possible coordinate systems to use, they are:
 
-    -   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html): the default cartesian coordinate systems, where you specify x and y values (e.g. allows you to zoom in or out).
-    -   [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html): a cartesian system with the x and y flipped.
-    -   [`coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html): a cartesian system with a "fixed" aspect ratio (e.g. 1.78 for a "widescreen" plot).
-    -   [`coord_quickmap()`](https://ggplot2.tidyverse.org/reference/coord_map.html): a coordinate system that approximates a good aspect ratio for maps.
+```         
+-   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html): the default cartesian coordinate systems, where you specify x and y values (e.g. allows you to zoom in or out).
+-   [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html): a cartesian system with the x and y flipped.
+-   [`coord_fixed()`](https://ggplot2.tidyverse.org/reference/coord_fixed.html): a cartesian system with a "fixed" aspect ratio (e.g. 1.78 for a "widescreen" plot).
+-   [`coord_quickmap()`](https://ggplot2.tidyverse.org/reference/coord_map.html): a coordinate system that approximates a good aspect ratio for maps.
+```
 
 ### Working with Coordinate
 
@@ -561,10 +561,7 @@ Themes control elements of the graph not related to the data. For example:
 -   gridlines
 -   colour of labels
 
-Built-in themes include:
--   `theme_gray()` (default)
--   `theme_bw()`
--   `theme_classic()`
+Built-in themes include: - `theme_gray()` (default) - `theme_bw()` - `theme_classic()`
 
 A list of theme can be found at this [link](https://ggplot2.tidyverse.org/reference/ggtheme.html). Each theme element can be conceived of as either a line (e.g. x-axis), a rectangle (e.g. graph background), or text (e.g. axis title).
 
@@ -615,5 +612,5 @@ ggplot(data=exam_data,
 ```{r}
 #| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://isss608-ay2022-23jan.netlify.app/hands-on_ex/Hands-on_Ex01/Hands-on_Ex01-ggplot2.html")
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap01.html")
 ```
