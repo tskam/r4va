@@ -514,7 +514,6 @@ Beside providing functions to place plots next to each other based on the provid
 
 ::: panel-tabset
 ## The plot
-
 ```{r}
 #| echo: false
 p3 + inset_element(p2, 
@@ -525,11 +524,9 @@ p3 + inset_element(p2,
 ```
 
 ## The code
-
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
-p12 <- p1|p2
 p3 + inset_element(p2, 
                    left = 0.02, 
                    bottom = 0.7, 
