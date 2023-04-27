@@ -19,7 +19,7 @@ Diverging stacked bar charts are often the best choice when visualizing Likert s
 -   *likert* function of **HH** package, and
 -   *plot_liker* function of **sjPlot** package
 
-In this hands-on exercise, we will focus on using *likert* function of **HH** package.
+In this hands-on exercise, we will focus on using *likert* function of [**HH**]() package.
 
 ## Data Preparation
 
@@ -90,11 +90,25 @@ The column names are changed to reflect the satisfaction rating (Very Poor, Poor
 ```{r}
 colnames(Oct_df) <- c("No_Resp","Very Poor","Poor","Satisfactory","Good","Excellent")
 
-rownames(Oct_df)<-c("Temperature of Food","Timeliness of Meals Served","Accuracy of Meals Served","Courtesy of Food Service Staff","Portion Size of Meals Served","Taste of Meals Served","Variety of Food Provided in Menu","Presentation of Meals Served")
+rownames(Oct_df)<-c("Temperature of Food",
+                    "Timeliness of Meals Served",
+                    "Accuracy of Meals Served",
+                    "Courtesy of Food Service Staff",
+                    "Portion Size of Meals Served",
+                    "Taste of Meals Served",
+                    "Variety of Food Provided in Menu",
+                    "Presentation of Meals Served")
 
 colnames(Nov_df) <- c("No_Resp","Very Poor","Poor","Satisfactory","Good","Excellent")
 
-rownames(Nov_df) <- c("Temperature of Food","Timeliness of Meals Served","Accuracy of Meals Served","Courtesy of Food Service Staff","Portion Size of Meals Served","Taste of Meals Served","Variety of Food Provided in Menu","Presentation of Meals Served")
+rownames(Nov_df) <- c("Temperature of Food",
+                      "Timeliness of Meals Served",
+                      "Accuracy of Meals Served",
+                      "Courtesy of Food Service Staff",
+                      "Portion Size of Meals Served",
+                      "Taste of Meals Served",
+                      "Variety of Food Provided in Menu",
+                      "Presentation of Meals Served")
 ```
 
 ### Changing the dataframe row name
@@ -102,8 +116,10 @@ rownames(Nov_df) <- c("Temperature of Food","Timeliness of Meals Served","Accura
 The R dataframe row names are converted into a column called Measure for better usage
 
 ```{r}
-Oct_df <- tibble::rownames_to_column(Oct_df, var="Measure") 
-Nov_df <- tibble::rownames_to_column(Nov_df, var="Measure") 
+Oct_df <- tibble::rownames_to_column(Oct_df, 
+                                     var="Measure") 
+Nov_df <- tibble::rownames_to_column(Nov_df, 
+                                     var="Measure") 
 ```
 
 ### Excluding missing value
@@ -123,30 +139,60 @@ The survey results are presented using stacked divergent barcharts using the *li
 
 Below are the code chunk used to create the basic diverging stacked bar charts for the month of October of 2016.
 
-```{r echo=TRUE, eval=TRUE}
-likert(Measure ~ ., data=Oct_df, ylab=NULL,
-       ReferenceZero=3, as.percent=TRUE,
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+likert(Measure ~ ., 
+       data=Oct_df, 
+       ylab=NULL,
+       ReferenceZero=3, 
+       as.percent=TRUE,
        positive.order=TRUE, 
        main = list("Monthly Meal Service Satisfaction Survey Report, Oct 2016",x=unit(.55, "npc")), 
-       sub= list("Satisfaction Rating",x=unit(.57, "npc")), 
+       sub= list("Satisfaction Rating",
+                 x=unit(.57, "npc")),
        xlim=c(-40,-20,0,20,40,60,80,100),
        strip=FALSE, 
        par.strip.text=list(cex=.7))
 ```
 
-Things to learn from the code chunk above:
+## The code chunk
+```{r}
+#| eval: false
+likert(Measure ~ ., 
+       data=Oct_df, 
+       ylab=NULL,
+       ReferenceZero=3, 
+       as.percent=TRUE,
+       positive.order=TRUE, 
+       main = list("Monthly Meal Service Satisfaction Survey Report, Oct 2016",x=unit(.55, "npc")), 
+       sub= list("Satisfaction Rating",
+                 x=unit(.57, "npc")),
+       xlim=c(-40,-20,0,20,40,60,80,100),
+       strip=FALSE, 
+       par.strip.text=list(cex=.7))
+```
+:::
 
--   The results are displayed as percentages using the as.percent=TRUE option.\
--   The results are sorted by descending order using the positive.order=TRUE option.\
+::: callout-note
+### Things to learn from the code chunk above
+
+-   The results are displayed as percentages using the as.percent=TRUE option.
+-   The results are sorted by descending order using the positive.order=TRUE option.
 -   The x-axis tick marks separtion is set to 20. Since we are using a divergent chart we have to define negative values as well.
--   The unit function is used to define the position of the main title and subtitle to ensure they are centered.\
+-   The unit function is used to define the position of the main title and subtitle to ensure they are centered.
 -   The count of responses for each question is displayed with tick marks.
+:::
 
 *DIY: Plot a diverging bar chart for the month of November 2016.*
 
 The output should look similar to the figure below:
 
-```{r echo = FALSE, eval=TRUE}
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
 likert(Measure ~ ., data=Nov_df, ylab=NULL,
        ReferenceZero=3, as.percent=TRUE,
        positive.order=TRUE, 
@@ -157,16 +203,40 @@ likert(Measure ~ ., data=Nov_df, ylab=NULL,
        par.strip.text=list(cex=.7))
 ```
 
+## The code chunk
+```{r}
+#| eval: false
+likert(Measure ~ ., 
+       data=Nov_df, 
+       ylab=NULL,
+       ReferenceZero=3, 
+       as.percent=TRUE,
+       positive.order=TRUE, 
+       main = list("Monthly Meal Service Satisfaction Survey Report, Nov 2016",
+                   x=unit(.55, "npc")), 
+       sub= list("Satisfaction Rating",
+                 x=unit(.57, "npc")), 
+       xlim=c(-40,-20,0,20,40,60,80,100),
+       strip=FALSE,
+       par.strip.text=list(cex=.7))
+```
+:::
+
 ### Diverging Stacked Bar Charts with Two Categories
 
 We try out the option of splitting the questions into Meal and Services categories.
 
+::: panel-tabset
+## The plot
 ```{r}
-Type <-c("Meal","Service","Service","Service","Meal","Meal","Meal","Meal")
+#| echo: false
+Type <-c("Meal", "Service", "Service","Service",
+         "Meal","Meal","Meal","Meal")
 Oct_df2<-cbind(Oct_df,Type)
 Nov_df2<-cbind(Nov_df,Type)
 
-likert(Measure ~ .| Type, data=Oct_df2,
+likert(Measure ~ .| Type, 
+       data=Oct_df2,
        layout=c(1,2),
        scales=list(y=list(relation="free")),
        between=list(y=1),
@@ -178,17 +248,50 @@ likert(Measure ~ .| Type, data=Oct_df2,
        ReferenceZero=3,
        as.percent=TRUE, 
        positive.order=TRUE, 
-       main = list("Monthly Meal Service Satisfaction Survey Report, Oct 2016",x=unit(.55, "npc")), 
+       main = list("Monthly Meal Service Satisfaction Survey Report, Oct 2016",
+                   x=unit(.55, "npc")), 
        sub= list("Satisfaction Rating",x=unit(.57, "npc")), 
        xlim=c(-40,-20,0,20,40,60,80,100),
        resize.height.tuning=1)
 ```
 
+## The code chunk
+```{r}
+#| eval: false
+Type <-c("Meal", "Service", "Service","Service",
+         "Meal","Meal","Meal","Meal")
+Oct_df2<-cbind(Oct_df,Type)
+Nov_df2<-cbind(Nov_df,Type)
+
+likert(Measure ~ .| Type, 
+       data=Oct_df2,
+       layout=c(1,2),
+       scales=list(y=list(relation="free")),
+       between=list(y=1),
+       strip.left=strip.custom(bg="gray97"),
+       strip=FALSE,
+       par.strip.text=list(cex=1.1, lines=2),
+       ylab=NULL, 
+       cex=1.2,
+       ReferenceZero=3,
+       as.percent=TRUE, 
+       positive.order=TRUE, 
+       main = list("Monthly Meal Service Satisfaction Survey Report, Oct 2016",
+                   x=unit(.55, "npc")), 
+       sub= list("Satisfaction Rating",x=unit(.57, "npc")), 
+       xlim=c(-40,-20,0,20,40,60,80,100),
+       resize.height.tuning=1)
+```
+:::
+
 *DIY: Plot a diverging bar chart with two categories for the month of November 2016.*
 
+::: panel-tabset
+## The plot
 The output should look similar to the figure below:
 
-```{r echo=FALSE, eval=TRUE}
+```{r}
+#| echo: false
 likert(Measure ~ .| Type, data=Nov_df2,
        layout=c(1,2),
        scales=list(y=list(relation="free")),
@@ -206,5 +309,30 @@ likert(Measure ~ .| Type, data=Nov_df2,
        xlim=c(-40,-20,0,20,40,60,80,100),
        resize.height.tuning=1)
 ```
+
+## The code chunk
+The code chunk should look similar to the print below:
+
+```{r}
+#| eval: false
+likert(Measure ~ .| Type, data=Nov_df2,
+       layout=c(1,2),
+       scales=list(y=list(relation="free")),
+       between=list(y=1),
+       strip.left=strip.custom(bg="gray97"),
+       strip=FALSE,
+       par.strip.text=list(cex=1.1, lines=2),
+       ylab=NULL, 
+       cex=1.2,
+       ReferenceZero=3,
+       as.percent=TRUE, 
+       positive.order=TRUE, 
+       main = list("Monthly Meal Service Satisfaction Survey Report, Nov 2016", 
+                   x=unit(.55, "npc")), 
+       sub= list("Satisfaction Rating", x=unit(.57, "npc")), 
+       xlim=c(-40,-20,0,20,40,60,80,100),
+       resize.height.tuning=1)
+```
+:::
 
 **Credit:** This hands-on exercise was created base on DataViz Makeover 3 submission by David Ten Kao Yuan (ISSS608 AY2016-17T3).
