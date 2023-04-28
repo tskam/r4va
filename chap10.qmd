@@ -51,7 +51,6 @@ Next, the code chunk below will
 
 ```{r}
 knitr::kable(head(my_sum), format = 'html')
-
 ```
 
 ### Visualizing the uncertainty of point estimates: ggplot2 methods
@@ -137,7 +136,7 @@ ggplotly((ggplot(shared_df) +
     -   for frequentist models, one visualises confidence distributions or bootstrap distributions (see vignette("freq-uncertainty-vis"));
     -   for Bayesian models, one visualises probability distributions (see the tidybayes package, which builds on top of ggdist).
 
-![](img/ggdist.png)
+![](chap10/img/ggdist.png)
 
 ### Visualizing the uncertainty of point estimates: **ggdist** methods
 
@@ -254,3 +253,12 @@ ggplot(data = exam,
   theme_bw() + 
   transition_states(.draw, 1, 3)
 ```
+
+```{r}
+#| eval: false
+#| echo: false
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap10.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap10.pdf")
+```
+
+
