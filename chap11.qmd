@@ -1,5 +1,5 @@
 ---
-title: "Funnel Plots for Fair Comparisons"
+title: "Visualising Uncertainty"
 date: "12/4/2023"
 date-modified: "`r Sys.Date()`"
 format: html
@@ -9,224 +9,412 @@ execute:
   warning: false
 ---
 
-## Overview
+## Learning Outcome
 
-Funnel plot is a specially designed data visualisation for conducting unbiased comparison between outlets, stores or business entities. By the end of this hands-on exercise, you will gain hands-on experience on:
+Visualising uncertainty is relatively new in statistical graphics. In this chapter, you will gain hands-on experience on creating statistical graphics for visualising uncertainty. By the end of this chapter you will be able:
 
--   plotting funnel plots by using **funnelPlotR** package,
--   plotting static funnel plot by using ggplot2 package, and
--   plotting interactive funnel plot by using both **plotly R** and **ggplot2** packages.
+-   to plot statistics error bars by using ggplot2,
+-   to plot interactive error bars by combining ggplot2, plotly and DT,
+-   to create advanced by using ggdist, and
+-   to create hypothetical outcome plots (HOPs) by using ungeviz package.
 
-## Installing and Launching R Packages
+## Getting Started
 
-In this exercise, four R packages will be used. They are:
+### Installing and loading the packages
 
--   **readr** for importing csv into R.
--   **FunnelPlotR** for creating funnel plot.
--   **ggplot2** for creating funnel plot manually.
--   **knitr** for building static html table.
--   **plotly** for creating interactive funnel plot.
+For the purpose of this exercise, the following R packages will be used, they are:
 
-```{r}
-pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
-```
-
-## Importing Data
-
-In this section, COVID-19_DKI_Jakarta will be used. The data was downloaded from [Open Data Covid-19 Provinsi DKI Jakarta portal](https://riwayat-file-covid-19-dki-jakarta-jakartagis.hub.arcgis.com/). For this hands-on exercise, we are going to compare the cumulative COVID-19 cases and death by sub-district (i.e. kelurahan) as at 31st July 2021, DKI Jakarta.
-
-The code chunk below imports the data into R and save it into a tibble data frame object called *covid19*.
+-   tidyverse, a family of R packages for data science process,
+-   plotly for creating interactive plot,
+-   gganimate for creating animation plot,
+-   DT for displaying interactive html table,
+-   crosstalk for for implementing cross-widget interactions (currently, linked brushing and filtering), and
+-   ggdist for visualising distribution and uncertainty.
 
 ```{r}
-covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
-  mutate_if(is.character, as.factor)
+pacman::p_load(ungeviz, plotly, crosstalk,
+               DT, ggdist, ggridges,
+               colorspace, gganimate, tidyverse)
 ```
 
-```{r echo=FALSE}
-kable(head(covid19))
-```
+### Data import
 
-## FunnelPlotR methods
-
-[**FunnelPlotR**](https://nhs-r-community.github.io/FunnelPlotR/) package uses ggplot to generate funnel plots. It requires a `numerator` (events of interest), `denominator` (population to be considered) and `group`. The key arguments selected for customisation are:
-
--   `limit`: plot limits (95 or 99).
--   `label_outliers`: to label outliers (true or false).
--   `Poisson_limits`: to add Poisson limits to the plot.
--   `OD_adjust`: to add overdispersed limits to the plot.
--   `xrange` and `yrange`: to specify the range to display for axes, acts like a zoom function.
--   Other aesthetic components such as graph title, axis labels etc.
-
-### FunnelPlotR methods: The basic plot
-
-The code chunk below plots a funnel plot.
+For the purpose of this exercise, *Exam_data.csv* will be used.
 
 ```{r}
-funnel_plot(
-  numerator = covid19$Positive,
-  denominator = covid19$Death,
-  group = covid19$`Sub-district`
+exam <- read_csv("data/Exam_data.csv")
+```
+
+## Visualizing the uncertainty of point estimates: ggplot2 methods
+
+A point estimate is a single number, such as a mean. Uncertainty, on the other hand, is expressed as standard error, confidence interval, or credible interval.
+
+::: callout-important
+-   Don't confuse the uncertainty of a point estimate with the variation in the sample
+:::
+
+In this section, you will learn how to plot error bars of maths scores by race by using data provided in *exam* tibble data frame.
+
+Firstly, code chunk below will be used to derive the necessary summary statistics.
+
+```{r}
+my_sum <- exam %>%
+  group_by(RACE) %>%
+  summarise(
+    n=n(),
+    mean=mean(MATHS),
+    sd=sd(MATHS)
+    ) %>%
+  mutate(se=sd/sqrt(n-1))
+```
+
+::: callout-tip
+### Things to learn from the code chunk above
+
+-   `group_by()` of **dplyr** package is used to group the observation by RACE,
+-   `summarise()` is used to compute the count of observations, mean, standard deviation
+-   `mutate()` is used to derive standard error of Maths by RACE, and
+-   the output is save as a tibble data table called *my_sum*.
+:::
+
+::: callout-note
+For the mathematical explanation, please refer to Slide 20 of Lesson 4.
+:::
+
+Next, the code chunk below will be used to display *my_sum* tibble data frame in an html table format.
+
+::: panel-tabset
+## The code chunk
+
+```{r}
+#| eval: false
+knitr::kable(head(my_sum), format = 'html')
+```
+
+## The table
+
+```{r}
+#| echo: false
+knitr::kable(head(my_sum), format = 'html')
+```
+:::
+
+### Plotting standard error bars of point estimates
+
+Now we are ready to plot the standard error bars of mean maths score by race as shown below.
+
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+ggplot(my_sum) +
+  geom_errorbar(
+    aes(x=RACE, 
+        ymin=mean-se, 
+        ymax=mean+se), 
+    width=0.2, 
+    colour="black", 
+    alpha=0.9, 
+    size=0.5) +
+  geom_point(aes
+           (x=RACE, 
+            y=mean), 
+           stat="identity", 
+           color="red",
+           size = 1.5,
+           alpha=1) +
+  ggtitle("Standard error of mean maths score by rac")
+```
+
+## The code chunk
+```{r}
+#| eval: false
+ggplot(my_sum) +
+  geom_errorbar(
+    aes(x=RACE, 
+        ymin=mean-se, 
+        ymax=mean+se), 
+    width=0.2, 
+    colour="black", 
+    alpha=0.9, 
+    size=0.5) +
+  geom_point(aes
+           (x=RACE, 
+            y=mean), 
+           stat="identity", 
+           color="red",
+           size = 1.5,
+           alpha=1) +
+  ggtitle("Standard error of mean maths score by rac")
+```
+
+::: callout-tip
+### Things to learn from the code chunk above
+- The error bars are computed by using the formula mean+/-se.
+- For `geom_point()`, it is important to indicate *stat="identity"*.
+:::
+:::
+
+
+### Plotting confidence interval of point estimates 
+
+Instead of plotting the standard error bar of point estimates, we can also plot the confidence intervals of mean maths score by race. 
+
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+ggplot(my_sum) +
+  geom_errorbar(
+    aes(x=reorder(RACE, -mean), 
+        ymin=mean-1.96*se, 
+        ymax=mean+1.96*se), 
+    width=0.2, 
+    colour="black", 
+    alpha=0.9, 
+    size=0.5) +
+  geom_point(aes
+           (x=RACE, 
+            y=mean), 
+           stat="identity", 
+           color="red",
+           size = 1.5,
+           alpha=1) +
+  labs(x = "Maths score",
+       title = "95% confidence interval of mean maths score by race")
+```
+
+## The code chunk
+```{r}
+#| eval: false
+ggplot(my_sum) +
+  geom_errorbar(
+    aes(x=reorder(RACE, -mean), 
+        ymin=mean-1.96*se, 
+        ymax=mean+1.96*se), 
+    width=0.2, 
+    colour="black", 
+    alpha=0.9, 
+    size=0.5) +
+  geom_point(aes
+           (x=RACE, 
+            y=mean), 
+           stat="identity", 
+           color="red",
+           size = 1.5,
+           alpha=1) +
+  labs(x = "Maths score",
+       title = "95% confidence interval of mean maths score by race")
+```
+
+::: callout-tip
+### Things to learn from the code chunk above
+- The confidence intervals are computed by using the formula mean+/-1.96*se.  
+- The error bars is sorted by using the average maths scores.
+- `labs()` argument of ggplot2 is used to change the x-axis label.
+:::
+:::
+
+### Visualizing the uncertainty of point estimates with interactive error bars
+
+In this section, you will learn how to plot interactive error bars for the 99% confidence interval of mean maths score by race as shown in the figure below.
+
+::: panel-tabset
+## The plot
+
+```{r}
+#| echo: false
+shared_df = SharedData$new(my_sum)
+
+bscols(widths = c(5,7),
+
+ggplotly((ggplot(shared_df) +
+            geom_errorbar(aes(x=reorder(RACE, -mean), ymin=mean-2.58*se, ymax=mean+2.58*se), width=0.2, colour="black", alpha=0.9, size=0.5) +
+            geom_point(aes (x=RACE, y=mean, text = paste("Race:", `RACE`,"<br>N:", `n`,"<br>Avg. Scores:", round(mean, digits = 2),"<br>95% CI:[", round((mean-2.58*se), digits = 2), ",", round((mean+2.58*se), digits = 2),"]")), stat="identity", color="red", size = 1.5, alpha=1) + xlab("Race") + ylab("Average Scores") + theme_minimal() + theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) + ggtitle("99% Confidence interval of average /<br>maths scores by race")), tooltip = "text"), DT::datatable(shared_df, rownames = FALSE, class="compact", width="90%", options = list(pageLength = 10, scrollX=T), colnames = c("No. of pupils", "Avg Scores","Std Dev","Std Error")) %>%
+  formatRound(columns=c('mean', 'sd', 'se'), digits=2) 
 )
+
 ```
 
-Things to learn from the code chunk above.
-
--   `group` in this function is different from the scatterplot. Here, it defines the level of the points to be plotted i.e. Sub-district, District or City. If Cityc is chosen, there are only six data points.
--   By default, `data_type`argument is "SR".
--   `limit`: Plot limits, accepted values are: 95 or 99, corresponding to 95% or 99.8% quantiles of the distribution.
-
-### FunnelPlotR methods: Makeover 1
-
-The code chunk below plots a funnel plot.
+## The code chunk
 
 ```{r}
-funnel_plot(
-  numerator = covid19$Death,
-  denominator = covid19$Positive,
-  group = covid19$`Sub-district`,
-  data_type = "PR",     #<<
-  xrange = c(0, 6500),  #<<
-  yrange = c(0, 0.05)   #<<
-)
+#| eval: false
+shared_df = SharedData$new(my_sum)
+
+bscols(widths = c(4,8),
+       ggplotly((ggplot(shared_df) +
+                   geom_errorbar(aes(
+                     x=reorder(RACE, -mean),
+                     ymin=mean-2.58*se, 
+                     ymax=mean+2.58*se), 
+                     width=0.2, 
+                     colour="black", 
+                     alpha=0.9, 
+                     size=0.5) +
+                   geom_point(aes(
+                     x=RACE, 
+                     y=mean, 
+                     text = paste("Race:", `RACE`, 
+                                  "<br>N:", `n`,
+                                  "<br>Avg. Scores:", round(mean, digits = 2),
+                                  "<br>95% CI:[", 
+                                  round((mean-2.58*se), digits = 2), ",",
+                                  round((mean+2.58*se), digits = 2),"]")),
+                     stat="identity", 
+                     color="red", 
+                     size = 1.5, 
+                     alpha=1) + 
+                   xlab("Race") + 
+                   ylab("Average Scores") + 
+                   theme_minimal() + 
+                   theme(axis.text.x = element_text(
+                     angle = 45, vjust = 0.5, hjust=1)) +
+                   ggtitle("99% Confidence interval of average /<br>maths scores by race")), 
+                tooltip = "text"), 
+       DT::datatable(shared_df, 
+                     rownames = FALSE, 
+                     class="compact", 
+                     width="100%", 
+                     options = list(pageLength = 10,
+                                    scrollX=T), 
+                     colnames = c("No. of pupils", 
+                                  "Avg Scores",
+                                  "Std Dev",
+                                  "Std Error")) %>%
+         formatRound(columns=c('mean', 'sd', 'se'),
+                     digits=2))
 ```
+:::
 
-Things to learn from the code chunk above. + `data_type` argument is used to change from default "SR" to "PR" (i.e. proportions). + `xrange` and `yrange` are used to set the range of x-axis and y-axis
+## Visualising Uncertainty: **ggdist** package
 
-### FunnelPlotR methods: Makeover 2
+-   [**ggdist**](https://mjskay.github.io/ggdist/index.html) is an R package that provides a flexible set of ggplot2 geoms and stats designed especially for visualising distributions and uncertainty.
+-   It is designed for both frequentist and Bayesian uncertainty visualization, taking the view that uncertainty visualization can be unified through the perspective of distribution visualization:
+    -   for frequentist models, one visualises confidence distributions or bootstrap distributions (see vignette("freq-uncertainty-vis"));
+    -   for Bayesian models, one visualises probability distributions (see the tidybayes package, which builds on top of ggdist).
 
-The code chunk below plots a funnel plot.
+![](chap10/img/ggdist.png)
+
+### Visualizing the uncertainty of point estimates: **ggdist** methods
+
+In the code chunk below, [`stat_pointinterval()`](https://mjskay.github.io/ggdist/reference/stat_pointinterval.html) of **ggdist** is used to build a visual for displaying distribution of maths scores by race.
 
 ```{r}
-funnel_plot(
-  numerator = covid19$Death,
-  denominator = covid19$Positive,
-  group = covid19$`Sub-district`,
-  data_type = "PR",   
-  xrange = c(0, 6500),  
-  yrange = c(0, 0.05),
-  label = NA,
-  title = "Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases", #<<           
-  x_label = "Cumulative COVID-19 Positive Cases", #<<
-  y_label = "Cumulative Fatality Rate"  #<<
-)
+exam %>%
+  ggplot(aes(x = RACE, 
+             y = MATHS)) +
+  stat_pointinterval() +   #<<
+  labs(
+    title = "Visualising confidence intervals of mean math score",
+    subtitle = "Mean Point + Multiple-interval plot")
 ```
 
-Things to learn from the code chunk above.
-
--   `label = NA` argument is to removed the default label outliers feature.
--   `title` argument is used to add plot title.
--   `x_label` and `y_label` arguments are used to add/edit x-axis and y-axis titles.
-
-## Funnel Plot for Fair Visual Comparison: ggplot2 methods
-
-In this section, you will gain hands-on experience on building funnel plots step-by-step by using ggplot2. It aims to enhance you working experience of ggplot2 to customise speciallised data visualisation like funnel plot.
-
-### Computing the basic derived fields
-
-To plot the funnel plot from scratch, we need to derive cumulative death rate and standard error of cumulative death rate.
+Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.
 
 ```{r}
-df <- covid19 %>%
-  mutate(rate = Death / Positive) %>%
-  mutate(rate.se = sqrt((rate*(1-rate)) / (Positive))) %>%
-  filter(rate > 0)
+exam %>%
+  ggplot(aes(x = RACE, y = MATHS)) +
+  stat_pointinterval(.width = 0.95,
+  .point = median,
+  .interval = qi) +
+  labs(
+    title = "Visualising confidence intervals of mean math score",
+    subtitle = "Mean Point + Multiple-interval plot")
 ```
 
-Next, the *fit.mean* is computed by using the code chunk below.
+### Visualizing the uncertainty of point estimates: **ggdist** methods
+
+::: callout-note
+### Your turn
+
+Makeover the plot on previous slide by showing 95% and 99% confidence intervals.
+:::
 
 ```{r}
-fit.mean <- weighted.mean(df$rate, 1/df$rate.se^2)
+exam %>%
+  ggplot(aes(x = RACE, 
+             y = MATHS)) +
+  stat_pointinterval(
+    show.legend = FALSE) +   
+  labs(
+    title = "Visualising confidence intervals of mean math score",
+    subtitle = "Mean Point + Multiple-interval plot")
 ```
 
-### Calculate lower and upper limits for 95% and 99.9% CI
+Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.
 
-The code chunk below is used to compute the lower and upper limits for 95% confidence interval.
+### Visualizing the uncertainty of point estimates: **ggdist** methods
+
+In the code chunk below, [`stat_gradientinterval()`](https://mjskay.github.io/ggdist/reference/stat_gradientinterval.html) of **ggdist** is used to build a visual for displaying distribution of maths scores by race.
 
 ```{r}
-number.seq <- seq(1, max(df$Positive), 1)
-number.ll95 <- fit.mean - 1.96 * sqrt((fit.mean*(1-fit.mean)) / (number.seq)) 
-number.ul95 <- fit.mean + 1.96 * sqrt((fit.mean*(1-fit.mean)) / (number.seq)) 
-number.ll999 <- fit.mean - 3.29 * sqrt((fit.mean*(1-fit.mean)) / (number.seq)) 
-number.ul999 <- fit.mean + 3.29 * sqrt((fit.mean*(1-fit.mean)) / (number.seq)) 
-dfCI <- data.frame(number.ll95, number.ul95, number.ll999, 
-                   number.ul999, number.seq, fit.mean)
+exam %>%
+  ggplot(aes(x = RACE, 
+             y = MATHS)) +
+  stat_gradientinterval(   
+    fill = "skyblue",      
+    show.legend = TRUE     
+  ) +                        
+  labs(
+    title = "Visualising confidence intervals of mean math score",
+    subtitle = "Gradient + interval plot")
 ```
 
-### Plotting a static funnel plot
+Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.
 
-In the code chunk below, ggplot2 functions are used to plot a static funnel plot.
+## Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)
+
+Step 1: Installing ungeviz package
+
+```{r eval=FALSE}
+devtools::install_github("wilkelab/ungeviz")
+```
+
+Note: You only need to perform this step once.
+
+Step 2: Launch the application in R
 
 ```{r}
-p <- ggplot(df, aes(x = Positive, y = rate)) +
-  geom_point(aes(label=`Sub-district`), 
-             alpha=0.4) +
-  geom_line(data = dfCI, 
-            aes(x = number.seq, 
-                y = number.ll95), 
-            size = 0.4, 
-            colour = "grey40", 
-            linetype = "dashed") +
-  geom_line(data = dfCI, 
-            aes(x = number.seq, 
-                y = number.ul95), 
-            size = 0.4, 
-            colour = "grey40", 
-            linetype = "dashed") +
-  geom_line(data = dfCI, 
-            aes(x = number.seq, 
-                y = number.ll999), 
-            size = 0.4, 
-            colour = "grey40") +
-  geom_line(data = dfCI, 
-            aes(x = number.seq, 
-                y = number.ul999), 
-            size = 0.4, 
-            colour = "grey40") +
-  geom_hline(data = dfCI, 
-             aes(yintercept = fit.mean), 
-             size = 0.4, 
-             colour = "grey40") +
-  coord_cartesian(ylim=c(0,0.05)) +
-  annotate("text", x = 1, y = -0.13, label = "95%", size = 3, colour = "grey40") + 
-  annotate("text", x = 4.5, y = -0.18, label = "99%", size = 3, colour = "grey40") + 
-  ggtitle("Cumulative Fatality Rate by Cumulative Number of COVID-19 Cases") +
-  xlab("Cumulative Number of COVID-19 Cases") + 
-  ylab("Cumulative Fatality Rate") +
-  theme_light() +
-  theme(plot.title = element_text(size=12),
-        legend.position = c(0.91,0.85), 
-        legend.title = element_text(size=7),
-        legend.text = element_text(size=7),
-        legend.background = element_rect(colour = "grey60", linetype = "dotted"),
-        legend.key.height = unit(0.3, "cm"))
-p
+library(ungeviz)
 ```
-
-### Interactive Funnel Plot: plotly + ggplot2
-
-The funnel plot created using ggplot2 functions can be made interactive with `ggplotly()` of **plotly** r package.
 
 ```{r}
-fp_ggplotly <- ggplotly(p,
-  tooltip = c("label", 
-              "x", 
-              "y"))
-fp_ggplotly
+ggplot(data = exam, 
+       (aes(x = factor(RACE), y = MATHS))) +
+  geom_point(position = position_jitter(
+    height = 0.3, width = 0.05), 
+    size = 0.4, color = "#0072B2", alpha = 1/2) +
+  geom_hpline(data = sampler(25, group = RACE), height = 0.6, color = "#D55E00") +
+  theme_bw() + 
+  # `.draw` is a generated column indicating the sample draw
+  transition_states(.draw, 1, 3)
+
 ```
 
-## References
+## Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)
 
--   [funnelPlotR](https://nhs-r-community.github.io/FunnelPlotR/index.html) package.
-
--   [Funnel Plots for Indirectly-standardised ratios](https://nhs-r-community.github.io/FunnelPlotR/articles/funnel_plots.html).
-
--   [Changing funnel plot options](https://nhs-r-community.github.io/FunnelPlotR/articles/changing_funnel_plot_options.html)
-
--   [ggplot2](https://ggplot2.tidyverse.org/) package.
+```{r}
+ggplot(data = exam, 
+       (aes(x = factor(RACE), 
+            y = MATHS))) +
+  geom_point(position = position_jitter(
+    height = 0.3, 
+    width = 0.05), 
+    size = 0.4, 
+    color = "#0072B2", 
+    alpha = 1/2) +
+  geom_hpline(data = sampler(25, 
+                             group = RACE), 
+              height = 0.6, 
+              color = "#D55E00") +
+  theme_bw() + 
+  transition_states(.draw, 1, 3)
+```
 
 ```{r}
 #| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://r4va.netlify.app/chap11.html",
-                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap11.pdf")
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap10.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap10.pdf")
 ```

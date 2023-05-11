@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-12-04">
 
-<title>R for Visual Analytics - 10&nbsp; Visualising Uncertainty</title>
+<title>R for Visual Analytics - 10&nbsp; Visual Statistical Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,22 +125,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
-<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
-<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
-<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
-<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="site_libs/datatables-binding-0.27/datatables.js"></script>
-<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="site_libs/bootstrap-grid-3.4.1/bootstrap-grid.min.css" rel="stylesheet">
-
 
 </head>
 
@@ -150,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -248,22 +232,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap09.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></a>
+  <a href="./chap09.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visualising Distribution</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap10.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></a>
+  <a href="./chap10.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap11.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Funnel Plots for Fair Comparisons</span></a>
+  <a href="./chap11.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap12.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap12.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Funnel Plots for Fair Comparisons</span></a>
   </div>
 </li>
       </ul>
@@ -458,22 +442,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#learning-outcome" id="toc-learning-outcome" class="nav-link active" data-scroll-target="#learning-outcome"><span class="toc-section-number">10.1</span>  Learning Outcome</a></li>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="toc-section-number">10.2</span>  Getting Started</a>
+  <li><a href="#visual-statistical-analysis-with-ggstatsplot" id="toc-visual-statistical-analysis-with-ggstatsplot" class="nav-link" data-scroll-target="#visual-statistical-analysis-with-ggstatsplot"><span class="toc-section-number">10.2</span>  Visual Statistical Analysis with <strong>ggstatsplot</strong></a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="toc-section-number">10.3</span>  Getting Started</a>
   <ul class="collapse">
-  <li><a href="#installing-and-loading-the-packages" id="toc-installing-and-loading-the-packages" class="nav-link" data-scroll-target="#installing-and-loading-the-packages"><span class="toc-section-number">10.2.1</span>  Installing and loading the packages</a></li>
-  <li><a href="#data-import" id="toc-data-import" class="nav-link" data-scroll-target="#data-import"><span class="toc-section-number">10.2.2</span>  Data import</a></li>
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-ggplot2-methods" id="toc-visualizing-the-uncertainty-of-point-estimates-ggplot2-methods" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-ggplot2-methods"><span class="toc-section-number">10.2.3</span>  Visualizing the uncertainty of point estimates: ggplot2 methods</a></li>
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-ggplot2-methods-1" id="toc-visualizing-the-uncertainty-of-point-estimates-ggplot2-methods-1" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-ggplot2-methods-1"><span class="toc-section-number">10.2.4</span>  Visualizing the uncertainty of point estimates: ggplot2 methods</a></li>
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-with-interactive-error-bars" id="toc-visualizing-the-uncertainty-of-point-estimates-with-interactive-error-bars" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-with-interactive-error-bars"><span class="toc-section-number">10.2.5</span>  Visualizing the uncertainty of point estimates with interactive error bars</a></li>
+  <li><a href="#installing-and-launching-r-packages" id="toc-installing-and-launching-r-packages" class="nav-link" data-scroll-target="#installing-and-launching-r-packages"><span class="toc-section-number">10.3.1</span>  Installing and launching R packages</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data"><span class="toc-section-number">10.3.2</span>  Importing data</a></li>
+  <li><a href="#one-sample-test-gghistostats-method" id="toc-one-sample-test-gghistostats-method" class="nav-link" data-scroll-target="#one-sample-test-gghistostats-method"><span class="toc-section-number">10.3.3</span>  One-sample test: <em>gghistostats()</em> method</a></li>
+  <li><a href="#unpacking-the-bayes-factor" id="toc-unpacking-the-bayes-factor" class="nav-link" data-scroll-target="#unpacking-the-bayes-factor"><span class="toc-section-number">10.3.4</span>  Unpacking the Bayes Factor</a></li>
+  <li><a href="#how-to-interpret-bayes-factor" id="toc-how-to-interpret-bayes-factor" class="nav-link" data-scroll-target="#how-to-interpret-bayes-factor"><span class="toc-section-number">10.3.5</span>  How to interpret Bayes Factor</a></li>
+  <li><a href="#two-sample-mean-test-ggbetweenstats" id="toc-two-sample-mean-test-ggbetweenstats" class="nav-link" data-scroll-target="#two-sample-mean-test-ggbetweenstats"><span class="toc-section-number">10.3.6</span>  Two-sample mean test: <em>ggbetweenstats()</em></a></li>
+  <li><a href="#oneway-anova-test-ggbetweenstats-method" id="toc-oneway-anova-test-ggbetweenstats-method" class="nav-link" data-scroll-target="#oneway-anova-test-ggbetweenstats-method"><span class="toc-section-number">10.3.7</span>  Oneway ANOVA Test: <em>ggbetweenstats()</em> method</a></li>
+  <li><a href="#significant-test-of-correlation-ggscatterstats" id="toc-significant-test-of-correlation-ggscatterstats" class="nav-link" data-scroll-target="#significant-test-of-correlation-ggscatterstats"><span class="toc-section-number">10.3.8</span>  Significant Test of Correlation: <em>ggscatterstats()</em></a></li>
+  <li><a href="#significant-test-of-association-depedence-ggbarstats-methods" id="toc-significant-test-of-association-depedence-ggbarstats-methods" class="nav-link" data-scroll-target="#significant-test-of-association-depedence-ggbarstats-methods"><span class="toc-section-number">10.3.9</span>  Significant Test of Association (Depedence) : <em>ggbarstats()</em> methods</a></li>
   </ul></li>
-  <li><a href="#visualising-uncertainty-ggdist-package" id="toc-visualising-uncertainty-ggdist-package" class="nav-link" data-scroll-target="#visualising-uncertainty-ggdist-package"><span class="toc-section-number">10.3</span>  Visualising Uncertainty: <strong>ggdist</strong> package</a>
+  <li><a href="#visualising-models" id="toc-visualising-models" class="nav-link" data-scroll-target="#visualising-models"><span class="toc-section-number">10.4</span>  Visualising Models</a></li>
+  <li><a href="#getting-started-1" id="toc-getting-started-1" class="nav-link" data-scroll-target="#getting-started-1"><span class="toc-section-number">10.5</span>  Getting Started</a></li>
+  <li><a href="#installing-and-loading-the-required-libraries" id="toc-installing-and-loading-the-required-libraries" class="nav-link" data-scroll-target="#installing-and-loading-the-required-libraries"><span class="toc-section-number">10.6</span>  Installing and loading the required libraries</a>
   <ul class="collapse">
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods" id="toc-visualizing-the-uncertainty-of-point-estimates-ggdist-methods" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods"><span class="toc-section-number">10.3.1</span>  Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</a></li>
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods-1" id="toc-visualizing-the-uncertainty-of-point-estimates-ggdist-methods-1" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods-1"><span class="toc-section-number">10.3.2</span>  Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</a></li>
-  <li><a href="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods-2" id="toc-visualizing-the-uncertainty-of-point-estimates-ggdist-methods-2" class="nav-link" data-scroll-target="#visualizing-the-uncertainty-of-point-estimates-ggdist-methods-2"><span class="toc-section-number">10.3.3</span>  Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</a></li>
+  <li><a href="#importing-excel-file-readxl-methods" id="toc-importing-excel-file-readxl-methods" class="nav-link" data-scroll-target="#importing-excel-file-readxl-methods"><span class="toc-section-number">10.6.1</span>  Importing Excel file: readxl methods</a></li>
+  <li><a href="#multiple-regression-model-using-lm" id="toc-multiple-regression-model-using-lm" class="nav-link" data-scroll-target="#multiple-regression-model-using-lm"><span class="toc-section-number">10.6.2</span>  Multiple Regression Model using lm()</a></li>
+  <li><a href="#model-diagnostic-checking-for-multicolinearity" id="toc-model-diagnostic-checking-for-multicolinearity" class="nav-link" data-scroll-target="#model-diagnostic-checking-for-multicolinearity"><span class="toc-section-number">10.6.3</span>  Model Diagnostic: checking for multicolinearity:</a></li>
+  <li><a href="#model-diagnostic-checking-normality-assumption" id="toc-model-diagnostic-checking-normality-assumption" class="nav-link" data-scroll-target="#model-diagnostic-checking-normality-assumption"><span class="toc-section-number">10.6.4</span>  Model Diagnostic: checking normality assumption</a></li>
+  <li><a href="#model-diagnostic-check-model-for-homogeneity-of-variances" id="toc-model-diagnostic-check-model-for-homogeneity-of-variances" class="nav-link" data-scroll-target="#model-diagnostic-check-model-for-homogeneity-of-variances"><span class="toc-section-number">10.6.5</span>  Model Diagnostic: Check model for homogeneity of variances</a></li>
+  <li><a href="#model-diagnostic-complete-check" id="toc-model-diagnostic-complete-check" class="nav-link" data-scroll-target="#model-diagnostic-complete-check"><span class="toc-section-number">10.6.6</span>  Model Diagnostic: Complete check</a></li>
+  <li><a href="#visualising-regression-parameters-see-methods" id="toc-visualising-regression-parameters-see-methods" class="nav-link" data-scroll-target="#visualising-regression-parameters-see-methods"><span class="toc-section-number">10.6.7</span>  Visualising Regression Parameters: see methods</a></li>
+  <li><a href="#visualising-regression-parameters-ggcoefstats-methods" id="toc-visualising-regression-parameters-ggcoefstats-methods" class="nav-link" data-scroll-target="#visualising-regression-parameters-ggcoefstats-methods"><span class="toc-section-number">10.6.8</span>  Visualising Regression Parameters: <em>ggcoefstats()</em> methods</a></li>
   </ul></li>
-  <li><a href="#visualising-uncertainty-with-hypothetical-outcome-plots-hops" id="toc-visualising-uncertainty-with-hypothetical-outcome-plots-hops" class="nav-link" data-scroll-target="#visualising-uncertainty-with-hypothetical-outcome-plots-hops"><span class="toc-section-number">10.4</span>  Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)</a></li>
-  <li><a href="#visualising-uncertainty-with-hypothetical-outcome-plots-hops-1" id="toc-visualising-uncertainty-with-hypothetical-outcome-plots-hops-1" class="nav-link" data-scroll-target="#visualising-uncertainty-with-hypothetical-outcome-plots-hops-1"><span class="toc-section-number">10.5</span>  Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)</a></li>
   </ul>
 </nav>
     </div>
@@ -482,7 +476,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></h1>
 </div>
 
 
@@ -500,7 +494,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">May 7, 2023</p>
+      <p class="date-modified">May 11, 2023</p>
     </div>
   </div>
     
@@ -511,461 +505,357 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="learning-outcome" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="learning-outcome"><span class="header-section-number">10.1</span> Learning Outcome</h2>
-<p>Visualising uncertainty is relatively new in statistical graphics. In this chapter, you will gain hands-on experience on creating statistical graphics for visualising uncertainty. By the end of this chapter you will be able:</p>
+<p>In this hands-on exercise, you will gain hands-on experience on using:</p>
 <ul>
-<li>to plot statistics error bars by using ggplot2,</li>
-<li>to plot interactive error bars by combining ggplot2, plotly and DT,</li>
-<li>to create advanced by using ggdist, and</li>
-<li>to create hypothetical outcome plots (HOPs) by using ungeviz package.</li>
+<li><p>ggstatsplot package to create visual graphics with rich statistical information,</p></li>
+<li><p>performance package to visualise model diagnostics, and</p></li>
+<li><p>parameters package to visualise model parameters</p></li>
 </ul>
 </section>
-<section id="getting-started" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">10.2</span> Getting Started</h2>
-<section id="installing-and-loading-the-packages" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="installing-and-loading-the-packages"><span class="header-section-number">10.2.1</span> Installing and loading the packages</h3>
-<p>For the purpose of this exercise, the following R packages will be used, they are:</p>
+<section id="visual-statistical-analysis-with-ggstatsplot" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="visual-statistical-analysis-with-ggstatsplot"><span class="header-section-number">10.2</span> Visual Statistical Analysis with <strong>ggstatsplot</strong></h2>
+<p><img src="chap09/img/image1.jpg" width="47" height="49"></p>
 <ul>
-<li>tidyverse, a family of R packages for data science process,</li>
-<li>plotly for creating interactive plot,</li>
-<li>gganimate for creating animation plot,</li>
-<li>DT for displaying interactive html table,</li>
-<li>crosstalk for for implementing cross-widget interactions (currently, linked brushing and filtering), and</li>
-<li>ggdist for visualising distribution and uncertainty.</li>
+<li><a href="https://indrajeetpatil.github.io/ggstatsplot/index.html"><strong>ggstatsplot</strong></a> is an extension of <a href="https://ggplot2.tidyverse.org/"><strong>ggplot2</strong></a> package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+<ul>
+<li>To provide alternative statistical inference methods by default.</li>
+<li>To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the <a href="https://my.ilstu.edu/~jhkahn/apastats.html">APA</a> gold standard for statistical reporting. For example, here are results from a robust t-test:</li>
+</ul></li>
 </ul>
+<p><img src="chap09/img/image2.jpg" class="img-fluid"></p>
+</section>
+<section id="getting-started" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">10.3</span> Getting Started</h2>
+<section id="installing-and-launching-r-packages" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="installing-and-launching-r-packages"><span class="header-section-number">10.3.1</span> Installing and launching R packages</h3>
+<p>In this exercise, <strong>ggstatsplot</strong> and <strong>tidyverse</strong> will be used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ungeviz, plotly, crosstalk,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               DT, ggdist, gganimate, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggstatsplot, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-import" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="data-import"><span class="header-section-number">10.2.2</span> Data import</h3>
-<p>For the purpose of this exercise, <em>Exam_data.csv</em> will be used.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Exam_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="visualizing-the-uncertainty-of-point-estimates-ggplot2-methods" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-ggplot2-methods"><span class="header-section-number">10.2.3</span> Visualizing the uncertainty of point estimates: ggplot2 methods</h3>
-<p>A point estimate is a single number, such as a mean. Uncertainty, on the other hand, is expressed as standard error, confidence interval, or credible interval.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>Don’t confuse the uncertainty of a point estimate with the variation in the sample</li>
-</ul>
-</div>
-</div>
-<p>In this section, you will learn how to plot error bars of maths scores by race by using data provided in <em>exam</em> tibble data frame.</p>
-<p>Firstly, code chunk below will be used to derive the necessary summary statistics.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>my_sum <span class="ot">&lt;-</span> exam <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(RACE) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n=</span><span class="fu">n</span>(),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean=</span><span class="fu">mean</span>(MATHS),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd=</span><span class="fu">sd</span>(MATHS)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">se=</span>sd<span class="sc">/</span><span class="fu">sqrt</span>(n<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-What can you learn from the code chunk above?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li><code>group_by()</code> of <strong>dplyr</strong> package is used to group the observation by RACE,</li>
-<li><code>summarise()</code> is used to compute the count of observations, mean, standard deviation</li>
-<li><code>mutate()</code> is used to derive standard error of Maths by RACE, and</li>
-<li>the output is save as a tibble data table called <em>my_sum</em>.</li>
-</ul>
-</div>
-</div>
+<section id="importing-data" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">10.3.2</span> Importing data</h3>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Note
+Do-It-Yourself
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For the mathematical explanation, please refer to Slide 20 of Lesson 4.</p>
+<p>Importing <em>Exam.csv</em> data by using appropriate tidyverse package.</p>
 </div>
 </div>
-<p>Next, the code chunk below will be used to display <em>my_sum</em> tibble data frame in an html table format.</p>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">The code chunk</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">The table</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(my_sum), <span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell">
-<div class="cell-output-display">
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> RACE </th>
-   <th style="text-align:right;"> n </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> se </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Chinese </td>
-   <td style="text-align:right;"> 193 </td>
-   <td style="text-align:right;"> 76.50777 </td>
-   <td style="text-align:right;"> 15.69040 </td>
-   <td style="text-align:right;"> 1.132357 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Indian </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 60.66667 </td>
-   <td style="text-align:right;"> 23.35237 </td>
-   <td style="text-align:right;"> 7.041005 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Malay </td>
-   <td style="text-align:right;"> 108 </td>
-   <td style="text-align:right;"> 57.44444 </td>
-   <td style="text-align:right;"> 21.13478 </td>
-   <td style="text-align:right;"> 2.043177 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Others </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 69.66667 </td>
-   <td style="text-align:right;"> 10.72381 </td>
-   <td style="text-align:right;"> 3.791438 </td>
-  </tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 322 × 7
+   ID         CLASS GENDER RACE    ENGLISH MATHS SCIENCE
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Student321 3I    Male   Malay        21     9      15
+ 2 Student305 3I    Female Malay        24    22      16
+ 3 Student289 3H    Male   Chinese      26    16      16
+ 4 Student227 3F    Male   Chinese      27    77      31
+ 5 Student318 3I    Male   Malay        27    11      25
+ 6 Student306 3I    Female Malay        31    16      16
+ 7 Student313 3I    Male   Chinese      31    21      25
+ 8 Student316 3I    Male   Malay        31    18      27
+ 9 Student312 3I    Male   Malay        33    19      15
+10 Student297 3H    Male   Indian       34    49      37
+# ℹ 312 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="visualizing-the-uncertainty-of-point-estimates-ggplot2-methods-1" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-ggplot2-methods-1"><span class="header-section-number">10.2.4</span> Visualizing the uncertainty of point estimates: ggplot2 methods</h3>
-<p>The code chunk below is used to reveal the standard error of mean maths score by race.</p>
+<section id="one-sample-test-gghistostats-method" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="one-sample-test-gghistostats-method"><span class="header-section-number">10.3.3</span> One-sample test: <em>gghistostats()</em> method</h3>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/gghistostats.html"><em>gghistostats()</em></a> is used to to build an visual of one-sample test on English scores.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_sum) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>RACE, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin=</span>mean<span class="sc">-</span>se, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax=</span>mean<span class="sc">+</span>se), </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">width=</span><span class="fl">0.2</span>, </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour=</span><span class="st">"black"</span>, </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha=</span><span class="fl">0.9</span>, </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(aes</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>           (<span class="at">x=</span>RACE, </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">y=</span>mean), </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat=</span><span class="st">"identity"</span>, </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span><span class="st">"red"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">1.5</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Standard error of mean </span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="st">          maths score by rac"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gghistostats</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exam,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> ENGLISH,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"bayes"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">test.value =</span> <span class="dv">60</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"English scores"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap10_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Default information: - statistical details - Bayes Factor - sample sizes - distribution summary</p>
+</section>
+<section id="unpacking-the-bayes-factor" class="level3" data-number="10.3.4">
+<h3 data-number="10.3.4" class="anchored" data-anchor-id="unpacking-the-bayes-factor"><span class="header-section-number">10.3.4</span> Unpacking the Bayes Factor</h3>
+<ul>
+<li><p>A Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories.</p></li>
+<li><p>That’s because the Bayes factor gives us a way to evaluate the data in favor of a null hypothesis, and to use external information to do so. It tells us what the weight of the evidence is in favor of a given hypothesis.</p></li>
+<li><p>When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as</p></li>
+</ul>
+<p><img src="chap09/img/image5.jpg" class="img-fluid"></p>
+<ul>
+<li>The <a href="https://www.statisticshowto.com/bayesian-information-criterion/"><strong>Schwarz criterion</strong></a> is one of the easiest ways to calculate rough approximation of the Bayes Factor.</li>
+</ul>
+</section>
+<section id="how-to-interpret-bayes-factor" class="level3" data-number="10.3.5">
+<h3 data-number="10.3.5" class="anchored" data-anchor-id="how-to-interpret-bayes-factor"><span class="header-section-number">10.3.5</span> How to interpret Bayes Factor</h3>
+<p>A <strong>Bayes Factor</strong> can be any positive number. One of the most common interpretations is this one—first proposed by Harold Jeffereys (1961) and slightly modified by <a href="https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true">Lee and Wagenmakers</a> in 2013:</p>
+<p><img src="chap09/img/image6.jpg" class="img-fluid" width="480"></p>
+</section>
+<section id="two-sample-mean-test-ggbetweenstats" class="level3" data-number="10.3.6">
+<h3 data-number="10.3.6" class="anchored" data-anchor-id="two-sample-mean-test-ggbetweenstats"><span class="header-section-number">10.3.6</span> Two-sample mean test: <em>ggbetweenstats()</em></h3>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html"><em>ggbetweenstats()</em></a> is used to build a visual for two-sample mean test of Maths scores by gender.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exam,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> GENDER, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> MATHS,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"np"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap10_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Default information: - statistical details - Bayes Factor - sample sizes - distribution summary</p>
+</section>
+<section id="oneway-anova-test-ggbetweenstats-method" class="level3" data-number="10.3.7">
+<h3 data-number="10.3.7" class="anchored" data-anchor-id="oneway-anova-test-ggbetweenstats-method"><span class="header-section-number">10.3.7</span> Oneway ANOVA Test: <em>ggbetweenstats()</em> method</h3>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html"><em>ggbetweenstats()</em></a> is used to build a visual for One-way ANOVA test on English score by race.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbetweenstats</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exam,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> RACE, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> ENGLISH,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"p"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean.ci =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.comparisons =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pairwise.display =</span> <span class="st">"s"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">p.adjust.method =</span> <span class="st">"fdr"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">messages =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap10_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>“ns” → only non-significant</li>
+<li>“s” → only significant</li>
+<li>“all” → everything</li>
+</ul>
+<section id="ggbetweenstats---summary-of-tests" class="level4" data-number="10.3.7.1">
+<h4 data-number="10.3.7.1" class="anchored" data-anchor-id="ggbetweenstats---summary-of-tests"><span class="header-section-number">10.3.7.1</span> ggbetweenstats - Summary of tests</h4>
+<p><img src="chap09/img/image7.jpg" class="img-fluid"></p>
+<p><img src="chap09/img/image8.jpg" class="img-fluid"></p>
+<p><img src="chap09/img/image9.jpg" class="img-fluid"></p>
+</section>
+</section>
+<section id="significant-test-of-correlation-ggscatterstats" class="level3" data-number="10.3.8">
+<h3 data-number="10.3.8" class="anchored" data-anchor-id="significant-test-of-correlation-ggscatterstats"><span class="header-section-number">10.3.8</span> Significant Test of Correlation: <em>ggscatterstats()</em></h3>
+<p>In the code chunk below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html"><em>ggscatterstats()</em></a> is used to build a visual for Significant Test of Correlation between Maths scores and English scores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatterstats</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> exam,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> MATHS,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> ENGLISH,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">marginal =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="chap10_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Your turn
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Plot the 95% confidence interval of mean maths score by race. The error bars should be sorted by the average maths scores.</p>
-</div>
-</div>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">The plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">The code chunk</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+</section>
+<section id="significant-test-of-association-depedence-ggbarstats-methods" class="level3" data-number="10.3.9">
+<h3 data-number="10.3.9" class="anchored" data-anchor-id="significant-test-of-association-depedence-ggbarstats-methods"><span class="header-section-number">10.3.9</span> Significant Test of Association (Depedence) : <em>ggbarstats()</em> methods</h3>
+<p>In the code chunk below, the Maths scores is binned into a 4-class variable by using <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut"><em>cut()</em></a>.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exam1 <span class="ot">&lt;-</span> exam <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MATHS_bins =</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">cut</span>(MATHS, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">60</span>,<span class="dv">75</span>,<span class="dv">85</span>,<span class="dv">100</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this code chunk below <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html"><em>ggbarstats()</em></a> is used to build a visual for Significant Test of Association</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggbarstats</span>(exam1, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> MATHS_bins, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> GENDER)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_sum) <span class="sc">+</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(RACE, <span class="sc">-</span>mean), </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin=</span>mean<span class="fl">-1.96</span><span class="sc">*</span>se, </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax=</span>mean<span class="fl">+1.96</span><span class="sc">*</span>se), </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">width=</span><span class="fl">0.2</span>, </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour=</span><span class="st">"black"</span>, </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha=</span><span class="fl">0.9</span>, </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(aes</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>           (<span class="at">x=</span>RACE, </span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">y=</span>mean), </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">stat=</span><span class="st">"identity"</span>, </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span><span class="st">"red"</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> <span class="fl">1.5</span>,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"95% confidence interval of mean maths score by race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="visualizing-the-uncertainty-of-point-estimates-with-interactive-error-bars" class="level3" data-number="10.2.5">
-<h3 data-number="10.2.5" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-with-interactive-error-bars"><span class="header-section-number">10.2.5</span> Visualizing the uncertainty of point estimates with interactive error bars</h3>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Your turn
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Plot interactive error bars for the 99% confidence interval of mean maths score by race.</p>
-</div>
-</div>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">The plot</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">The code chunk</a></li></ul>
-<div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell">
-<div class="cell-output-display">
-
-<div class="container-fluid crosstalk-bscols">
-<div class="row">
-<div class="col-xs-5">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8c6887dc9fe54ebfd118" style="width:100%;height:400px;"></div>
-<script type="application/json" data-for="htmlwidget-8c6887dc9fe54ebfd118">{"x":{"data":[{"x":[1,3,4,2],"y":[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],"text":"","key":["1","2","3","4"],"type":"scatter","mode":"lines","opacity":0.9,"line":{"color":"transparent"},"error_y":{"array":[2.92148180332821,18.1657940296391,5.2713960499886,9.78190932282649],"arrayminus":[2.92148180332821,18.1657940296391,5.2713960499886,9.7819093228265],"type":"data","width":21.3333333333334,"symmetric":false,"color":"rgba(0,0,0,1)"},"set":"SharedDataafb750ef","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","_isNestedKey":false,"frame":null},{"x":[1,3,4,2],"y":[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],"text":["Race: Chinese <br>N: 193 <br>Avg. Scores: 76.51 <br>95% CI:[ 73.59 , 79.43 ]","Race: Indian <br>N: 12 <br>Avg. Scores: 60.67 <br>95% CI:[ 42.5 , 78.83 ]","Race: Malay <br>N: 108 <br>Avg. Scores: 57.44 <br>95% CI:[ 52.17 , 62.72 ]","Race: Others <br>N: 9 <br>Avg. Scores: 69.67 <br>95% CI:[ 59.88 , 79.45 ]"],"key":["1","2","3","4"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)"}},"hoveron":"points","set":"SharedDataafb750ef","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","_isNestedKey":false,"frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":50.8458187739088,"l":37.2602739726027},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"99% Confidence interval of average /<br>maths scores by race","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":["Chinese","Others","Indian","Malay"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["Chinese","Others","Indian","Malay"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-45,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Race","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[40.6534874694042,81.2959611571165],"tickmode":"array","ticktext":["50","60","70","80"],"tickvals":[50,60,70,80],"categoryorder":"array","categoryarray":["50","60","70","80"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Average Scores","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative","dragmode":"zoom"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"6a7459717070":{"x":{},"ymin":{},"ymax":{},"type":"scatter"},"6a7436a72ec7":{"x":{},"y":{},"text":{}}},"cur_data":"6a7459717070","visdat":{"6a7459717070":["function (y) ","x"],"6a7436a72ec7":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0,"ctGroups":["SharedDataafb750ef"]},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-</div>
-<div class="col-xs-7">
-<div id="htmlwidget-e7c822f42178ab787cb7" style="width:90%;height:auto;" class="datatables html-widget "></div>
-<script type="application/json" data-for="htmlwidget-e7c822f42178ab787cb7">{"x":{"crosstalkOptions":{"key":["1","2","3","4"],"group":"SharedDataafb750ef"},"filter":"none","vertical":false,"data":[["Chinese","Indian","Malay","Others"],[193,12,108,9],[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],[15.6904028426431,23.3523731841827,21.1347847806846,10.7238052947636],[1.1323572881117,7.04100543784463,2.04317676356147,3.79143772202577]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>No. of pupils<\/th>\n      <th>Avg Scores<\/th>\n      <th>Std Dev<\/th>\n      <th>Std Error<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render"],"jsHooks":[]}</script>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>shared_df <span class="ot">=</span> SharedData<span class="sc">$</span><span class="fu">new</span>(my_sum)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">bscols</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">8</span>),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">ggplotly</span>((<span class="fu">ggplot</span>(shared_df) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x=</span><span class="fu">reorder</span>(RACE, <span class="sc">-</span>mean),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ymin=</span>mean<span class="fl">-2.58</span><span class="sc">*</span>se, </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ymax=</span>mean<span class="fl">+2.58</span><span class="sc">*</span>se), </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width=</span><span class="fl">0.2</span>, </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour=</span><span class="st">"black"</span>, </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">alpha=</span><span class="fl">0.9</span>, </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">geom_point</span>(<span class="fu">aes</span>(</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x=</span>RACE, </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y=</span>mean, </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">text =</span> <span class="fu">paste</span>(<span class="st">"Race:"</span>, <span class="st">`</span><span class="at">RACE</span><span class="st">`</span>, </span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"&lt;br&gt;N:"</span>, <span class="st">`</span><span class="at">n</span><span class="st">`</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"&lt;br&gt;Avg. Scores:"</span>, <span class="fu">round</span>(mean, <span class="at">digits =</span> <span class="dv">2</span>),</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"&lt;br&gt;95% CI:["</span>, </span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">round</span>((mean<span class="fl">-2.58</span><span class="sc">*</span>se), <span class="at">digits =</span> <span class="dv">2</span>), <span class="st">","</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">round</span>((mean<span class="fl">+2.58</span><span class="sc">*</span>se), <span class="at">digits =</span> <span class="dv">2</span>),<span class="st">"]"</span>)),</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">stat=</span><span class="st">"identity"</span>, </span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color=</span><span class="st">"red"</span>, </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                     <span class="at">size =</span> <span class="fl">1.5</span>, </span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">alpha=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">xlab</span>(<span class="st">"Race"</span>) <span class="sc">+</span> </span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">ylab</span>(<span class="st">"Average Scores"</span>) <span class="sc">+</span> </span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">ggtitle</span>(<span class="st">"99% Confidence interval of average /&lt;br&gt;maths scores by race"</span>)), </span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                <span class="at">tooltip =</span> <span class="st">"text"</span>), </span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>       DT<span class="sc">::</span><span class="fu">datatable</span>(shared_df, </span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                     <span class="at">rownames =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">class=</span><span class="st">"compact"</span>, </span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width=</span><span class="st">"100%"</span>, </span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">10</span>,</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">scrollX=</span>T), </span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">"No. of pupils"</span>, </span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Avg Scores"</span>,</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Std Dev"</span>,</span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Std Error"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>         <span class="fu">formatRound</span>(<span class="at">columns=</span><span class="fu">c</span>(<span class="st">'mean'</span>, <span class="st">'sd'</span>, <span class="st">'se'</span>),</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>                     <span class="at">digits=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+<p><img src="chap10_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="visualising-uncertainty-ggdist-package" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="visualising-uncertainty-ggdist-package"><span class="header-section-number">10.3</span> Visualising Uncertainty: <strong>ggdist</strong> package</h2>
+<section id="visualising-models" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="visualising-models"><span class="header-section-number">10.4</span> Visualising Models</h2>
+<p>In this section, you will learn how to visualise model diagnostic and model parameters by using parameters package.</p>
 <ul>
-<li><a href="https://mjskay.github.io/ggdist/index.html"><strong>ggdist</strong></a> is an R package that provides a flexible set of ggplot2 geoms and stats designed especially for visualising distributions and uncertainty.</li>
-<li>It is designed for both frequentist and Bayesian uncertainty visualization, taking the view that uncertainty visualization can be unified through the perspective of distribution visualization:
-<ul>
-<li>for frequentist models, one visualises confidence distributions or bootstrap distributions (see vignette(“freq-uncertainty-vis”));</li>
-<li>for Bayesian models, one visualises probability distributions (see the tidybayes package, which builds on top of ggdist).</li>
-</ul></li>
+<li>Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.</li>
 </ul>
-<p><img src="chap10/img/ggdist.png" class="img-fluid"></p>
-<section id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods" class="level3" data-number="10.3.1">
-<h3 data-number="10.3.1" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods"><span class="header-section-number">10.3.1</span> Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</h3>
-<p>In the code chunk below, <a href="https://mjskay.github.io/ggdist/reference/stat_pointinterval.html"><code>stat_pointinterval()</code></a> of <strong>ggdist</strong> is used to build a visual for displaying distribution of maths scores by race.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>exam <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RACE, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_pointinterval</span>() <span class="sc">+</span>   <span class="co">#&lt;&lt;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Visualising confidence intervals of mean math score"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Mean Point + Multiple-interval plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>exam <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RACE, <span class="at">y =</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_pointinterval</span>(<span class="at">.width =</span> <span class="fl">0.95</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">.point =</span> median,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">.interval =</span> qi) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Visualising confidence intervals of mean math score"</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Mean Point + Multiple-interval plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
+<p><img src="chap09/img/image4.jpg" class="img-fluid"></p>
 </section>
-<section id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods-1" class="level3" data-number="10.3.2">
-<h3 data-number="10.3.2" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods-1"><span class="header-section-number">10.3.2</span> Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</h3>
+<section id="getting-started-1" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="getting-started-1"><span class="header-section-number">10.5</span> Getting Started</h2>
+</section>
+<section id="installing-and-loading-the-required-libraries" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="installing-and-loading-the-required-libraries"><span class="header-section-number">10.6</span> Installing and loading the required libraries</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Your turn
+Do-It-Yourself
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Makeover the plot on previous slide by showing 95% and 99% confidence intervals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, performance, parameters, see)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<section id="importing-excel-file-readxl-methods" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="importing-excel-file-readxl-methods"><span class="header-section-number">10.6.1</span> Importing Excel file: readxl methods</h3>
+<p>In the code chunk below, <a href="https://readxl.tidyverse.org/reference/read_excel.html"><em>read_xls()</em></a> of <a href="https://readxl.tidyverse.org/"><strong>readxl</strong></a> package is used to import the data worksheet of <code>ToyotaCorolla.xls</code> workbook into R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>car_resale <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="st">"data/ToyotaCorolla.xls"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"data"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>car_resale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,436 × 38
+      Id Model    Price Age_08_04 Mfg_Month Mfg_Year     KM Quarterly_Tax Weight
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+ 1    81 TOYOTA … 18950        25         8     2002  20019           100   1180
+ 2     1 TOYOTA … 13500        23        10     2002  46986           210   1165
+ 3     2 TOYOTA … 13750        23        10     2002  72937           210   1165
+ 4     3 &nbsp;TOYOTA… 13950        24         9     2002  41711           210   1165
+ 5     4 TOYOTA … 14950        26         7     2002  48000           210   1165
+ 6     5 TOYOTA … 13750        30         3     2002  38500           210   1170
+ 7     6 TOYOTA … 12950        32         1     2002  61000           210   1170
+ 8     7 &nbsp;TOYOTA… 16900        27         6     2002  94612           210   1245
+ 9     8 TOYOTA … 18600        30         3     2002  75889           210   1245
+10    44 TOYOTA … 16950        27         6     2002 110404           234   1255
+# ℹ 1,426 more rows
+# ℹ 29 more variables: Guarantee_Period &lt;dbl&gt;, HP_Bin &lt;chr&gt;, CC_bin &lt;chr&gt;,
+#   Doors &lt;dbl&gt;, Gears &lt;dbl&gt;, Cylinders &lt;dbl&gt;, Fuel_Type &lt;chr&gt;, Color &lt;chr&gt;,
+#   Met_Color &lt;dbl&gt;, Automatic &lt;dbl&gt;, Mfr_Guarantee &lt;dbl&gt;,
+#   BOVAG_Guarantee &lt;dbl&gt;, ABS &lt;dbl&gt;, Airbag_1 &lt;dbl&gt;, Airbag_2 &lt;dbl&gt;,
+#   Airco &lt;dbl&gt;, Automatic_airco &lt;dbl&gt;, Boardcomputer &lt;dbl&gt;, CD_Player &lt;dbl&gt;,
+#   Central_Lock &lt;dbl&gt;, Powered_Windows &lt;dbl&gt;, Power_Steering &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<p>Notice that the output object <code>car_resale</code> is a tibble data frame.</p>
+</section>
+<section id="multiple-regression-model-using-lm" class="level3" data-number="10.6.2">
+<h3 data-number="10.6.2" class="anchored" data-anchor-id="multiple-regression-model-using-lm"><span class="header-section-number">10.6.2</span> Multiple Regression Model using lm()</h3>
+<p>The code chunk below is used to calibrate a multiple linear regression model by using <em>lm()</em> of Base Stats of R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> Mfg_Year <span class="sc">+</span> KM <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> Guarantee_Period, <span class="at">data =</span> car_resale)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Age_08_04 + Mfg_Year + KM + Weight + Guarantee_Period, 
+    data = car_resale)
+
+Coefficients:
+     (Intercept)         Age_08_04          Mfg_Year                KM  
+      -2.637e+06        -1.409e+01         1.315e+03        -2.323e-02  
+          Weight  Guarantee_Period  
+       1.903e+01         2.770e+01  </code></pre>
+</div>
+</div>
+</section>
+<section id="model-diagnostic-checking-for-multicolinearity" class="level3" data-number="10.6.3">
+<h3 data-number="10.6.3" class="anchored" data-anchor-id="model-diagnostic-checking-for-multicolinearity"><span class="header-section-number">10.6.3</span> Model Diagnostic: checking for multicolinearity:</h3>
+<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_collinearity.html"><em>check_collinearity()</em></a> of <a href="https://easystats.github.io/performance/index.html"><strong>performance</strong></a> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_collinearity</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+             Term  VIF     VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+               KM 1.46 [ 1.37,  1.57]         1.21      0.68     [0.64, 0.73]
+           Weight 1.41 [ 1.32,  1.51]         1.19      0.71     [0.66, 0.76]
+ Guarantee_Period 1.04 [ 1.01,  1.17]         1.02      0.97     [0.86, 0.99]
+
+High Correlation
+
+      Term   VIF     VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+ Age_08_04 31.07 [28.08, 34.38]         5.57      0.03     [0.03, 0.04]
+  Mfg_Year 31.16 [28.16, 34.48]         5.58      0.03     [0.03, 0.04]</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exam <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RACE, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_pointinterval</span>(</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>   </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Visualising confidence intervals of mean math score"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Mean Point + Multiple-interval plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>check_c <span class="ot">&lt;-</span> <span class="fu">check_collinearity</span>(model)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="chap10_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.</p>
 </section>
-<section id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods-2" class="level3" data-number="10.3.3">
-<h3 data-number="10.3.3" class="anchored" data-anchor-id="visualizing-the-uncertainty-of-point-estimates-ggdist-methods-2"><span class="header-section-number">10.3.3</span> Visualizing the uncertainty of point estimates: <strong>ggdist</strong> methods</h3>
-<p>In the code chunk below, <a href="https://mjskay.github.io/ggdist/reference/stat_gradientinterval.html"><code>stat_gradientinterval()</code></a> of <strong>ggdist</strong> is used to build a visual for displaying distribution of maths scores by race.</p>
+<section id="model-diagnostic-checking-normality-assumption" class="level3" data-number="10.6.4">
+<h3 data-number="10.6.4" class="anchored" data-anchor-id="model-diagnostic-checking-normality-assumption"><span class="header-section-number">10.6.4</span> Model Diagnostic: checking normality assumption</h3>
+<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_normality.html"><em>check_normality()</em></a> of <a href="https://easystats.github.io/performance/index.html"><strong>performance</strong></a> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>exam <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RACE, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> MATHS)) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_gradientinterval</span>(   </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"skyblue"</span>,      </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">show.legend =</span> <span class="cn">TRUE</span>     </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span>                        </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Visualising confidence intervals of mean math score"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Gradient + interval plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> KM <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              Weight <span class="sc">+</span> Guarantee_Period, <span class="at">data =</span> car_resale)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>check_n <span class="ot">&lt;-</span> <span class="fu">check_normality</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="chap10_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.</p>
 </section>
-</section>
-<section id="visualising-uncertainty-with-hypothetical-outcome-plots-hops" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="visualising-uncertainty-with-hypothetical-outcome-plots-hops"><span class="header-section-number">10.4</span> Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)</h2>
-<p>Step 1: Installing ungeviz package</p>
+<section id="model-diagnostic-check-model-for-homogeneity-of-variances" class="level3" data-number="10.6.5">
+<h3 data-number="10.6.5" class="anchored" data-anchor-id="model-diagnostic-check-model-for-homogeneity-of-variances"><span class="header-section-number">10.6.5</span> Model Diagnostic: Check model for homogeneity of variances</h3>
+<p>In the code chunk, <a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html"><em>check_heteroscedasticity()</em></a> of <a href="https://easystats.github.io/performance/index.html"><strong>performance</strong></a> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"wilkelab/ungeviz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Note: You only need to perform this step once.</p>
-<p>Step 2: Launch the application in R</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ungeviz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>check_h <span class="ot">&lt;-</span> <span class="fu">check_heteroscedasticity</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam, </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       (<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(RACE), <span class="at">y =</span> MATHS))) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fl">0.3</span>, <span class="at">width =</span> <span class="fl">0.05</span>), </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"#0072B2"</span>, <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hpline</span>(<span class="at">data =</span> <span class="fu">sampler</span>(<span class="dv">25</span>, <span class="at">group =</span> RACE), <span class="at">height =</span> <span class="fl">0.6</span>, <span class="at">color =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># `.draw` is a generated column indicating the sample draw</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(.draw, <span class="dv">1</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(check_h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-17-1.gif" class="img-fluid"></p>
+<p><img src="chap10_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="visualising-uncertainty-with-hypothetical-outcome-plots-hops-1" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="visualising-uncertainty-with-hypothetical-outcome-plots-hops-1"><span class="header-section-number">10.5</span> Visualising Uncertainty with Hypothetical Outcome Plots (HOPs)</h2>
+<section id="model-diagnostic-complete-check" class="level3" data-number="10.6.6">
+<h3 data-number="10.6.6" class="anchored" data-anchor-id="model-diagnostic-complete-check"><span class="header-section-number">10.6.6</span> Model Diagnostic: Complete check</h3>
+<p>We can also perform the complete by using <a href="https://easystats.github.io/performance/reference/check_model.html"><em>check_model()</em></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam, </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       (<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(RACE), </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> MATHS))) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fl">0.3</span>, </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.05</span>), </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.4</span>, </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"#0072B2"</span>, </span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hpline</span>(<span class="at">data =</span> <span class="fu">sampler</span>(<span class="dv">25</span>, </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> RACE), </span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">height =</span> <span class="fl">0.6</span>, </span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"#D55E00"</span>) <span class="sc">+</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_states</span>(.draw, <span class="dv">1</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_model</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap10_files/figure-html/unnamed-chunk-18-1.gif" class="img-fluid"></p>
+<p><img src="chap10_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+</section>
+<section id="visualising-regression-parameters-see-methods" class="level3" data-number="10.6.7">
+<h3 data-number="10.6.7" class="anchored" data-anchor-id="visualising-regression-parameters-see-methods"><span class="header-section-number">10.6.7</span> Visualising Regression Parameters: see methods</h3>
+<p>In the code below, plot() of see package and parameters() of parameters package is used to visualise the parameters of a regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">parameters</span>(model1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap10_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="visualising-regression-parameters-ggcoefstats-methods" class="level3" data-number="10.6.8">
+<h3 data-number="10.6.8" class="anchored" data-anchor-id="visualising-regression-parameters-ggcoefstats-methods"><span class="header-section-number">10.6.8</span> Visualising Regression Parameters: <em>ggcoefstats()</em> methods</h3>
+<p>In the code below, <a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggcoefstats.html"><em>ggcoefstats()</em></a> of ggstatsplot package to visualise the parameters of a regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcoefstats</span>(model1, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">output =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="chap10_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -973,6 +863,7 @@ Your turn
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1112,12 +1003,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./chap09.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visualising Distribution</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./chap11.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Funnel Plots for Fair Comparisons</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
