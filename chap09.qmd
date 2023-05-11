@@ -1,5 +1,5 @@
 ---
-title: "Visual Statistical Analysis"
+title: "Visualising Distribution"
 date: "12/4/2023"
 date-modified: "`r Sys.Date()`"
 format: html
@@ -11,277 +11,453 @@ execute:
 
 ## Learning Outcome
 
-In this hands-on exercise, you will gain hands-on experience on using:
-
--   ggstatsplot package to create visual graphics with rich statistical information,
-
--   performance package to visualise model diagnostics, and
-
--   parameters package to visualise model parameters
-
-## Visual Statistical Analysis with **ggstatsplot**
-
-![](chap09/img/image1.jpg){width="47" height="49"}
-
--   [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
-    -   To provide alternative statistical inference methods by default.
-    -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test:
-
-![](chap09/img/image2.jpg)
+Visualising distribution is not new in statistical analysis. In chapter 1 we have shared with you some of the popular statistical graphics methods for visualising distribution are histogram, probability density curve (pdf), boxplot, notch plot and violin plot and how they can be created by using ggplot2. In this chapter, we are going to share with you two relatively new statistical graphic methods for visualising distribution, namely ridgeline plot and raincloud plot by using ggplot2 and its extensions.
 
 ## Getting Started
 
-### Installing and launching R packages
+### Installing and loading the packages
 
-In this exercise, **ggstatsplot** and **tidyverse** will be used.
+For the purpose of this exercise, the following R packages will be used, they are:
+
+-   tidyverse, a family of R packages for data science process,
+-   ggridges, a ggplot2 extension specially designed for plotting ridgeline plots, and
+-   ggdist for visualising distribution and uncertainty.
 
 ```{r}
-pacman::p_load(ggstatsplot, tidyverse)
+pacman::p_load(ggdist, ggridges, ggthemes,
+               colorspace, tidyverse)
 ```
 
-### Importing data
+### Data import
 
-::: callout-note
-### Do-It-Yourself
+For the purpose of this exercise, *Exam_data.csv* will be used.
 
-Importing *Exam.csv* data by using appropriate tidyverse package.
-:::
+```{r}
+exam <- read_csv("data/Exam_data.csv")
+```
+
+## Visualising Distribution with Ridgeline Plot
+
+*Ridgeline plot* (sometimes called *Joyplot*) is a data visualisation technique for revealing the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale and presented with a slight overlap.
+
+Figure below is a ridgelines plot showing the distribution of English score by class.
 
 ```{r}
 #| echo: false
-exam <- read_csv("chap09/data/Exam_data.csv")
-exam
+ggplot(exam, 
+       aes(x = ENGLISH, 
+           y = CLASS)) + 
+  geom_density_ridges(rel_min_height = 0.02) +
+  theme_ridges()
 ```
-
-### One-sample test: *gghistostats()* method
-
-In the code chunk below, [*gghistostats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/gghistostats.html) is used to to build an visual of one-sample test on English scores.
-
-```{r}
-set.seed(1234)
-
-gghistostats(
-  data = exam,
-  x = ENGLISH,
-  type = "bayes",
-  test.value = 60,
-  xlab = "English scores"
-)
-```
-
-Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
-
-### Unpacking the Bayes Factor
-
--   A Bayes factor is the ratio of the likelihood of one particular hypothesis to the likelihood of another. It can be interpreted as a measure of the strength of evidence in favor of one theory among two competing theories.
-
--   That's because the Bayes factor gives us a way to evaluate the data in favor of a null hypothesis, and to use external information to do so. It tells us what the weight of the evidence is in favor of a given hypothesis.
-
--   When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as
-
-![](chap09/img/image5.jpg)
-
--   The [**Schwarz criterion**](https://www.statisticshowto.com/bayesian-information-criterion/) is one of the easiest ways to calculate rough approximation of the Bayes Factor.
-
-### How to interpret Bayes Factor
-
-A **Bayes Factor** can be any positive number. One of the most common interpretations is this one---first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
-
-![](chap09/img/image6.jpg){width="480"}
-
-### Two-sample mean test: *ggbetweenstats()*
-
-In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for two-sample mean test of Maths scores by gender.
-
-```{r}
-ggbetweenstats(
-  data = exam,
-  x = GENDER, 
-  y = MATHS,
-  type = "np",
-  messages = FALSE
-)
-```
-
-Default information: - statistical details - Bayes Factor - sample sizes - distribution summary
-
-### Oneway ANOVA Test: *ggbetweenstats()* method
-
-In the code chunk below, [*ggbetweenstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html) is used to build a visual for One-way ANOVA test on English score by race.
-
-```{r}
-ggbetweenstats(
-  data = exam,
-  x = RACE, 
-  y = ENGLISH,
-  type = "p",
-  mean.ci = TRUE, 
-  pairwise.comparisons = TRUE, 
-  pairwise.display = "s",
-  p.adjust.method = "fdr",
-  messages = FALSE
-)
-```
-
--   "ns" → only non-significant
--   "s" → only significant
--   "all" → everything
-
-#### ggbetweenstats - Summary of tests
-
-![](chap09/img/image7.jpg)
-
-![](chap09/img/image8.jpg)
-
-![](chap09/img/image9.jpg)
-
-### Significant Test of Correlation: *ggscatterstats()*
-
-In the code chunk below, [*ggscatterstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html) is used to build a visual for Significant Test of Correlation between Maths scores and English scores.
-
-```{r}
-ggscatterstats(
-  data = exam,
-  x = MATHS,
-  y = ENGLISH,
-  marginal = FALSE,
-  )
-```
-
-### Significant Test of Association (Depedence) : *ggbarstats()* methods
-
-In the code chunk below, the Maths scores is binned into a 4-class variable by using [*cut()*](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cut).
-
-```{r}
-exam1 <- exam %>% 
-  mutate(MATHS_bins = 
-           cut(MATHS, 
-               breaks = c(0,60,75,85,100))
-)
-```
-
-In this code chunk below [*ggbarstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbarstats.html) is used to build a visual for Significant Test of Association
-
-```{r}
-ggbarstats(exam1, 
-           x = MATHS_bins, 
-           y = GENDER)
-```
-
-## Visualising Models
-
-In this section, you will learn how to visualise model diagnostic and model parameters by using parameters package.
-
--   Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.
-
-![](chap09/img/image4.jpg)
-
-## Getting Started
-
-## Installing and loading the required libraries
 
 ::: callout-note
-### Do-It-Yourself
+-   Ridgeline plots make sense when the number of group to represent is medium to high, and thus a classic window separation would take to much space. Indeed, the fact that groups overlap each other allows to use space more efficiently. If you have less than 5 groups, dealing with other distribution plots is probably better.
+
+-   It works well when there is a clear pattern in the result, like if there is an obvious ranking in groups. Otherwise group will tend to overlap each other, leading to a messy plot not providing any insight.
+:::
+
+### Plotting ridgeline graph: ggridges method
+
+There are several ways to plot ridgeline plot with R. In this section, you will learn how to plot ridgeline plot by using [ggridges](https://wilkelab.org/ggridges/index.html) package.
+
+ggridges package provides two main geom to plot gridgeline plots, they are: [`geom_ridgeline()`](https://wilkelab.org/ggridges/reference/geom_ridgeline.html) and [`geom_density_ridges()`](https://wilkelab.org/ggridges/reference/geom_density_ridges.html). The former takes height values directly to draw the ridgelines, and the latter first estimates data densities and then draws those using ridgelines.
+
+The ridgeline plot below is plotted by using `geom_density_ridges()`.
+
+::: panel-tabset
+### The plot
 
 ```{r}
-pacman::p_load(readxl, performance, parameters, see)
+#| echo: false
+ggplot(exam, 
+       aes(x = ENGLISH, 
+           y = CLASS)) +
+  geom_density_ridges(
+    scale = 3,
+    rel_min_height = 0.01,
+    bandwidth = 3.4,
+    fill = lighten("#7097BB", .3),
+    color = "white"
+  ) +
+  scale_x_continuous(
+    name = "English grades",
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
+```
+
+### The code chunk
+
+```{r}
+#| eval: false
+ggplot(exam, 
+       aes(x = ENGLISH, 
+           y = CLASS)) +
+  geom_density_ridges(
+    scale = 3,
+    rel_min_height = 0.01,
+    bandwidth = 3.4,
+    fill = lighten("#7097BB", .3),
+    color = "white"
+  ) +
+  scale_x_continuous(
+    name = "English grades",
+    expand = c(0, 0)
+    ) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
 ```
 :::
 
-### Importing Excel file: readxl methods
+### Varying fill colors along the x axis
 
-In the code chunk below, [*read_xls()*](https://readxl.tidyverse.org/reference/read_excel.html) of [**readxl**](https://readxl.tidyverse.org/) package is used to import the data worksheet of `ToyotaCorolla.xls` workbook into R.
+Sometimes we would like to have the area under a ridgeline not filled with a single solid color but rather with colors that vary in some form along the x axis. This effect can be achieved by using either [`geom_ridgeline_gradient()`](https://wilkelab.org/ggridges/reference/geom_ridgeline_gradient.html) or [`geom_density_ridges_gradient()`](https://wilkelab.org/ggridges/reference/geom_ridgeline_gradient.html). Both geoms work just like `geom_ridgeline()` and `geom_density_ridges()`, except that they allow for varying fill colors. However, they do not allow for alpha transparency in the fill. For technical reasons, we can have changing fill colors or transparency but not both.
 
-```{r}
-car_resale <- read_xls("chap09/data/ToyotaCorolla.xls", 
-                       "data")
-car_resale
-```
-
-Notice that the output object `car_resale` is a tibble data frame.
-
-### Multiple Regression Model using lm()
-
-The code chunk below is used to calibrate a multiple linear regression model by using *lm()* of Base Stats of R.
+::: panel-tabset
+## The plot
 
 ```{r}
-model <- lm(Price ~ Age_08_04 + Mfg_Year + KM + 
-              Weight + Guarantee_Period, data = car_resale)
-model
+#| echo: false
+ggplot(exam, 
+       aes(x = ENGLISH, 
+           y = CLASS,
+           fill = stat(x))) +
+  geom_density_ridges_gradient(
+    scale = 3,
+    rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Temp. [F]",
+                       option = "C") +
+  scale_x_continuous(
+    name = "English grades",
+    expand = c(0, 0)) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
 ```
 
-### Model Diagnostic: checking for multicolinearity:
-
-In the code chunk, [*check_collinearity()*](https://easystats.github.io/performance/reference/check_collinearity.html) of [**performance**](https://easystats.github.io/performance/index.html) package.
+## The code chunk
 
 ```{r}
-check_collinearity(model)
+#| eval: false
+ggplot(exam, 
+       aes(x = ENGLISH, 
+           y = CLASS,
+           fill = stat(x))) +
+  geom_density_ridges_gradient(
+    scale = 3,
+    rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Temp. [F]",
+                       option = "C") +
+  scale_x_continuous(
+    name = "English grades",
+    expand = c(0, 0)
+  ) +
+  scale_y_discrete(name = NULL, expand = expansion(add = c(0.2, 2.6))) +
+  theme_ridges()
 ```
+:::
 
-```{r fig.height=5}
-check_c <- check_collinearity(model)
-plot(check_c)
-```
+### Mapping the probabilities directly onto colour
 
-### Model Diagnostic: checking normality assumption
+Beside providing additional geom objects to support the need to plot ridgeline plot, ggridges package also provides a stat function called [`stat_density_ridges()`](https://wilkelab.org/ggridges/reference/stat_density_ridges.html) that replaces [`stat_density()`](https://ggplot2.tidyverse.org/reference/geom_density.html) of ggplot2.
 
-In the code chunk, [*check_normality()*](https://easystats.github.io/performance/reference/check_normality.html) of [**performance**](https://easystats.github.io/performance/index.html) package.
+Figure below is plotted by mapping the probabilities calculated by using `stat(ecdf)` which represent the empirical cumulative density function for the distribution of English score.
+
+::: panel-tabset
+### The plot
 
 ```{r}
-model1 <- lm(Price ~ Age_08_04 + KM + 
-              Weight + Guarantee_Period, data = car_resale)
-
+#| echo: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = 0.5 - abs(0.5-stat(ecdf)))) +
+  stat_density_ridges(geom = "density_ridges_gradient", 
+                      calc_ecdf = TRUE) +
+  scale_fill_viridis_c(name = "Tail probability", direction = -1) +
+  theme_ridges()
 ```
+
+### The code chunk
 
 ```{r}
-check_n <- check_normality(model1)
+#| eval: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = 0.5 - abs(0.5-stat(ecdf)))) +
+  stat_density_ridges(geom = "density_ridges_gradient", 
+                      calc_ecdf = TRUE) +
+  scale_fill_viridis_c(name = "Tail probability",
+                       direction = -1) +
+  theme_ridges()
 ```
+:::
 
-```{r fig.height=4}
-plot(check_n)
-```
+::: callout-important
+It is important include the argument `calc_ecdf = TRUE` in `stat_density_ridges()`.
+:::
 
-### Model Diagnostic: Check model for homogeneity of variances
+### Ridgeline plots with quantile lines
 
-In the code chunk, [*check_heteroscedasticity()*](https://easystats.github.io/performance/reference/check_heteroscedasticity.html) of [**performance**](https://easystats.github.io/performance/index.html) package.
+By using [`geom_density_ridges_gradient()`](https://wilkelab.org/ggridges/reference/geom_ridgeline_gradient.html), we can colour the ridgeline plot by quantile, via the calculated `stat(quantile)` aesthetic as shown in the figure below.
 
-```{r fig.height=4}
-check_h <- check_heteroscedasticity(model1)
-
-```
-
-```{r fig.height=4}
-plot(check_h)
-```
-
-### Model Diagnostic: Complete check
-
-We can also perform the complete by using [*check_model()*](https://easystats.github.io/performance/reference/check_model.html).
-
-```{r fig.width=12, fig.height=10}
-check_model(model1)
-```
-
-### Visualising Regression Parameters: see methods
-
-In the code below, plot() of see package and parameters() of parameters package is used to visualise the parameters of a regression model.
+::: panel-tabset
+### The plot
 
 ```{r}
-plot(parameters(model1))
+#| echo: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = 4,
+    quantile_lines = TRUE) +
+  scale_fill_viridis_d(name = "Quartiles") +
+  theme_ridges()
 ```
 
-### Visualising Regression Parameters: *ggcoefstats()* methods
-
-In the code below, [*ggcoefstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggcoefstats.html) of ggstatsplot package to visualise the parameters of a regression model.
+### The code chunk
 
 ```{r}
-ggcoefstats(model1, 
-            output = "plot")
+#| eval: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = 4,
+    quantile_lines = TRUE) +
+  scale_fill_viridis_d(name = "Quartiles") +
+  theme_ridges()
 ```
+:::
+
+Instead of using number to define the quantiles, we can also specify quantiles by cut points such as 2.5% and 97.5% tails to colour the ridgeline plot as shown in the figure below.
+
+::: panel-tabset
+### The plot
+
+```{r}
+#| echo: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = c(0.025, 0.975)
+    ) +
+  scale_fill_manual(
+    name = "Probability",
+    values = c("#FF0000A0", "#A0A0A0A0", "#0000FFA0"),
+    labels = c("(0, 0.025]", "(0.025, 0.975]", "(0.975, 1]")
+  ) +
+  theme_ridges()
+```
+
+### The code chunk
+
+```{r}
+#| eval: false
+ggplot(exam,
+       aes(x = ENGLISH, 
+           y = CLASS, 
+           fill = factor(stat(quantile))
+           )) +
+  stat_density_ridges(
+    geom = "density_ridges_gradient",
+    calc_ecdf = TRUE, 
+    quantiles = c(0.025, 0.975)
+    ) +
+  scale_fill_manual(
+    name = "Probability",
+    values = c("#FF0000A0", "#A0A0A0A0", "#0000FFA0"),
+    labels = c("(0, 0.025]", "(0.025, 0.975]", "(0.975, 1]")
+  ) +
+  theme_ridges()
+```
+:::
+
+## Visualising Distribution with Raincloud Plot
+
+Raincloud Plot is a data visualisation techniques that produces a half-density to a distribution plot. It gets the name because the density plot is in the shape of a "raincloud". The raincloud (half-density) plot enhances the traditional box-plot by highlighting multiple modalities (an indicator that groups may exist). The boxplot does not show where densities are clustered, but the raincloud plot does! 
+
+In this section, you will learn how to create a raincloud plot to visualise the distribution of English score by race. It will be created by using functions provided by **ggdist** and ggplot2 packages.
+
+### Plotting a Half Eye graph
+
+First, we will plot a Half-Eye graph by using [`stat_halfeye()`](https://mjskay.github.io/ggdist/reference/stat_halfeye.html) of **ggdist** package. 
+
+This produces a Half Eye visualization, which is contains a half-density and a slab-interval. 
+
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA)
+```
+
+## The code chunk
+```{r}
+#| eval: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA)
+```
+
+::: callout-tip
+## Things to learn from the code chunk above
+We remove the slab interval by setting .width = 0 and point_colour = NA. 
+:::
+:::
+
+### Adding the boxplot with `geom_boxplot()`
+
+Next, we will add the second geometry layer using [`geom_boxplot()`]() of ggplot2. This produces a narrow boxplot. We reduce the width and adjust the opacity.
+
+::: panel-tabset
+## The plot
+```{r}
+#| eval: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA)
+```
+
+## The code chunk
+```{r}
+#| echo: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA)
+```
+:::
+
+### Adding the Dot Plots with `stat_dots()`
+
+Next, we will add the third geometry layer using [`stat_dots()`](https://mjskay.github.io/ggdist/reference/stat_dots.html) of ggdist package. This produces a half-dotplot, which is similar to a histogram that indicates the number of samples (number of dots) in each bin. We select side = "left" to indicate we want it on the left-hand side.
+
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 2)
+```
+
+## The code chunk
+```{r}
+#| eval: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 2)
+```
+:::
+
+### Finishing touch
+
+Lastly, [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html) of ggplot2 package will be used to flip the raincloud chart horizontally to give it the raincloud appearance. At the same time, `theme_economist()` of ggthemes package is used to give the raincloud chart a professional publishing standard look.
+
+::: panel-tabset
+## The plot
+```{r}
+#| echo: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 1.5) +
+  coord_flip() +
+  theme_economist()
+```
+
+## The code chunk
+```{r}
+#| eval: false
+ggplot(exam, 
+       aes(x = RACE, 
+           y = ENGLISH)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA) +
+  stat_dots(side = "left", 
+            justification = 1.2, 
+            binwidth = .5,
+            dotsize = 1.5) +
+  coord_flip() +
+  theme_economist()
+```
+:::
+
 
 ```{r}
 #| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://r4va.netlify.app/chap09.html",
-                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap09.pdf")
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap10.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap10.pdf")
 ```

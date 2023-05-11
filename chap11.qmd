@@ -304,13 +304,21 @@ In the code chunk below, [`stat_pointinterval()`](https://mjskay.github.io/ggdis
 exam %>%
   ggplot(aes(x = RACE, 
              y = MATHS)) +
-  stat_pointinterval() +   #<<
+  stat_pointinterval() +
   labs(
     title = "Visualising confidence intervals of mean math score",
     subtitle = "Mean Point + Multiple-interval plot")
 ```
 
-Gentle advice: This function comes with many arguments, students are advised to read the syntax reference for more detail.
+::: callout-note
+This function comes with many arguments, students are advised to read the syntax reference for more detail.
+:::
+
+For example, in the code chunk below the following arguments are used:
+
+- .width = 0.95
+- .point = median
+- .interval = qi
 
 ```{r}
 exam %>%
@@ -319,8 +327,8 @@ exam %>%
   .point = median,
   .interval = qi) +
   labs(
-    title = "Visualising confidence intervals of mean math score",
-    subtitle = "Mean Point + Multiple-interval plot")
+    title = "Visualising confidence intervals of median math score",
+    subtitle = "Median Point + Multiple-interval plot")
 ```
 
 ### Visualizing the uncertainty of point estimates: **ggdist** methods
