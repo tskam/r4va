@@ -311,10 +311,8 @@ heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
 ```
 
 ```{r}
-#| echo: false
 #| eval: false
-renderthis::to_pdf(
-  from = "https://isss608-ay2022-23jan.netlify.app/Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05-pcp.html",
-  to = "D:/ISSS608_AY2022-23Jan/Hands-on_Ex/Hands-on_Ex05-pcp.pdf"
-)
+#| echo: false
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap14.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap14.pdf")
 ```
