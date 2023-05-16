@@ -205,3 +205,11 @@ parallelPlot(wh,
 
 -   [**parallelPlot**](https://cran.r-project.org/web/packages/parallelPlot/parallelPlot.pdf)
 
+```{r}
+#| eval: false
+#| echo: false
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap15.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap15.pdf")
+```
+
+
