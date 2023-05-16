@@ -35,29 +35,24 @@ In this exercise, version 3.2.1 of **ggplot2** will be installed instead of the 
 
 The code chunks below will accomplish the task.
 
-```{r, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
-
-packages = c('ggtern', 'plotly', 'readr', 'dplyr', 'tidyr')
-
-for(p in packages){
-  if(!require(p, character.only = T)){
-    install.packages(p)
-  }
-  library(p, character.only = T)
-}
+```{r}
+pacman::p_load('plotly', 'tidyverse')
 ```
 
-The code chunk below will then be used to install ggplot2 version 3.2.1.
-
-```{r echo=TRUE, eval=FALSE}
-require(devtools)
-install_version("ggplot2", version = "3.2.1", repos = "http://cran.us.r-project.org")
-```
-
-Then, the code chunk below will be used to launch **ggplot2** package in RStudio.
+::: callout-note
+Due to some technical issue, ggtern is currently not available for downloading via cran.  We need to download ggtern from the archive by using the code chunk below.  The latest archive version is 3.4.1.
+:::
 
 ```{r}
-library(ggplot2)
+#| eval: false
+require(devtools)
+install_version("ggtern", version = "3.4.1", repos = "http://cran.us.r-project.org")
+```
+
+Next, load ggtern package into R environment by using the code chunk below.
+
+```{r}
+library(ggtern)
 ```
 
 ## Data Preparation
