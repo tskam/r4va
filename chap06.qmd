@@ -1,5 +1,5 @@
 ---
-title: "Visual Correlation Analysis of Numerical and Categorical Data"
+title: "Visual Correlation Analysis"
 date: "12/4/2023"
 date-modified: "`r Sys.Date()`"
 format: html
