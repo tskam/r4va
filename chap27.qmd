@@ -571,12 +571,13 @@ visNetwork(GAStech_nodes,
   visLayout(randomSeed = 123)
 ```
 
-Visit [Option](http://datastorm-open.github.io/visNetwork/edges.html) to find out more about visEdges's argument. \]
+Visit [Option](http://datastorm-open.github.io/visNetwork/edges.html) to find out more about visEdges's argument.
 
 ### Interactivity
 
-In the code chunk below, *visOptions()* is used to incorporate interactivity features in the data visualisation.\
-- The argument *highlightNearest* highlights nearest when clicking a node.\
+In the code chunk below, *visOptions()* is used to incorporate interactivity features in the data visualisation.
+
+- The argument *highlightNearest* highlights nearest when clicking a node.
 - The argument *nodesIdSelection* adds an id node selection creating an HTML select element.
 
 ```{r}
@@ -592,3 +593,14 @@ visNetwork(GAStech_nodes,
 Visit [Option](http://datastorm-open.github.io/visNetwork/options.html) to find out more about visOption's argument.
 
 ## Reference
+
+```{r}
+#| eval: false
+#| echo: false
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap27.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap27.pdf")
+```
+
+
+
+
