@@ -1,5 +1,5 @@
 ---
-title: "R for Data Science: Tidyverse principles and methods"
+title: "Time on the Horizon: "
 date: "12/4/2023"
 date-modified: "`r Sys.Date()`"
 format: html
@@ -9,5 +9,74 @@ execute:
   warning: false
 ---
 
-## Learning Outcome
+## Overview
+
+A horizon graph is an analytical graphical method specially designed for visualising large numbers of time-series.  It aims to overcome the issue of visualising highly overlapping time-series as shown in the figure below.
+
+A horizon graph essentially an area chart that has been split into slices and the slices then layered on top of one another with the areas representing the highest (absolute) values on top.  Each slice has a greater intensity of colour based on the absolute value it represents.
+
+In this section, you will learn how to plot a [horizon graph](http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf) by using [**ggHoriPlot**](https://rivasiker.github.io/ggHoriPlot/index.html) package.
+
+## Getting started
+
+Before getting start, make sure that **ggHoriPlot** has been included in the `pacman::p_load(...)` statement above. 
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+pacman::p_load(ggHoriPlot, ggthemes, tidyverse)
+```
+
+Then, refer to [Getting Started](https://rivasiker.github.io/ggHoriPlot/articles/ggHoriPlot.html) to learn more about the function. Lastly, read \[`geom_horizon()`\](https://rivasiker.github.io/ggHoriPlot/reference/geom_horizon.html to learn more about the usage ot its arguments.
+
+
+
+
+### Step 1: Data Import
+
+For the purpose of this hands-on exercise, [Average Retail Prices Of Selected Consumer Items](https://tablebuilder.singstat.gov.sg/table/TS/M212891) will be used.
+
+Use the code chunk below to import the AVERP.csv file into R environment.
+
+```{r}
+averp <- read_csv("data/AVERP.csv") %>%
+  mutate(`Date` = dmy(`Date`))
+```
+
+::: callout-tip
+# Thing to learn from the code chunk above.
+
+-   By default, read_csv will import data in Date field as Character data type. [`dmy()`](https://lubridate.tidyverse.org/reference/ymd.html) of [**lubridate**](https://lubridate.tidyverse.org/index.html) package to palse the Date field into appropriate Date data type in R.\
+:::
+
+### Step 2: Plotting the horizon graph
+
+Next, the code chunk below will be used to plot the horizon graph.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+averp %>% 
+  filter(Date >= "2018-01-01") %>%
+  ggplot() +
+  geom_horizon(aes(x = Date, y=Values), 
+               origin = "midpoint", 
+               horizonscale = 6)+
+  facet_grid(`Consumer Items`~.) +
+    theme_few() +
+  scale_fill_hcl(palette = 'RdBu') +
+  theme(panel.spacing.y=unit(0, "lines"), strip.text.y = element_text(
+    size = 5, angle = 0, hjust = 0),
+    legend.position = 'none',
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size=7),
+    axis.title.y = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+    ) +
+    scale_x_date(expand=c(0,0), date_breaks = "3 month", date_labels = "%b%y") +
+  ggtitle('Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)')
+```
+
 

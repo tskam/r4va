@@ -207,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap06.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visual Correlation Analysis of Numerical and Categorical Data</span></a>
+  <a href="./chap06.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visual Correlation Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -307,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Time on the Horizon:</span></a>
   </div>
 </li>
       </ul>
@@ -467,11 +467,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#step-1-data-import-1" id="toc-step-1-data-import-1" class="nav-link" data-scroll-target="#step-1-data-import-1"><span class="toc-section-number">17.5.1</span>  Step 1: Data Import</a></li>
   <li><a href="#step-2-plotting-the-slopegraph" id="toc-step-2-plotting-the-slopegraph" class="nav-link" data-scroll-target="#step-2-plotting-the-slopegraph"><span class="toc-section-number">17.5.2</span>  Step 2: Plotting the slopegraph</a></li>
   </ul></li>
-  <li><a href="#plotting-horizon-plot" id="toc-plotting-horizon-plot" class="nav-link" data-scroll-target="#plotting-horizon-plot"><span class="toc-section-number">17.6</span>  Plotting Horizon Plot</a>
-  <ul class="collapse">
-  <li><a href="#step-1-data-import-2" id="toc-step-1-data-import-2" class="nav-link" data-scroll-target="#step-1-data-import-2"><span class="toc-section-number">17.6.1</span>  Step 1: Data Import</a></li>
-  <li><a href="#step-2-plotting-the-horizon-graph" id="toc-step-2-plotting-the-horizon-graph" class="nav-link" data-scroll-target="#step-2-plotting-the-horizon-graph"><span class="toc-section-number">17.6.2</span>  Step 2: Plotting the horizon graph</a></li>
-  </ul></li>
+  <li><a href="#plotting-horizon-plot" id="toc-plotting-horizon-plot" class="nav-link" data-scroll-target="#plotting-horizon-plot"><span class="toc-section-number">17.6</span>  Plotting Horizon Plot</a></li>
   </ul>
 </nav>
     </div>
@@ -498,7 +494,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 16, 2023</p>
+      <p class="date-modified">May 30, 2023</p>
     </div>
   </div>
     
@@ -1010,65 +1006,8 @@ Thing to learn from the code chunk above
 </section>
 <section id="plotting-horizon-plot" class="level2" data-number="17.6">
 <h2 data-number="17.6" class="anchored" data-anchor-id="plotting-horizon-plot"><span class="header-section-number">17.6</span> Plotting Horizon Plot</h2>
-<p>In this section, you will learn how to plot a <a href="http://www.perceptualedge.com/articles/visual_business_intelligence/time_on_the_horizon.pdf">horizon graph</a> by using <a href="https://rivasiker.github.io/ggHoriPlot/index.html"><strong>ggHoriPlot</strong></a> package.</p>
-<p>Before getting start, make sure that <strong>ggHoriPlot</strong> has been included in the <code>pacman::p_load(...)</code> statement above. Then, refer to <a href="https://rivasiker.github.io/ggHoriPlot/articles/ggHoriPlot.html">Getting Started</a> to learn more about the function. Lastly, read [<code>geom_horizon()</code>](https://rivasiker.github.io/ggHoriPlot/reference/geom_horizon.html to learn more about the usage ot its arguments.</p>
-<section id="step-1-data-import-2" class="level3" data-number="17.6.1">
-<h3 data-number="17.6.1" class="anchored" data-anchor-id="step-1-data-import-2"><span class="header-section-number">17.6.1</span> Step 1: Data Import</h3>
-<p>For the purpose of this hands-on exercise, <a href="https://tablebuilder.singstat.gov.sg/table/TS/M212891">Average Retail Prices Of Selected Consumer Items</a> will be used.</p>
-<p>Use the code chunk below to import the AVERP.csv file into R environment.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>averp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/AVERP.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Date</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">dmy</span>(<span class="st">`</span><span class="at">Date</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Thing to learn from the code chunk above.
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>By default, read_csv will import data in Date field as Character data type. <a href="https://lubridate.tidyverse.org/reference/ymd.html"><code>dmy()</code></a> of <a href="https://lubridate.tidyverse.org/index.html"><strong>lubridate</strong></a> package to palse the Date field into appropriate Date data type in R.<br>
-</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="step-2-plotting-the-horizon-graph" class="level3" data-number="17.6.2">
-<h3 data-number="17.6.2" class="anchored" data-anchor-id="step-2-plotting-the-horizon-graph"><span class="header-section-number">17.6.2</span> Step 2: Plotting the horizon graph</h3>
-<p>Next, the code chunk below will be used to plot the horizon graph.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>averp <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;=</span> <span class="st">"2018-01-01"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y=</span>Values), </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="st">"midpoint"</span>, </span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">horizonscale =</span> <span class="dv">6</span>)<span class="sc">+</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="st">`</span><span class="at">Consumer Items</span><span class="st">`</span><span class="sc">~</span>.) <span class="sc">+</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_few</span>() <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">'RdBu'</span>) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.spacing.y=</span><span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>), <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">5</span>, <span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">'none'</span>,</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">7</span>),</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">date_breaks =</span> <span class="st">"3 month"</span>, <span class="at">date_labels =</span> <span class="st">"%b%y"</span>) <span class="sc">+</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">'Average Retail Prices of Selected Consumer Items (Jan 2018 to Dec 2022)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="chap17_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="960"></p>
-</div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
