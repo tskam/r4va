@@ -7,6 +7,8 @@ execute:
   echo: true
   eval: true
   warning: false
+  freeze: auto
+editor: visual 
 ---
 
 ## Learning Outcome
@@ -372,7 +374,4 @@ rice %>%
 
 For effective data visualisation design, `factor()` is used convert the value type of *Year* field from numeric to factor.
 :::
-
-## Plotting Horizon Plot
-
 
