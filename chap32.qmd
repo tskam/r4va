@@ -7,7 +7,8 @@ execute:
   echo: true
   eval: true
   warning: false
+  freeze: auto
+editor: visual 
 ---
 
 ## Learning Outcome
-
