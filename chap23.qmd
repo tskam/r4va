@@ -365,9 +365,7 @@ boxmap("wp_nonfunctional", NGA_wp)
 ```{r}
 #| echo: false
 #| eval: false
-renderthis::to_pdf(
-  from = "https://isss608-ay2022-23jan.netlify.app/hands-on_ex/hands-on_ex07/hands-on_ex07-analytical_mapping.html",
-  to = "../../_site/hands-on_ex/hands-on_ex07/hands-on_ex07-analytical_mapping.pdf"
-)
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap23.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap23.pdf")
 ```
 
