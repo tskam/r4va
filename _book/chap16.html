@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -121,7 +92,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
@@ -136,11 +108,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap13.html">Visualising and Analysing Multivariate Data</a></li><li class="breadcrumb-item"><a href="./chap16.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -148,333 +125,379 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for Visual Analytics</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">The Building Block</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">The Building Block</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap01.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A Layered Grammar of Graphics: ggplot2 methods</span></a>
+  <a href="./chap01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A Layered Grammar of Graphics: ggplot2 methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap02.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Beyond ggplot2 Fundamentals</span></a>
+  <a href="./chap02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Beyond ggplot2 Fundamentals</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap03.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Programming Interactive Data Visualisation with R</span></a>
+  <a href="./chap03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Programming Interactive Data Visualisation with R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap04.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming Animated Statistical Graphics with R</span></a>
+  <a href="./chap04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Programming Animated Statistical Graphics with R</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Not So Common Chart</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Not So Common Chart</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap05.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualising Likert Scale Data with Divergining Stacked Bar Chart</span></a>
+  <a href="./chap05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Visualising Likert Scale Data with Divergining Stacked Bar Chart</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap06.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visual Correlation Analysis</span></a>
+  <a href="./chap06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Visual Correlation Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap07.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap08.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Visual Analytics</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Visual Analytics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap09.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visualising Distribution</span></a>
+  <a href="./chap09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Visualising Distribution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap10.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></a>
+  <a href="./chap10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Visual Statistical Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap11.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></a>
+  <a href="./chap11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Visualising Uncertainty</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap12.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Funnel Plots for Fair Comparisons</span></a>
+  <a href="./chap12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Funnel Plots for Fair Comparisons</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Visualising and Analysing Multivariate Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Multivariate Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap13.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Creating Ternary Plot with R</span></a>
+  <a href="./chap13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Creating Ternary Plot with R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap14.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Heatmap for Visualising and Analysing Multivariate Data</span></a>
+  <a href="./chap14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Heatmap for Visualising and Analysing Multivariate Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap15.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Visual Multivariate Analysis with Parallel Coordinates Plot</span></a>
+  <a href="./chap15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Visual Multivariate Analysis with Parallel Coordinates Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap16.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></a>
+  <a href="./chap16.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">Visualising and Analysing Time-series Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Time-series Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap17.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Visualising and Analysing Time-oriented Data</span></a>
+  <a href="./chap17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Visualising and Analysing Time-oriented Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap18.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Time on the Horizon:</span></a>
+  <a href="./chap20.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Time on the Horizon: ggHoriPlot methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">Visualising and Analysing Geographical Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Geographical Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap21.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Choropleth Mapping with R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap22.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Visualising Geospatial Point Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap23.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Analytical Mapping</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap24.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">Visualising and Analysing Spatio-temporal Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Spatio-temporal Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap25.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap26.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">Visualising and Analysing Network Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Network Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap27.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Chapter 27: Modelling, Visualising and Analysing Network Data with R</span></a>
+  <a href="./chap27.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Chapter 27: Modelling, Visualising and Analysing Network Data with R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap28.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">Visualising and Analysing Text Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+ <span class="menu-text">Visualising and Analysing Text Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap29.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap30.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">Information Dashboard Design with R</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+ <span class="menu-text">Information Dashboard Design with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap31.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a>
+  <a href="./chap32.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Summary</span></a>
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="toc-section-number">16.1</span>  Overview</a></li>
-  <li><a href="#installing-and-launching-r-packages" id="toc-installing-and-launching-r-packages" class="nav-link" data-scroll-target="#installing-and-launching-r-packages"><span class="toc-section-number">16.2</span>  Installing and Launching R Packages</a></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="toc-section-number">16.3</span>  Data Wrangling</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">16.1</span> Overview</a></li>
+  <li><a href="#installing-and-launching-r-packages" id="toc-installing-and-launching-r-packages" class="nav-link" data-scroll-target="#installing-and-launching-r-packages"><span class="header-section-number">16.2</span> Installing and Launching R Packages</a></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">16.3</span> Data Wrangling</a>
   <ul class="collapse">
-  <li><a href="#importing-the-data-set" id="toc-importing-the-data-set" class="nav-link" data-scroll-target="#importing-the-data-set"><span class="toc-section-number">16.3.1</span>  Importing the data set</a></li>
-  <li><a href="#data-wrangling-and-manipulation" id="toc-data-wrangling-and-manipulation" class="nav-link" data-scroll-target="#data-wrangling-and-manipulation"><span class="toc-section-number">16.3.2</span>  Data Wrangling and Manipulation</a></li>
-  <li><a href="#grouped-summaries-without-the-pipe" id="toc-grouped-summaries-without-the-pipe" class="nav-link" data-scroll-target="#grouped-summaries-without-the-pipe"><span class="toc-section-number">16.3.3</span>  Grouped summaries without the Pipe</a></li>
-  <li><a href="#grouped-summaries-with-the-pipe" id="toc-grouped-summaries-with-the-pipe" class="nav-link" data-scroll-target="#grouped-summaries-with-the-pipe"><span class="toc-section-number">16.3.4</span>  Grouped summaries with the <em>pipe</em></a></li>
+  <li><a href="#importing-the-data-set" id="toc-importing-the-data-set" class="nav-link" data-scroll-target="#importing-the-data-set"><span class="header-section-number">16.3.1</span> Importing the data set</a></li>
+  <li><a href="#data-wrangling-and-manipulation" id="toc-data-wrangling-and-manipulation" class="nav-link" data-scroll-target="#data-wrangling-and-manipulation"><span class="header-section-number">16.3.2</span> Data Wrangling and Manipulation</a></li>
+  <li><a href="#grouped-summaries-without-the-pipe" id="toc-grouped-summaries-without-the-pipe" class="nav-link" data-scroll-target="#grouped-summaries-without-the-pipe"><span class="header-section-number">16.3.3</span> Grouped summaries without the Pipe</a></li>
+  <li><a href="#grouped-summaries-with-the-pipe" id="toc-grouped-summaries-with-the-pipe" class="nav-link" data-scroll-target="#grouped-summaries-with-the-pipe"><span class="header-section-number">16.3.4</span> Grouped summaries with the <em>pipe</em></a></li>
   </ul></li>
-  <li><a href="#designing-treemap-with-treemap-package" id="toc-designing-treemap-with-treemap-package" class="nav-link" data-scroll-target="#designing-treemap-with-treemap-package"><span class="toc-section-number">16.4</span>  Designing Treemap with treemap Package</a>
+  <li><a href="#designing-treemap-with-treemap-package" id="toc-designing-treemap-with-treemap-package" class="nav-link" data-scroll-target="#designing-treemap-with-treemap-package"><span class="header-section-number">16.4</span> Designing Treemap with treemap Package</a>
   <ul class="collapse">
-  <li><a href="#designing-a-static-treemap" id="toc-designing-a-static-treemap" class="nav-link" data-scroll-target="#designing-a-static-treemap"><span class="toc-section-number">16.4.1</span>  Designing a static treemap</a></li>
-  <li><a href="#using-the-basic-arguments" id="toc-using-the-basic-arguments" class="nav-link" data-scroll-target="#using-the-basic-arguments"><span class="toc-section-number">16.4.2</span>  Using the basic arguments</a></li>
-  <li><a href="#working-with-vcolor-and-type-arguments" id="toc-working-with-vcolor-and-type-arguments" class="nav-link" data-scroll-target="#working-with-vcolor-and-type-arguments"><span class="toc-section-number">16.4.3</span>  Working with <em>vColor</em> and <em>type</em> arguments</a></li>
-  <li><a href="#colours-in-treemap-package" id="toc-colours-in-treemap-package" class="nav-link" data-scroll-target="#colours-in-treemap-package"><span class="toc-section-number">16.4.4</span>  Colours in treemap package</a></li>
-  <li><a href="#the-value-type-treemap" id="toc-the-value-type-treemap" class="nav-link" data-scroll-target="#the-value-type-treemap"><span class="toc-section-number">16.4.5</span>  The “value” type treemap</a></li>
-  <li><a href="#the-manual-type-treemap" id="toc-the-manual-type-treemap" class="nav-link" data-scroll-target="#the-manual-type-treemap"><span class="toc-section-number">16.4.6</span>  The “manual” type treemap</a></li>
-  <li><a href="#treemap-layout" id="toc-treemap-layout" class="nav-link" data-scroll-target="#treemap-layout"><span class="toc-section-number">16.4.7</span>  Treemap Layout</a></li>
-  <li><a href="#working-with-algorithm-argument" id="toc-working-with-algorithm-argument" class="nav-link" data-scroll-target="#working-with-algorithm-argument"><span class="toc-section-number">16.4.8</span>  Working with <em>algorithm</em> argument</a></li>
-  <li><a href="#using-sortid" id="toc-using-sortid" class="nav-link" data-scroll-target="#using-sortid"><span class="toc-section-number">16.4.9</span>  Using <em>sortID</em></a></li>
+  <li><a href="#designing-a-static-treemap" id="toc-designing-a-static-treemap" class="nav-link" data-scroll-target="#designing-a-static-treemap"><span class="header-section-number">16.4.1</span> Designing a static treemap</a></li>
+  <li><a href="#using-the-basic-arguments" id="toc-using-the-basic-arguments" class="nav-link" data-scroll-target="#using-the-basic-arguments"><span class="header-section-number">16.4.2</span> Using the basic arguments</a></li>
+  <li><a href="#working-with-vcolor-and-type-arguments" id="toc-working-with-vcolor-and-type-arguments" class="nav-link" data-scroll-target="#working-with-vcolor-and-type-arguments"><span class="header-section-number">16.4.3</span> Working with <em>vColor</em> and <em>type</em> arguments</a></li>
+  <li><a href="#colours-in-treemap-package" id="toc-colours-in-treemap-package" class="nav-link" data-scroll-target="#colours-in-treemap-package"><span class="header-section-number">16.4.4</span> Colours in treemap package</a></li>
+  <li><a href="#the-value-type-treemap" id="toc-the-value-type-treemap" class="nav-link" data-scroll-target="#the-value-type-treemap"><span class="header-section-number">16.4.5</span> The “value” type treemap</a></li>
+  <li><a href="#the-manual-type-treemap" id="toc-the-manual-type-treemap" class="nav-link" data-scroll-target="#the-manual-type-treemap"><span class="header-section-number">16.4.6</span> The “manual” type treemap</a></li>
+  <li><a href="#treemap-layout" id="toc-treemap-layout" class="nav-link" data-scroll-target="#treemap-layout"><span class="header-section-number">16.4.7</span> Treemap Layout</a></li>
+  <li><a href="#working-with-algorithm-argument" id="toc-working-with-algorithm-argument" class="nav-link" data-scroll-target="#working-with-algorithm-argument"><span class="header-section-number">16.4.8</span> Working with <em>algorithm</em> argument</a></li>
+  <li><a href="#using-sortid" id="toc-using-sortid" class="nav-link" data-scroll-target="#using-sortid"><span class="header-section-number">16.4.9</span> Using <em>sortID</em></a></li>
   </ul></li>
-  <li><a href="#designing-treemap-using-treemapify-package" id="toc-designing-treemap-using-treemapify-package" class="nav-link" data-scroll-target="#designing-treemap-using-treemapify-package"><span class="toc-section-number">16.5</span>  Designing Treemap using <strong>treemapify</strong> Package</a>
+  <li><a href="#designing-treemap-using-treemapify-package" id="toc-designing-treemap-using-treemapify-package" class="nav-link" data-scroll-target="#designing-treemap-using-treemapify-package"><span class="header-section-number">16.5</span> Designing Treemap using <strong>treemapify</strong> Package</a>
   <ul class="collapse">
-  <li><a href="#designing-a-basic-treemap" id="toc-designing-a-basic-treemap" class="nav-link" data-scroll-target="#designing-a-basic-treemap"><span class="toc-section-number">16.5.1</span>  Designing a basic treemap</a></li>
-  <li><a href="#defining-hierarchy" id="toc-defining-hierarchy" class="nav-link" data-scroll-target="#defining-hierarchy"><span class="toc-section-number">16.5.2</span>  Defining hierarchy</a></li>
+  <li><a href="#designing-a-basic-treemap" id="toc-designing-a-basic-treemap" class="nav-link" data-scroll-target="#designing-a-basic-treemap"><span class="header-section-number">16.5.1</span> Designing a basic treemap</a></li>
+  <li><a href="#defining-hierarchy" id="toc-defining-hierarchy" class="nav-link" data-scroll-target="#defining-hierarchy"><span class="header-section-number">16.5.2</span> Defining hierarchy</a></li>
   </ul></li>
-  <li><a href="#designing-interactive-treemap-using-d3treer" id="toc-designing-interactive-treemap-using-d3treer" class="nav-link" data-scroll-target="#designing-interactive-treemap-using-d3treer"><span class="toc-section-number">16.6</span>  Designing Interactive Treemap using <strong>d3treeR</strong></a>
+  <li><a href="#designing-interactive-treemap-using-d3treer" id="toc-designing-interactive-treemap-using-d3treer" class="nav-link" data-scroll-target="#designing-interactive-treemap-using-d3treer"><span class="header-section-number">16.6</span> Designing Interactive Treemap using <strong>d3treeR</strong></a>
   <ul class="collapse">
-  <li><a href="#installing-d3treer-package" id="toc-installing-d3treer-package" class="nav-link" data-scroll-target="#installing-d3treer-package"><span class="toc-section-number">16.6.1</span>  Installing <em>d3treeR</em> package</a></li>
-  <li><a href="#designing-an-interactive-treemap" id="toc-designing-an-interactive-treemap" class="nav-link" data-scroll-target="#designing-an-interactive-treemap"><span class="toc-section-number">16.6.2</span>  Designing An Interactive Treemap</a></li>
+  <li><a href="#installing-d3treer-package" id="toc-installing-d3treer-package" class="nav-link" data-scroll-target="#installing-d3treer-package"><span class="header-section-number">16.6.1</span> Installing <em>d3treeR</em> package</a></li>
+  <li><a href="#designing-an-interactive-treemap" id="toc-designing-an-interactive-treemap" class="nav-link" data-scroll-target="#designing-an-interactive-treemap"><span class="header-section-number">16.6.2</span> Designing An Interactive Treemap</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -484,7 +507,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></h1>
 </div>
 
 
@@ -502,7 +525,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">May 30, 2023</p>
+      <p class="date-modified">June 9, 2023</p>
     </div>
   </div>
     
@@ -551,12 +574,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><em>summarise()</em> computes the summary for each group.</li>
 </ul>
 <p>In our case, <em>group_by()</em> will used together with <em>summarise()</em> to derive the summarised data.frame.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Recommendation
 </div>
 </div>
@@ -578,12 +601,12 @@ Recommendation
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">`</span><span class="at">Median Unit Price ($ psm)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(<span class="st">`</span><span class="at">Unit Price ($ psm)</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">`</span><span class="at">Median Transacted Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(<span class="st">`</span><span class="at">Transacted Price ($)</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -598,12 +621,12 @@ Note
 <section id="grouped-summaries-with-the-pipe" class="level3" data-number="16.3.4">
 <h3 data-number="16.3.4" class="anchored" data-anchor-id="grouped-summaries-with-the-pipe"><span class="header-section-number">16.3.4</span> Grouped summaries with the <em>pipe</em></h3>
 <p>The code chunk below shows a more efficient way to tackle the same processes by using the <em>pipe</em>, %&gt;%:</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Recommendation
 </div>
 </div>
@@ -910,12 +933,9 @@ Recommendation
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">d3tree</span>(tm,<span class="at">rootname =</span> <span class="st">"Singapore"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="d3tree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ec4f9e7af409e006b05e" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-ec4f9e7af409e006b05e">{"x":{"data":{"name":"Singapore","id":1,"size":null,"children":[{"name":"Central Region","color":"#006837","h":1,"id":2,"size":10825,"stdErr":10825,"vColor":20978846.5,"vColorValue":20978846.5,"vSize":10825,"w":0.466494290023702,"x0":0,"y0":0,"children":[{"name":"Bishan","color":"#D9EF8B","h":0.216561104744203,"id":3,"size":698,"stdErr":698,"vColor":749211.5,"vColorValue":749211.5,"vSize":698,"w":0.138897168228343,"x0":0.327597121795359,"y0":0.397388086941709},{"name":"Bukit Merah","color":"#DCF090","h":0.216561104744203,"id":4,"size":708,"stdErr":708,"vColor":689448,"vColorValue":689448,"vSize":708,"w":0.140887099005253,"x0":0.186710022790106,"y0":0.397388086941709},{"name":"Bukit Timah","color":"#219B51","h":0.270276129121881,"id":5,"size":1171,"stdErr":1171,"vColor":2823552.5,"vColorValue":2823552.5,"vSize":1171,"w":0.186710022790106,"x0":0,"y0":0.343673062564031},{"name":"Downtown Core","color":"#E0F295","h":0.225794694775928,"id":6,"size":439,"stdErr":439,"vColor":570894,"vColorValue":570894,"vSize":439,"w":0.0837855671683048,"x0":0.303503687832968,"y0":0.171593392165781},{"name":"Geylang","color":"#66BD63","h":0.386050808314088,"id":7,"size":1489,"stdErr":1489,"vColor":2140814.5,"vColorValue":2140814.5,"vSize":1489,"w":0.16621440484453,"x0":0,"y0":0.613949191685912},{"name":"Kallang","color":"#A6D96A","h":0.174721630867006,"id":8,"size":757,"stdErr":757,"vColor":1415268,"vColorValue":1415268,"vSize":757,"w":0.186710022790106,"x0":0,"y0":0.168951431697025},{"name":"Marine Parade","color":"#ABDB6D","h":0.180798665368094,"id":9,"size":490,"stdErr":490,"vColor":1397529.5,"vColorValue":1397529.5,"vSize":490,"w":0.116793665042861,"x0":0.186710022790106,"y0":0},{"name":"Museum","color":"#FBFDB9","h":0.0351116940585223,"id":10,"size":28,"stdErr":28,"vColor":135893,"vColorValue":135893,"vSize":28,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0.028841748690929},{"name":"Newton","color":"#B0DD70","h":0.171593392165781,"id":11,"size":268,"stdErr":268,"vColor":1306816,"vColorValue":1306816,"vSize":268,"w":0.0673058264824603,"x0":0.303503687832968,"y0":0},{"name":"Novena","color":"#40AA59","h":0.168951431697025,"id":12,"size":732,"stdErr":732,"vColor":2483944.5,"vColorValue":2483944.5,"vSize":732,"w":0.186710022790106,"x0":0,"y0":0},{"name":"Orchard","color":"#F3FAAF","h":0.0639534427494513,"id":13,"size":42,"stdErr":42,"vColor":251834.5,"vColorValue":251834.5,"vSize":42,"w":0.0283011308432922,"x0":0.403827500299269,"y0":0},{"name":"Outram","color":"#FBFDB9","h":0.028841748690929,"id":14,"size":23,"stdErr":23,"vColor":130671,"vColorValue":130671,"vSize":23,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0},{"name":"Queenstown","color":"#C9E881","h":0.386050808314088,"id":15,"size":1432,"stdErr":1432,"vColor":953979.5,"vColorValue":953979.5,"vSize":1432,"w":0.159851596868615,"x0":0.16621440484453,"y0":0.613949191685912},{"name":"River Valley","color":"#72C264","h":0.216589421573615,"id":16,"size":587,"stdErr":587,"vColor":1998014,"vColorValue":1998014,"vSize":587,"w":0.116793665042861,"x0":0.186710022790106,"y0":0.180798665368094},{"name":"Rochor","color":"#E4F39A","h":0.10763994941633,"id":17,"size":132,"stdErr":132,"vColor":520971,"vColorValue":520971,"vSize":132,"w":0.0528468217300926,"x0":0.370809514315428,"y0":0.0639534427494513},{"name":"Singapore River","color":"#ECF7A4","h":0.10763994941633,"id":18,"size":107,"stdErr":107,"vColor":378001,"vColorValue":378001,"vSize":107,"w":0.0428379539781812,"x0":0.423656336045521,"y0":0.0639534427494513},{"name":"Southern Islands","color":"#F7FBB4","h":0.0639534427494513,"id":19,"size":49,"stdErr":49,"vColor":173903,"vColorValue":173903,"vSize":49,"w":0.033017985983841,"x0":0.370809514315428,"y0":0},{"name":"Tanglin","color":"#66BD63","h":0.225794694775928,"id":20,"size":415,"stdErr":415,"vColor":2187332,"vColorValue":2187332,"vSize":415,"w":0.0792050350224293,"x0":0.387289255001273,"y0":0.171593392165781},{"name":"Toa Payoh","color":"#DCF090","h":0.386050808314088,"id":21,"size":1258,"stdErr":1258,"vColor":670769,"vColorValue":670769,"vSize":1258,"w":0.140428288310557,"x0":0.326066001713145,"y0":0.613949191685912}]},{"name":"East Region","color":"#006837","h":0.695476575121163,"id":22,"size":3775,"stdErr":3775,"vColor":4616987.5,"vColorValue":4616987.5,"vSize":3775,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.304523424878837,"children":[{"name":"Bedok","color":"#006837","h":0.333460291647498,"id":23,"size":1810,"stdErr":1810,"vColor":3529868.5,"vColorValue":3529868.5,"vSize":1810,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.666539708352502},{"name":"Changi","color":"#FFFFBF","h":0.00189537321190402,"id":24,"size":5,"stdErr":5,"vColor":20564,"vColorValue":20564,"vSize":5,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.304523424878837},{"name":"Pasir Ris","color":"#DCF090","h":0.360120910261761,"id":25,"size":950,"stdErr":950,"vColor":669171,"vColorValue":669171,"vSize":950,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.306418798090741},{"name":"Tampines","color":"#ECF7A4","h":0.362016283473665,"id":26,"size":1010,"stdErr":1010,"vColor":397384,"vColorValue":397384,"vSize":1010,"w":0.120229681192774,"x0":0.766087798471484,"y0":0.304523424878837}]},{"name":"North East Region","color":"#006837","h":0.695476575121163,"id":27,"size":4835,"stdErr":4835,"vColor":4208661,"vColorValue":4208661,"vSize":4835,"w":0.299593508447782,"x0":0.466494290023702,"y0":0.304523424878837,"children":[{"name":"Ang Mo Kio","color":"#DCF090","h":0.124005157714565,"id":28,"size":316,"stdErr":316,"vColor":640722.5,"vColorValue":640722.5,"vSize":316,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.427351318437884},{"name":"Hougang","color":"#99D368","h":0.448643523847551,"id":29,"size":1875,"stdErr":1875,"vColor":1617014.5,"vColorValue":1617014.5,"vSize":1875,"w":0.180101900718048,"x0":0.466494290023702,"y0":0.551356476152449},{"name":"Punggol","color":"#FBFDB9","h":0.122827893559047,"id":30,"size":313,"stdErr":313,"vColor":126110,"vColorValue":126110,"vSize":313,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.304523424878837},{"name":"Sengkang","color":"#EFF8AA","h":0.448643523847551,"id":31,"size":1244,"stdErr":1244,"vColor":348343.5,"vColorValue":348343.5,"vSize":1244,"w":0.119491607729734,"x0":0.64659619074175,"y0":0.551356476152449},{"name":"Serangoon","color":"#A6D96A","h":0.246833051273612,"id":32,"size":1087,"stdErr":1087,"vColor":1476470.5,"vColorValue":1476470.5,"vSize":1087,"w":0.189777473008589,"x0":0.466494290023702,"y0":0.304523424878837}]},{"name":"North Region","color":"#CEEA84","h":0.304523424878837,"id":33,"size":1117,"stdErr":1117,"vColor":866745,"vColorValue":866745,"vSize":1117,"w":0.15807052467998,"x0":0.84192947532002,"y0":0,"children":[{"name":"Mandai","color":"#FFFFBF","h":0.0295271724097004,"id":34,"size":29,"stdErr":29,"vColor":62025,"vColorValue":62025,"vSize":29,"w":0.0423247659530311,"x0":0.950377860606791,"y0":0},{"name":"Sembawang","color":"#F3FAAF","h":0.196836090208165,"id":35,"size":286,"stdErr":286,"vColor":244075,"vColorValue":244075,"vSize":286,"w":0.0626151939868065,"x0":0.937384806013194,"y0":0.107687334670672},{"name":"Sungei Kadut","color":"#FFFFBF","h":0.0295271724097003,"id":36,"size":5,"stdErr":5,"vColor":24359,"vColorValue":24359,"vSize":5,"w":0.00729737344017779,"x0":0.992702626559822,"y0":0},{"name":"Woodlands","color":"#F7FBB4","h":0.107687334670672,"id":37,"size":271,"stdErr":271,"vColor":164195,"vColorValue":164195,"vSize":271,"w":0.108448385286771,"x0":0.84192947532002,"y0":0},{"name":"Yishun","color":"#EFF8AA","h":0.196836090208165,"id":38,"size":436,"stdErr":436,"vColor":313496,"vColorValue":313496,"vSize":436,"w":0.0954553306931736,"x0":0.84192947532002,"y0":0.107687334670672},{"name":"YISHUN","color":"#FFFFBF","h":0.0781601622609715,"id":39,"size":90,"stdErr":90,"vColor":58595,"vColorValue":58595,"vSize":90,"w":0.0496221393932089,"x0":0.950377860606791,"y0":0.0295271724097003}]},{"name":"West Region","color":"#79C565","h":0.304523424878837,"id":40,"size":2653,"stdErr":2653,"vColor":1919890.5,"vColorValue":1919890.5,"vSize":2653,"w":0.375435185296318,"x0":0.466494290023702,"y0":0,"children":[{"name":"Bukit Batok","color":"#E0F295","h":0.204535894820693,"id":41,"size":583,"stdErr":583,"vColor":618812.5,"vColorValue":618812.5,"vSize":583,"w":0.122833675400378,"x0":0.631640487249787,"y0":0.0999875300581435},{"name":"Bukit Panjang","color":"#ECF7A4","h":0.0999875300581435,"id":42,"size":285,"stdErr":285,"vColor":374543.5,"vColorValue":374543.5,"vSize":285,"w":0.122833675400379,"x0":0.631640487249787,"y0":0},{"name":"Choa Chu Kang","color":"#FBFDB9","h":0.132058702051017,"id":43,"size":268,"stdErr":268,"vColor":125114,"vColorValue":125114,"vSize":268,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.0349857009165007},{"name":"Clementi","color":"#E4F39A","h":0.304523424878837,"id":44,"size":1167,"stdErr":1167,"vColor":531398.5,"vColorValue":531398.5,"vSize":1167,"w":0.165146197226085,"x0":0.466494290023702,"y0":0},{"name":"Jurong East","color":"#FFFFBF","h":0.0349857009165007,"id":45,"size":71,"stdErr":71,"vColor":65122,"vColorValue":65122,"vSize":71,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0},{"name":"Jurong West","color":"#F7FBB4","h":0.13747902191132,"id":46,"size":279,"stdErr":279,"vColor":204900,"vColorValue":204900,"vSize":279,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.167044402967517}]}]},"meta":{"type":"value","vSize":"Total Unit Sold","vColor":"Median Unit Price ($ psm)","stdErr":"Total Unit Sold","algorithm":"pivotSize","vpCoorX":[0.0281214848143982,0.971878515185602],"vpCoorY":[0.171685039370079,0.910314960629921],"aspRatio":1.78879815790035,"range":[0,3500000],"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
+<div class="d3tree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6c8c4f092c67071d5fad" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-6c8c4f092c67071d5fad">{"x":{"data":{"name":"Singapore","id":1,"size":null,"children":[{"name":"Central Region","color":"#006837","h":1,"id":2,"size":10825,"stdErr":10825,"vColor":20978846.5,"vColorValue":20978846.5,"vSize":10825,"w":0.466494290023702,"x0":0,"y0":0,"children":[{"name":"Bishan","color":"#D9EF8B","h":0.216561104744203,"id":3,"size":698,"stdErr":698,"vColor":749211.5,"vColorValue":749211.5,"vSize":698,"w":0.138897168228343,"x0":0.327597121795359,"y0":0.397388086941709},{"name":"Bukit Merah","color":"#DCF090","h":0.216561104744203,"id":4,"size":708,"stdErr":708,"vColor":689448,"vColorValue":689448,"vSize":708,"w":0.140887099005253,"x0":0.186710022790106,"y0":0.397388086941709},{"name":"Bukit Timah","color":"#219B51","h":0.270276129121881,"id":5,"size":1171,"stdErr":1171,"vColor":2823552.5,"vColorValue":2823552.5,"vSize":1171,"w":0.186710022790106,"x0":0,"y0":0.343673062564031},{"name":"Downtown Core","color":"#E0F295","h":0.225794694775928,"id":6,"size":439,"stdErr":439,"vColor":570894,"vColorValue":570894,"vSize":439,"w":0.0837855671683048,"x0":0.303503687832968,"y0":0.171593392165781},{"name":"Geylang","color":"#66BD63","h":0.386050808314088,"id":7,"size":1489,"stdErr":1489,"vColor":2140814.5,"vColorValue":2140814.5,"vSize":1489,"w":0.16621440484453,"x0":0,"y0":0.613949191685912},{"name":"Kallang","color":"#A6D96A","h":0.174721630867006,"id":8,"size":757,"stdErr":757,"vColor":1415268,"vColorValue":1415268,"vSize":757,"w":0.186710022790106,"x0":0,"y0":0.168951431697025},{"name":"Marine Parade","color":"#ABDB6D","h":0.180798665368094,"id":9,"size":490,"stdErr":490,"vColor":1397529.5,"vColorValue":1397529.5,"vSize":490,"w":0.116793665042861,"x0":0.186710022790106,"y0":0},{"name":"Museum","color":"#FBFDB9","h":0.0351116940585223,"id":10,"size":28,"stdErr":28,"vColor":135893,"vColorValue":135893,"vSize":28,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0.028841748690929},{"name":"Newton","color":"#B0DD70","h":0.171593392165781,"id":11,"size":268,"stdErr":268,"vColor":1306816,"vColorValue":1306816,"vSize":268,"w":0.0673058264824603,"x0":0.303503687832968,"y0":0},{"name":"Novena","color":"#40AA59","h":0.168951431697025,"id":12,"size":732,"stdErr":732,"vColor":2483944.5,"vColorValue":2483944.5,"vSize":732,"w":0.186710022790106,"x0":0,"y0":0},{"name":"Orchard","color":"#F3FAAF","h":0.0639534427494513,"id":13,"size":42,"stdErr":42,"vColor":251834.5,"vColorValue":251834.5,"vSize":42,"w":0.0283011308432922,"x0":0.403827500299269,"y0":0},{"name":"Outram","color":"#FBFDB9","h":0.028841748690929,"id":14,"size":23,"stdErr":23,"vColor":130671,"vColorValue":130671,"vSize":23,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0},{"name":"Queenstown","color":"#C9E881","h":0.386050808314088,"id":15,"size":1432,"stdErr":1432,"vColor":953979.5,"vColorValue":953979.5,"vSize":1432,"w":0.159851596868615,"x0":0.16621440484453,"y0":0.613949191685912},{"name":"River Valley","color":"#72C264","h":0.216589421573615,"id":16,"size":587,"stdErr":587,"vColor":1998014,"vColorValue":1998014,"vSize":587,"w":0.116793665042861,"x0":0.186710022790106,"y0":0.180798665368094},{"name":"Rochor","color":"#E4F39A","h":0.10763994941633,"id":17,"size":132,"stdErr":132,"vColor":520971,"vColorValue":520971,"vSize":132,"w":0.0528468217300926,"x0":0.370809514315428,"y0":0.0639534427494513},{"name":"Singapore River","color":"#ECF7A4","h":0.10763994941633,"id":18,"size":107,"stdErr":107,"vColor":378001,"vColorValue":378001,"vSize":107,"w":0.0428379539781812,"x0":0.423656336045521,"y0":0.0639534427494513},{"name":"Southern Islands","color":"#F7FBB4","h":0.0639534427494513,"id":19,"size":49,"stdErr":49,"vColor":173903,"vColorValue":173903,"vSize":49,"w":0.033017985983841,"x0":0.370809514315428,"y0":0},{"name":"Tanglin","color":"#66BD63","h":0.225794694775928,"id":20,"size":415,"stdErr":415,"vColor":2187332,"vColorValue":2187332,"vSize":415,"w":0.0792050350224293,"x0":0.387289255001273,"y0":0.171593392165781},{"name":"Toa Payoh","color":"#DCF090","h":0.386050808314088,"id":21,"size":1258,"stdErr":1258,"vColor":670769,"vColorValue":670769,"vSize":1258,"w":0.140428288310557,"x0":0.326066001713145,"y0":0.613949191685912}]},{"name":"East Region","color":"#006837","h":0.695476575121163,"id":22,"size":3775,"stdErr":3775,"vColor":4616987.5,"vColorValue":4616987.5,"vSize":3775,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.304523424878837,"children":[{"name":"Bedok","color":"#006837","h":0.333460291647498,"id":23,"size":1810,"stdErr":1810,"vColor":3529868.5,"vColorValue":3529868.5,"vSize":1810,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.666539708352502},{"name":"Changi","color":"#FFFFBF","h":0.00189537321190402,"id":24,"size":5,"stdErr":5,"vColor":20564,"vColorValue":20564,"vSize":5,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.304523424878837},{"name":"Pasir Ris","color":"#DCF090","h":0.360120910261761,"id":25,"size":950,"stdErr":950,"vColor":669171,"vColorValue":669171,"vSize":950,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.306418798090741},{"name":"Tampines","color":"#ECF7A4","h":0.362016283473665,"id":26,"size":1010,"stdErr":1010,"vColor":397384,"vColorValue":397384,"vSize":1010,"w":0.120229681192774,"x0":0.766087798471484,"y0":0.304523424878837}]},{"name":"North East Region","color":"#006837","h":0.695476575121163,"id":27,"size":4835,"stdErr":4835,"vColor":4208661,"vColorValue":4208661,"vSize":4835,"w":0.299593508447782,"x0":0.466494290023702,"y0":0.304523424878837,"children":[{"name":"Ang Mo Kio","color":"#DCF090","h":0.124005157714565,"id":28,"size":316,"stdErr":316,"vColor":640722.5,"vColorValue":640722.5,"vSize":316,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.427351318437884},{"name":"Hougang","color":"#99D368","h":0.448643523847551,"id":29,"size":1875,"stdErr":1875,"vColor":1617014.5,"vColorValue":1617014.5,"vSize":1875,"w":0.180101900718048,"x0":0.466494290023702,"y0":0.551356476152449},{"name":"Punggol","color":"#FBFDB9","h":0.122827893559047,"id":30,"size":313,"stdErr":313,"vColor":126110,"vColorValue":126110,"vSize":313,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.304523424878837},{"name":"Sengkang","color":"#EFF8AA","h":0.448643523847551,"id":31,"size":1244,"stdErr":1244,"vColor":348343.5,"vColorValue":348343.5,"vSize":1244,"w":0.119491607729734,"x0":0.64659619074175,"y0":0.551356476152449},{"name":"Serangoon","color":"#A6D96A","h":0.246833051273612,"id":32,"size":1087,"stdErr":1087,"vColor":1476470.5,"vColorValue":1476470.5,"vSize":1087,"w":0.189777473008589,"x0":0.466494290023702,"y0":0.304523424878837}]},{"name":"North Region","color":"#CEEA84","h":0.304523424878837,"id":33,"size":1117,"stdErr":1117,"vColor":866745,"vColorValue":866745,"vSize":1117,"w":0.15807052467998,"x0":0.84192947532002,"y0":0,"children":[{"name":"Mandai","color":"#FFFFBF","h":0.0295271724097004,"id":34,"size":29,"stdErr":29,"vColor":62025,"vColorValue":62025,"vSize":29,"w":0.0423247659530311,"x0":0.950377860606791,"y0":0},{"name":"Sembawang","color":"#F3FAAF","h":0.196836090208165,"id":35,"size":286,"stdErr":286,"vColor":244075,"vColorValue":244075,"vSize":286,"w":0.0626151939868065,"x0":0.937384806013194,"y0":0.107687334670672},{"name":"Sungei Kadut","color":"#FFFFBF","h":0.0295271724097003,"id":36,"size":5,"stdErr":5,"vColor":24359,"vColorValue":24359,"vSize":5,"w":0.00729737344017779,"x0":0.992702626559822,"y0":0},{"name":"Woodlands","color":"#F7FBB4","h":0.107687334670672,"id":37,"size":271,"stdErr":271,"vColor":164195,"vColorValue":164195,"vSize":271,"w":0.108448385286771,"x0":0.84192947532002,"y0":0},{"name":"Yishun","color":"#EFF8AA","h":0.196836090208165,"id":38,"size":436,"stdErr":436,"vColor":313496,"vColorValue":313496,"vSize":436,"w":0.0954553306931736,"x0":0.84192947532002,"y0":0.107687334670672},{"name":"YISHUN","color":"#FFFFBF","h":0.0781601622609715,"id":39,"size":90,"stdErr":90,"vColor":58595,"vColorValue":58595,"vSize":90,"w":0.0496221393932089,"x0":0.950377860606791,"y0":0.0295271724097003}]},{"name":"West Region","color":"#79C565","h":0.304523424878837,"id":40,"size":2653,"stdErr":2653,"vColor":1919890.5,"vColorValue":1919890.5,"vSize":2653,"w":0.375435185296318,"x0":0.466494290023702,"y0":0,"children":[{"name":"Bukit Batok","color":"#E0F295","h":0.204535894820693,"id":41,"size":583,"stdErr":583,"vColor":618812.5,"vColorValue":618812.5,"vSize":583,"w":0.122833675400378,"x0":0.631640487249787,"y0":0.0999875300581435},{"name":"Bukit Panjang","color":"#ECF7A4","h":0.0999875300581435,"id":42,"size":285,"stdErr":285,"vColor":374543.5,"vColorValue":374543.5,"vSize":285,"w":0.122833675400379,"x0":0.631640487249787,"y0":0},{"name":"Choa Chu Kang","color":"#FBFDB9","h":0.132058702051017,"id":43,"size":268,"stdErr":268,"vColor":125114,"vColorValue":125114,"vSize":268,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.0349857009165007},{"name":"Clementi","color":"#E4F39A","h":0.304523424878837,"id":44,"size":1167,"stdErr":1167,"vColor":531398.5,"vColorValue":531398.5,"vSize":1167,"w":0.165146197226085,"x0":0.466494290023702,"y0":0},{"name":"Jurong East","color":"#FFFFBF","h":0.0349857009165007,"id":45,"size":71,"stdErr":71,"vColor":65122,"vColorValue":65122,"vSize":71,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0},{"name":"Jurong West","color":"#F7FBB4","h":0.13747902191132,"id":46,"size":279,"stdErr":279,"vColor":204900,"vColorValue":204900,"vSize":279,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.167044402967517}]}]},"meta":{"type":"value","vSize":"Total Unit Sold","vColor":"Median Unit Price ($ psm)","stdErr":"Total Unit Sold","algorithm":"pivotSize","vpCoorX":[0.0281214848143982,0.971878515185602],"vpCoorY":[0.171685039370079,0.910314960629921],"aspRatio":1.78879815790035,"range":[0,3500000],"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
 </div>
-</div>
-<div class="cell">
-
 </div>
 
 
@@ -950,9 +970,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1017,6 +1051,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
