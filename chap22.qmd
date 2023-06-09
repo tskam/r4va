@@ -179,9 +179,6 @@ tmap_mode("plot")
 ```{r}
 #| echo: false
 #| eval: false
-renderthis::to_pdf(
-  from = "https://isss608-ay2022-23jan.netlify.app/Hands-on_Ex/Hands-on_Ex07/Hands-on_Ex07-Point_Mapping.html",
-  to = "../../_site/Hands-on_Ex/Hands-on_Ex07/Hands-on_Ex07-Point_Mapping.pdf"
-)
+renderthis::to_pdf(from = "https://r4va.netlify.app/chap22.html",
+                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap22.pdf")
 ```
-
