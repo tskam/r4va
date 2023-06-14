@@ -966,20 +966,6 @@
     "text": "30.1 Learning Outcome"
   },
   {
-    "objectID": "chap31.html#learning-outcome",
-    "href": "chap31.html#learning-outcome",
-    "title": "31  R for Data Science: Tidyverse principles and methods",
-    "section": "31.1 Learning Outcome",
-    "text": "31.1 Learning Outcome"
-  },
-  {
-    "objectID": "chap32.html#learning-outcome",
-    "href": "chap32.html#learning-outcome",
-    "title": "32  R for Data Science: Tidyverse principles and methods",
-    "section": "32.1 Learning Outcome",
-    "text": "32.1 Learning Outcome"
-  },
-  {
     "objectID": "chap31.html#overview",
     "href": "chap31.html#overview",
     "title": "31  Information Dashboard Design: R methods",
@@ -1034,5 +1020,12 @@
     "title": "31  Information Dashboard Design: R methods",
     "section": "31.8 Reference",
     "text": "31.8 Reference"
+  },
+  {
+    "objectID": "chap32.html#learning-outcome",
+    "href": "chap32.html#learning-outcome",
+    "title": "32  R for Data Science: Tidyverse principles and methods",
+    "section": "32.1 Learning Outcome",
+    "text": "32.1 Learning Outcome"
   }
 ]
