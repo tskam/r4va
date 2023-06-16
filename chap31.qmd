@@ -51,7 +51,7 @@ In the code chunk below, `odbcConnectAccess()` of [**RODBC**](https://cran.r-pro
 ```{r}
 #| eval: false
 library(RODBC)
-con <- odbcConnectAccess('data/Coffee Chain.mdb')
+con <- odbcConnectAccess2007('data/Coffee Chain.mdb')
 coffeechain <- sqlFetch(con, 'CoffeeChain Query')
 write_rds(coffeechain, "data/CoffeeChain.rds")
 odbcClose(con)
@@ -463,12 +463,9 @@ reactable(
 
 ## Reference
 
-
 ```{r}
 #| echo: false
 #| eval: false
 renderthis::to_pdf(from = "https://r4va.netlify.app/chap31.html",
                    to = "D://ISSS608_AY2022-23Apr/20-r4va/chap31.pdf")
 ```
-
-
