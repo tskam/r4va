@@ -517,7 +517,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 2, 2023</p>
+      <p class="date-modified">July 7, 2023</p>
     </div>
   </div>
     
@@ -551,8 +551,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="plotting-calendar-heatmap" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="plotting-calendar-heatmap"><span class="header-section-number">17.4</span> Plotting Calendar Heatmap</h2>
-<p>In this section, you will learn how to plot a calender heatmap programmetically by using ggplot2 package.</p>
-<p><img src="img/image01.png" class="img-fluid"></p>
+<p>In this section, you will learn how to plot a calender heatmap programmatically by using ggplot2 package.</p>
+<p><img src="chap17/img/image01.png" class="img-fluid"></p>
 <p>By the end of this section, you will be able to:</p>
 <ul>
 <li>plot a calender heatmap by using ggplot2 functions and extension,</li>
@@ -852,7 +852,7 @@ Things to learn from the code chunk
 <section id="building-multiple-calendar-heatmaps" class="level3" data-number="17.4.6">
 <h3 data-number="17.4.6" class="anchored" data-anchor-id="building-multiple-calendar-heatmaps"><span class="header-section-number">17.4.6</span> Building Multiple Calendar Heatmaps</h3>
 <p><strong>Challenge:</strong> Building multiple heatmaps for the top four countries with the highest number of attacks.</p>
-<p><img src="img/image02.png" class="img-fluid"></p>
+<p><img src="chap17/img/image02.png" class="img-fluid"></p>
 </section>
 <section id="plotting-multiple-calendar-heatmaps" class="level3" data-number="17.4.7">
 <h3 data-number="17.4.7" class="anchored" data-anchor-id="plotting-multiple-calendar-heatmaps"><span class="header-section-number">17.4.7</span> Plotting Multiple Calendar Heatmaps</h3>
@@ -914,7 +914,7 @@ Things to learn from the code chunk
 <section id="plotting-cycle-plot" class="level2" data-number="17.5">
 <h2 data-number="17.5" class="anchored" data-anchor-id="plotting-cycle-plot"><span class="header-section-number">17.5</span> Plotting Cycle Plot</h2>
 <p>In this section, you will learn how to plot a cycle plot showing the time-series patterns and trend of visitor arrivals from Vietnam programmatically by using ggplot2 functions.</p>
-<p><img src="img/image03.png" class="img-fluid"></p>
+<p><img src="chap17/img/image03.png" class="img-fluid"></p>
 <section id="step-1-data-import" class="level3" data-number="17.5.1">
 <h3 data-number="17.5.1" class="anchored" data-anchor-id="step-1-data-import"><span class="header-section-number">17.5.1</span> Step 1: Data Import</h3>
 <p>For the purpose of this hands-on exercise, <em>arrivals_by_air.xlsx</em> will be used.</p>
@@ -973,7 +973,8 @@ Things to learn from the code chunk
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019"</span>) <span class="sc">+</span></span>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"No. of Visitors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"No. of Visitors"</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>(<span class="at">base_family =</span> <span class="st">"Helvetica"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

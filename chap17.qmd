@@ -39,9 +39,9 @@ pacman::p_load(scales, viridis, lubridate, ggthemes, gridExtra, readxl, knitr, d
 
 ## Plotting Calendar Heatmap
 
-In this section, you will learn how to plot a calender heatmap programmetically by using ggplot2 package.
+In this section, you will learn how to plot a calender heatmap programmatically by using ggplot2 package.
 
-![](img/image01.png)
+![](chap17/img/image01.png)
 
 By the end of this section, you will be able to:
 
@@ -207,7 +207,7 @@ Then we can simply group the count by hour and wkday and plot it, since we know 
 
 **Challenge:** Building multiple heatmaps for the top four countries with the highest number of attacks.
 
-![](img/image02.png)
+![](chap17/img/image02.png)
 
 ### Plotting Multiple Calendar Heatmaps
 
@@ -271,7 +271,7 @@ ggplot(top4_attacks,
 
 In this section, you will learn how to plot a cycle plot showing the time-series patterns and trend of visitor arrivals from Vietnam programmatically by using ggplot2 functions.
 
-![](img/image03.png)
+![](chap17/img/image03.png)
 
 ### Step 1: Data Import
 
@@ -337,7 +337,8 @@ ggplot() +
   labs(axis.text.x = element_blank(),
        title = "Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019") +
   xlab("") +
-  ylab("No. of Visitors")
+  ylab("No. of Visitors") +
+  theme_tufte(base_family = "Helvetica")
 ```
 
 ## Plotting Slopegraph
@@ -374,4 +375,3 @@ rice %>%
 
 For effective data visualisation design, `factor()` is used convert the value type of *Year* field from numeric to factor.
 :::
-

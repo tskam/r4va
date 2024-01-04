@@ -33,6 +33,7 @@ By the end of this in-class exercise, you will be able to use appropriate functi
 
 ::: callout-note
 ## Your turn
+
 Using the steps you learned in previous lesson, install and load **sf**, **tmap** and **tidyverse** packages into R environment.
 :::
 
@@ -368,4 +369,3 @@ boxmap("wp_nonfunctional", NGA_wp)
 renderthis::to_pdf(from = "https://r4va.netlify.app/chap23.html",
                    to = "D://ISSS608_AY2022-23Apr/20-r4va/chap23.pdf")
 ```
-
