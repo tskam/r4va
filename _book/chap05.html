@@ -408,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap29.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visualising and Analysing Text Data with R: tidytext methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -511,7 +511,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 14, 2023</p>
+      <p class="date-modified">January 5, 2024</p>
     </div>
   </div>
     
@@ -539,13 +539,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The code chunks below will accomplish the task.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(HH, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package 'interp' successfully unpacked and MD5 sums checked
+package 'latticeExtra' successfully unpacked and MD5 sums checked
+package 'vcd' successfully unpacked and MD5 sums checked
+package 'HH' successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\tskam\AppData\Local\Temp\RtmpI5jc95\downloaded_packages</code></pre>
+</div>
 </div>
 </section>
 <section id="importing-data" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">5.2.2</span> Importing Data</h3>
 <p>First, important the data into R by using the code below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"chap04/data/SurveyData.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"chap04/data/SurveyData.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice that all the variables are categorical data type.</p>
 </section>
@@ -556,79 +565,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.3.1" class="anchored" data-anchor-id="making-the-table-long"><span class="header-section-number">5.3.1</span> Making the table long</h3>
 <p>The data has responses for different questions in columns. The questions data in columns are gathered into rows with the <strong>tidyr</strong>’s <em>gather</em> function</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">gather</span>(raw, measure, response, <span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">gather</span>(raw, measure, response, <span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="converting-to-factor" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="converting-to-factor"><span class="header-section-number">5.3.2</span> Converting to factor</h3>
 <p>The measure and response columns are recoded as factors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>survey<span class="sc">$</span>measure <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(survey<span class="sc">$</span>measure)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>survey<span class="sc">$</span>response <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(survey<span class="sc">$</span>response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>survey<span class="sc">$</span>measure <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(survey<span class="sc">$</span>measure)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>survey<span class="sc">$</span>response <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(survey<span class="sc">$</span>response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="it-is-about-time" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="it-is-about-time"><span class="header-section-number">5.3.3</span> It is about time</h3>
 <p>The data is filtered by Month using the <em>filter</em> function from <strong>dplyr</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Oct <span class="ot">&lt;-</span> <span class="fu">filter</span>(survey, Month<span class="sc">==</span><span class="st">"Oct"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Nov <span class="ot">&lt;-</span> <span class="fu">filter</span>(survey, Month<span class="sc">==</span><span class="st">"Nov"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Oct <span class="ot">&lt;-</span> <span class="fu">filter</span>(survey, Month<span class="sc">==</span><span class="st">"Oct"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Nov <span class="ot">&lt;-</span> <span class="fu">filter</span>(survey, Month<span class="sc">==</span><span class="st">"Nov"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="creating-the-contingency-table" class="level3" data-number="5.3.4">
 <h3 data-number="5.3.4" class="anchored" data-anchor-id="creating-the-contingency-table"><span class="header-section-number">5.3.4</span> Creating the contingency table</h3>
 <p>The data is tabulated into a contingency table by measure and response (satisfaction rating)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> <span class="fu">table</span>(Oct<span class="sc">$</span>measure,Oct<span class="sc">$</span>response) <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> <span class="fu">table</span>(Nov<span class="sc">$</span>measure,Nov<span class="sc">$</span>response) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> <span class="fu">table</span>(Oct<span class="sc">$</span>measure,Oct<span class="sc">$</span>response) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> <span class="fu">table</span>(Nov<span class="sc">$</span>measure,Nov<span class="sc">$</span>response) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="changing-the-column-name" class="level3" data-number="5.3.5">
 <h3 data-number="5.3.5" class="anchored" data-anchor-id="changing-the-column-name"><span class="header-section-number">5.3.5</span> Changing the column name</h3>
 <p>The column names are changed to reflect the satisfaction rating (Very Poor, Poor, Satisfactory, Good, Excellent) instead of the number scale( 1,2,3,4,5). The number “0” is recoded as “Missing”. The row names are changed to the actual 8 questions instead of using the names Measure 1 to Measure 8</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Oct_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"No_Resp"</span>,<span class="st">"Very Poor"</span>,<span class="st">"Poor"</span>,<span class="st">"Satisfactory"</span>,<span class="st">"Good"</span>,<span class="st">"Excellent"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Oct_df)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Temperature of Food"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Timeliness of Meals Served"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Accuracy of Meals Served"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Courtesy of Food Service Staff"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Portion Size of Meals Served"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Taste of Meals Served"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Variety of Food Provided in Menu"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Presentation of Meals Served"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Nov_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"No_Resp"</span>,<span class="st">"Very Poor"</span>,<span class="st">"Poor"</span>,<span class="st">"Satisfactory"</span>,<span class="st">"Good"</span>,<span class="st">"Excellent"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Nov_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Temperature of Food"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Timeliness of Meals Served"</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Accuracy of Meals Served"</span>,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Courtesy of Food Service Staff"</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Portion Size of Meals Served"</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Taste of Meals Served"</span>,</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Variety of Food Provided in Menu"</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Presentation of Meals Served"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Oct_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"No_Resp"</span>,<span class="st">"Very Poor"</span>,<span class="st">"Poor"</span>,<span class="st">"Satisfactory"</span>,<span class="st">"Good"</span>,<span class="st">"Excellent"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Oct_df)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Temperature of Food"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Timeliness of Meals Served"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Accuracy of Meals Served"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Courtesy of Food Service Staff"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Portion Size of Meals Served"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Taste of Meals Served"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Variety of Food Provided in Menu"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Presentation of Meals Served"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Nov_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"No_Resp"</span>,<span class="st">"Very Poor"</span>,<span class="st">"Poor"</span>,<span class="st">"Satisfactory"</span>,<span class="st">"Good"</span>,<span class="st">"Excellent"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Nov_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Temperature of Food"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Timeliness of Meals Served"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Accuracy of Meals Served"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Courtesy of Food Service Staff"</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Portion Size of Meals Served"</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Taste of Meals Served"</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Variety of Food Provided in Menu"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Presentation of Meals Served"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="changing-the-dataframe-row-name" class="level3" data-number="5.3.6">
 <h3 data-number="5.3.6" class="anchored" data-anchor-id="changing-the-dataframe-row-name"><span class="header-section-number">5.3.6</span> Changing the dataframe row name</h3>
 <p>The R dataframe row names are converted into a column called Measure for better usage</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(Oct_df, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">var=</span><span class="st">"Measure"</span>) </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(Nov_df, </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">var=</span><span class="st">"Measure"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(Oct_df, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">var=</span><span class="st">"Measure"</span>) </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(Nov_df, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">var=</span><span class="st">"Measure"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="excluding-missing-value" class="level3" data-number="5.3.7">
 <h3 data-number="5.3.7" class="anchored" data-anchor-id="excluding-missing-value"><span class="header-section-number">5.3.7</span> Excluding missing value</h3>
 <p>The column “Missing” is removed as we do not want to plot it as it would distort the chart.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> Oct_df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>)]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> Nov_df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Oct_df <span class="ot">&lt;-</span> Oct_df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>)]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Nov_df <span class="ot">&lt;-</span> Nov_df[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -650,18 +659,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> ., </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Oct_df, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>, </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Oct 2016"</span>,<span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>, </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span>.<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> ., </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Oct_df, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Oct 2016"</span>,<span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>, </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span>.<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -699,19 +708,19 @@ Things to learn from the code chunk above
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> ., </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Nov_df, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>, </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Nov 2016"</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span>.<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> ., </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Nov_df, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Nov 2016"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span>.<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -732,29 +741,29 @@ Things to learn from the code chunk above
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Type <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Meal"</span>, <span class="st">"Service"</span>, <span class="st">"Service"</span>,<span class="st">"Service"</span>,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Meal"</span>,<span class="st">"Meal"</span>,<span class="st">"Meal"</span>,<span class="st">"Meal"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>Oct_df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(Oct_df,Type)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>Nov_df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(Nov_df,Type)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> .<span class="sc">|</span> Type, </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Oct_df2,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales=</span><span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">between=</span><span class="fu">list</span>(<span class="at">y=</span><span class="dv">1</span>),</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip.left=</span><span class="fu">strip.custom</span>(<span class="at">bg=</span><span class="st">"gray97"</span>),</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">lines=</span><span class="dv">2</span>),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>, </span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex=</span><span class="fl">1.2</span>,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>,</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>, </span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Oct 2016"</span>,</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,<span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">resize.height.tuning=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Type <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Meal"</span>, <span class="st">"Service"</span>, <span class="st">"Service"</span>,<span class="st">"Service"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Meal"</span>,<span class="st">"Meal"</span>,<span class="st">"Meal"</span>,<span class="st">"Meal"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>Oct_df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(Oct_df,Type)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>Nov_df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(Nov_df,Type)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> .<span class="sc">|</span> Type, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>Oct_df2,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales=</span><span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">between=</span><span class="fu">list</span>(<span class="at">y=</span><span class="dv">1</span>),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip.left=</span><span class="fu">strip.custom</span>(<span class="at">bg=</span><span class="st">"gray97"</span>),</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">lines=</span><span class="dv">2</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>, </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex=</span><span class="fl">1.2</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>, </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Oct 2016"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>,<span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">resize.height.tuning=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -774,23 +783,23 @@ Things to learn from the code chunk above
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>The code chunk should look similar to the print below:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> .<span class="sc">|</span> Type, <span class="at">data=</span>Nov_df2,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales=</span><span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">between=</span><span class="fu">list</span>(<span class="at">y=</span><span class="dv">1</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip.left=</span><span class="fu">strip.custom</span>(<span class="at">bg=</span><span class="st">"gray97"</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">lines=</span><span class="dv">2</span>),</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>, </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex=</span><span class="fl">1.2</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>, </span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Nov 2016"</span>, </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>, <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">resize.height.tuning=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likert</span>(Measure <span class="sc">~</span> .<span class="sc">|</span> Type, <span class="at">data=</span>Nov_df2,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">layout=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales=</span><span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">between=</span><span class="fu">list</span>(<span class="at">y=</span><span class="dv">1</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip.left=</span><span class="fu">strip.custom</span>(<span class="at">bg=</span><span class="st">"gray97"</span>),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">strip=</span><span class="cn">FALSE</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.strip.text=</span><span class="fu">list</span>(<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">lines=</span><span class="dv">2</span>),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab=</span><span class="cn">NULL</span>, </span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex=</span><span class="fl">1.2</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">ReferenceZero=</span><span class="dv">3</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">as.percent=</span><span class="cn">TRUE</span>, </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">positive.order=</span><span class="cn">TRUE</span>, </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">list</span>(<span class="st">"Monthly Meal Service Satisfaction Survey Report, Nov 2016"</span>, </span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">55</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">sub=</span> <span class="fu">list</span>(<span class="st">"Satisfaction Rating"</span>, <span class="at">x=</span><span class="fu">unit</span>(.<span class="dv">57</span>, <span class="st">"npc"</span>)), </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="sc">-</span><span class="dv">20</span>,<span class="dv">0</span>,<span class="dv">20</span>,<span class="dv">40</span>,<span class="dv">60</span>,<span class="dv">80</span>,<span class="dv">100</span>),</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">resize.height.tuning=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

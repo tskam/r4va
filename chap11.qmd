@@ -32,6 +32,10 @@ For the purpose of this exercise, the following R packages will be used, they ar
 -   ggdist for visualising distribution and uncertainty.
 
 ```{r}
+devtools::install_github("wilkelab/ungeviz")
+```
+
+```{r}
 pacman::p_load(ungeviz, plotly, crosstalk,
                DT, ggdist, ggridges,
                colorspace, gganimate, tidyverse)
@@ -105,6 +109,7 @@ Now we are ready to plot the standard error bars of mean maths score by race as 
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 ggplot(my_sum) +
@@ -127,6 +132,7 @@ ggplot(my_sum) +
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 ggplot(my_sum) +
@@ -150,18 +156,19 @@ ggplot(my_sum) +
 
 ::: callout-tip
 ### Things to learn from the code chunk above
-- The error bars are computed by using the formula mean+/-se.
-- For `geom_point()`, it is important to indicate *stat="identity"*.
+
+-   The error bars are computed by using the formula mean+/-se.
+-   For `geom_point()`, it is important to indicate *stat="identity"*.
 :::
 :::
 
+### Plotting confidence interval of point estimates
 
-### Plotting confidence interval of point estimates 
-
-Instead of plotting the standard error bar of point estimates, we can also plot the confidence intervals of mean maths score by race. 
+Instead of plotting the standard error bar of point estimates, we can also plot the confidence intervals of mean maths score by race.
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 ggplot(my_sum) +
@@ -185,6 +192,7 @@ ggplot(my_sum) +
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 ggplot(my_sum) +
@@ -209,9 +217,10 @@ ggplot(my_sum) +
 
 ::: callout-tip
 ### Things to learn from the code chunk above
-- The confidence intervals are computed by using the formula mean+/-1.96*se.  
-- The error bars is sorted by using the average maths scores.
-- `labs()` argument of ggplot2 is used to change the x-axis label.
+
+-   The confidence intervals are computed by using the formula mean+/-1.96\*se.\
+-   The error bars is sorted by using the average maths scores.
+-   `labs()` argument of ggplot2 is used to change the x-axis label.
 :::
 :::
 
@@ -316,9 +325,9 @@ This function comes with many arguments, students are advised to read the syntax
 
 For example, in the code chunk below the following arguments are used:
 
-- .width = 0.95
-- .point = median
-- .interval = qi
+-   .width = 0.95
+-   .point = median
+-   .interval = qi
 
 ```{r}
 exam %>%
