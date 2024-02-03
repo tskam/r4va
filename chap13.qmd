@@ -36,23 +36,7 @@ In this exercise, version 3.2.1 of **ggplot2** will be installed instead of the 
 The code chunks below will accomplish the task.
 
 ```{r}
-pacman::p_load('plotly', 'tidyverse')
-```
-
-::: callout-note
-Due to some technical issue, ggtern is currently not available for downloading via cran.  We need to download ggtern from the archive by using the code chunk below.  The latest archive version is 3.4.1.
-:::
-
-```{r}
-#| eval: false
-require(devtools)
-install_version("ggtern", version = "3.4.1", repos = "http://cran.us.r-project.org")
-```
-
-Next, load ggtern package into R environment by using the code chunk below.
-
-```{r}
-library(ggtern)
+pacman::p_load(plotly, ggtern, tidyverse)
 ```
 
 ## Data Preparation
