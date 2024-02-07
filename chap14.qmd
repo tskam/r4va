@@ -7,6 +7,7 @@ execute:
   echo: true
   eval: true
   warning: false
+  freeze: auto
 ---
 
 ## Overview
@@ -17,10 +18,7 @@ In this hands-on exercise, you will gain hands-on experience on using R to plot 
 
 ## Installing and Launching R Packages
 
-Before you get started, you are required:
-
--   to start a new R project, and
--   to create a new R Markdown document.
+Before you get started, you are required to open a new Quarto document.  Keep the default html as the authoring format. 
 
 Next, you will use the code chunk below to install and launch **seriation**, **heatmaply**, **dendextend** and **tidyverse** in RStudio.
 
