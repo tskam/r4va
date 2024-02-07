@@ -7,6 +7,7 @@ execute:
   echo: true
   eval: true
   warning: false
+  freeze: auto
 ---
 
 ## Overview
@@ -30,10 +31,7 @@ In this hands-on exercise, you will learn how to plot data visualisation for vis
 
 ## Installing and Launching R Packages
 
-Before you get started, you are required:
-
--   to start a new R project, and
--   to create a new R Markdown document.
+Before you get started, you are required to open a new Quarto document.  Keep the default html authoring format.
 
 Next, you will use the code chunk below to install and launch **corrplot**, **ggpubr**, **plotly** and **tidyverse** in RStudio.
 
