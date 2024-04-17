@@ -71,7 +71,7 @@ globalPop <- read_xls("chap03/data/GlobalPopulation.xls",
 -   `mutate` of dplyr package is used to convert data values of Year field into integer.
 :::
 
-Unfortunately, `mutate_each_()` was deprecated in dplyr 0.7.0. and `funs()` was deprecated in dplyr 0.8.0. In view of this, we will re-write the code by using [`mutate_at()`]() as shown in the code chunk below.  
+Unfortunately, `mutate_each_()` was deprecated in dplyr 0.7.0. and `funs()` was deprecated in dplyr 0.8.0. In view of this, we will re-write the code by using [`mutate_at()`]() as shown in the code chunk below.
 
 ```{r}
 col <- c("Country", "Continent")
@@ -180,6 +180,7 @@ In this sub-section, you will learn how to create an animated bubble plot by usi
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 gg <- ggplot(globalPop, 
@@ -199,9 +200,10 @@ gg <- ggplot(globalPop,
 ggplotly(gg)
 ```
 
-The animated bubble plot above includes a play/pause button and a slider component for controlling the animation 
+The animated bubble plot above includes a play/pause button and a slider component for controlling the animation
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 gg <- ggplot(globalPop, 
@@ -229,10 +231,11 @@ ggplotly(gg)
 :::
 :::
 
-Notice that although `show.legend = FALSE` argument was used, the legend still appears on the plot.  To overcome this problem, `theme(legend.position='none')` should be used as shown in the plot and code chunk below. 
+Notice that although `show.legend = FALSE` argument was used, the legend still appears on the plot. To overcome this problem, `theme(legend.position='none')` should be used as shown in the plot and code chunk below.
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 #| fig-height: 6
@@ -254,6 +257,7 @@ ggplotly(gg)
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 gg <- ggplot(globalPop, 
@@ -280,6 +284,7 @@ In this sub-section, you will learn how to create an animated bubble plot by usi
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 #| fig-height: 6
@@ -300,6 +305,7 @@ bp
 ```
 
 ## The code chunk
+
 ```{r}
 bp <- globalPop %>%
   plot_ly(x = ~Old, 
@@ -317,7 +323,6 @@ bp <- globalPop %>%
 bp
 ```
 :::
-
 
 ## Reference
 

@@ -456,8 +456,8 @@ p1 + p2
 
 We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using:
 
--   "\|" operator to stack two ggplot2 graphs,
--   "/" operator to place the plots beside each other,
+-   "/" operator to stack two ggplot2 graphs,
+-   "|" operator to place the plots beside each other,
 -   "()" operator the define the sequence of the plotting.
 
 ::: panel-tabset
@@ -514,6 +514,7 @@ Beside providing functions to place plots next to each other based on the provid
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 p3 + inset_element(p2, 
@@ -524,6 +525,7 @@ p3 + inset_element(p2,
 ```
 
 ## The code
+
 ::: {style="font-size: 1.4em"}
 ```{r}
 #| eval: false
