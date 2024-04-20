@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-12-04">
+<meta name="dcterms.date" content="2023-04-12">
 
 <title>R for Visual Analytics - 9&nbsp; Visualising Distribution</title>
 <style>
@@ -510,14 +510,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 4, 2023</p>
+      <p class="date">April 12, 2023</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">April 17, 2024</p>
+      <p class="date-modified">April 20, 2024</p>
     </div>
   </div>
     
@@ -538,10 +538,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="installing-and-loading-the-packages"><span class="header-section-number">9.2.1</span> Installing and loading the packages</h3>
 <p>For the purpose of this exercise, the following R packages will be used, they are:</p>
 <ul>
-<li>tidyverse, a family of R packages for data science process,</li>
-<li>ggridges, a ggplot2 extension specially designed for plotting ridgeline plots, and</li>
-<li>ggdist for visualising distribution and uncertainty.</li>
+<li>ggridges, a ggplot2 extension specially designed for plotting ridgeline plots,</li>
+<li>ggdist, a ggplot2 extension spacially desgin for visualising distribution and uncertainty,</li>
+<li>tidyverse, a family of R packages to meet the modern data science and visual communication needs,</li>
+<li>ggthemes, a ggplot extension that provides the user additional themes, scales, and geoms for the ggplots package, and</li>
+<li>colorspace, an R package provides a broad toolbox for selecting individual colors or color palettes, manipulating these colors, and employing them in various kinds of visualisations.</li>
 </ul>
+<p>The code chunk below will be used load these R packages into RStudio environment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggdist, ggridges, ggthemes,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               colorspace, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -550,6 +553,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-import" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="data-import"><span class="header-section-number">9.2.2</span> Data import</h3>
 <p>For the purpose of this exercise, <em>Exam_data.csv</em> will be used.</p>
+<p>In the code chunk below, <a href="https://readr.tidyverse.org/reference/read_delim.html"><code>read_csv()</code></a> of <a href="https://readr.tidyverse.org/index.html"><strong>readr</strong></a> package is used to import <em>Exam_data.csv</em> into R and saved it into a tibble data.frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Exam_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -557,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="visualising-distribution-with-ridgeline-plot" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="visualising-distribution-with-ridgeline-plot"><span class="header-section-number">9.3</span> Visualising Distribution with Ridgeline Plot</h2>
-<p><em>Ridgeline plot</em> (sometimes called <em>Joyplot</em>) is a data visualisation technique for revealing the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale and presented with a slight overlap.</p>
+<p><a href="https://www.data-to-viz.com/graph/ridgeline.html"><em>Ridgeline plot</em></a> (sometimes called <em>Joyplot</em>) is a data visualisation technique for revealing the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale and presented with a slight overlap.</p>
 <p>Figure below is a ridgelines plot showing the distribution of English score by class.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -943,6 +947,13 @@ Things to learn from the code chunk above
 </div>
 </div>
 </div>
+<p><strong>Reference</strong></p>
+<ul>
+<li><a href="https://blog.revolutionanalytics.com/2017/07/joyplots.html">Introducing Ridgeline Plots (formerly Joyplots)</a></li>
+<li>Claus O. Wilke <a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a> especially Chapter <a href="https://clauswilke.com/dataviz/visualizing-amounts.html">6</a>, <a href="https://clauswilke.com/dataviz/histograms-density-plots.html">7</a>, <a href="https://clauswilke.com/dataviz/ecdf-qq.html">8</a>, <a href="https://clauswilke.com/dataviz/boxplots-violins.html">9</a> and <a href="https://clauswilke.com/dataviz/visualizing-proportions.html">10</a>.</li>
+<li>Allen M, Poggiali D, Whitaker K et al.&nbsp;<a href="https://wellcomeopenresearch.org/articles/4-63">“Raincloud plots: a multi-platform tool for robust data. visualization”</a> [version 2; peer review: 2 approved]. Welcome Open Res 2021, pp.&nbsp;4:63.</li>
+<li><a href="https://mjskay.github.io/ggdist/articles/dotsinterval.html">Dots + interval stats and geoms</a></li>
+</ul>
 
 
 </section>

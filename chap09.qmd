@@ -1,12 +1,13 @@
 ---
 title: "Visualising Distribution"
-date: "12/4/2023"
-date-modified: "`r Sys.Date()`"
+date: "April 12, 2023"
+date-modified: "last-modified"
 format: html
 execute: 
   echo: true
   eval: true
   warning: false
+  freeze: true
 ---
 
 ## Learning Outcome
@@ -19,9 +20,13 @@ Visualising distribution is not new in statistical analysis. In chapter 1 we hav
 
 For the purpose of this exercise, the following R packages will be used, they are:
 
--   tidyverse, a family of R packages for data science process,
--   ggridges, a ggplot2 extension specially designed for plotting ridgeline plots, and
--   ggdist for visualising distribution and uncertainty.
+-   ggridges, a ggplot2 extension specially designed for plotting ridgeline plots,
+-   ggdist, a ggplot2 extension spacially desgin for visualising distribution and uncertainty,
+-   tidyverse, a family of R packages to meet the modern data science and visual communication needs, 
+-   ggthemes, a ggplot extension that provides the user additional themes, scales, and geoms for the ggplots package, and
+-   colorspace, an R package provides a broad toolbox for selecting individual colors or color palettes, manipulating these colors, and employing them in various kinds of visualisations.
+
+The code chunk below will be used load these R packages into RStudio environment.
 
 ```{r}
 pacman::p_load(ggdist, ggridges, ggthemes,
@@ -32,13 +37,15 @@ pacman::p_load(ggdist, ggridges, ggthemes,
 
 For the purpose of this exercise, *Exam_data.csv* will be used.
 
+In the code chunk below, [`read_csv()`](https://readr.tidyverse.org/reference/read_delim.html) of [**readr**](https://readr.tidyverse.org/index.html) package is used to import *Exam_data.csv* into R and saved it into a tibble data.frame.
+
 ```{r}
 exam <- read_csv("data/Exam_data.csv")
 ```
 
 ## Visualising Distribution with Ridgeline Plot
 
-*Ridgeline plot* (sometimes called *Joyplot*) is a data visualisation technique for revealing the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale and presented with a slight overlap.
+[*Ridgeline plot*](https://www.data-to-viz.com/graph/ridgeline.html) (sometimes called *Joyplot*) is a data visualisation technique for revealing the distribution of a numeric value for several groups. Distribution can be represented using histograms or density plots, all aligned to the same horizontal scale and presented with a slight overlap.
 
 Figure below is a ridgelines plot showing the distribution of English score by class.
 
@@ -291,18 +298,19 @@ ggplot(exam,
 
 ## Visualising Distribution with Raincloud Plot
 
-Raincloud Plot is a data visualisation techniques that produces a half-density to a distribution plot. It gets the name because the density plot is in the shape of a "raincloud". The raincloud (half-density) plot enhances the traditional box-plot by highlighting multiple modalities (an indicator that groups may exist). The boxplot does not show where densities are clustered, but the raincloud plot does! 
+Raincloud Plot is a data visualisation techniques that produces a half-density to a distribution plot. It gets the name because the density plot is in the shape of a "raincloud". The raincloud (half-density) plot enhances the traditional box-plot by highlighting multiple modalities (an indicator that groups may exist). The boxplot does not show where densities are clustered, but the raincloud plot does!
 
 In this section, you will learn how to create a raincloud plot to visualise the distribution of English score by race. It will be created by using functions provided by **ggdist** and ggplot2 packages.
 
 ### Plotting a Half Eye graph
 
-First, we will plot a Half-Eye graph by using [`stat_halfeye()`](https://mjskay.github.io/ggdist/reference/stat_halfeye.html) of **ggdist** package. 
+First, we will plot a Half-Eye graph by using [`stat_halfeye()`](https://mjskay.github.io/ggdist/reference/stat_halfeye.html) of **ggdist** package.
 
-This produces a Half Eye visualization, which is contains a half-density and a slab-interval. 
+This produces a Half Eye visualization, which is contains a half-density and a slab-interval.
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 ggplot(exam, 
@@ -315,6 +323,7 @@ ggplot(exam,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 ggplot(exam, 
@@ -328,7 +337,8 @@ ggplot(exam,
 
 ::: callout-tip
 ## Things to learn from the code chunk above
-We remove the slab interval by setting .width = 0 and point_colour = NA. 
+
+We remove the slab interval by setting .width = 0 and point_colour = NA.
 :::
 :::
 
@@ -338,6 +348,7 @@ Next, we will add the second geometry layer using [`geom_boxplot()`]() of ggplot
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| eval: false
 ggplot(exam, 
@@ -352,6 +363,7 @@ ggplot(exam,
 ```
 
 ## The code chunk
+
 ```{r}
 #| echo: false
 ggplot(exam, 
@@ -372,6 +384,7 @@ Next, we will add the third geometry layer using [`stat_dots()`](https://mjskay.
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 ggplot(exam, 
@@ -390,6 +403,7 @@ ggplot(exam,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 ggplot(exam, 
@@ -414,6 +428,7 @@ Lastly, [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html
 
 ::: panel-tabset
 ## The plot
+
 ```{r}
 #| echo: false
 ggplot(exam, 
@@ -434,6 +449,7 @@ ggplot(exam,
 ```
 
 ## The code chunk
+
 ```{r}
 #| eval: false
 ggplot(exam, 
@@ -453,6 +469,13 @@ ggplot(exam,
   theme_economist()
 ```
 :::
+
+**Reference**
+
+-   [Introducing Ridgeline Plots (formerly Joyplots)](https://blog.revolutionanalytics.com/2017/07/joyplots.html)
+-   Claus O. Wilke [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) especially Chapter [6](https://clauswilke.com/dataviz/visualizing-amounts.html), [7](https://clauswilke.com/dataviz/histograms-density-plots.html), [8](https://clauswilke.com/dataviz/ecdf-qq.html), [9](https://clauswilke.com/dataviz/boxplots-violins.html) and [10](https://clauswilke.com/dataviz/visualizing-proportions.html).
+-   Allen M, Poggiali D, Whitaker K et al. [“Raincloud plots: a multi-platform tool for robust data. visualization”](https://wellcomeopenresearch.org/articles/4-63) [version 2; peer review: 2 approved]. Welcome Open Res 2021, pp. 4:63.
+-   [Dots + interval stats and geoms](https://mjskay.github.io/ggdist/articles/dotsinterval.html)
 
 
 ```{r}
