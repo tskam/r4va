@@ -1,13 +1,132 @@
 ---
-title: "R for Data Science: Tidyverse principles and methods"
-date: "12/4/2023"
-date-modified: "`r Sys.Date()`"
+title: "Scatterplot with Marginal Distribution"
+date: "April 26, 2024"
+date-modified: "last-modified"
 format: html
 execute: 
   echo: true
   eval: true
   warning: false
+  freeze: true
 ---
 
 ## Learning Outcome
+
+
+```{r}
+pacman::p_load(tidyverse, ggExtra, ggiraph, plotly)
+```
+
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+
+A simple scatterplot
+
+```{r}
+#| fig-height: 6
+#| fig-width: 6
+p <- ggplot(data=exam_data, 
+            aes(x= MATHS, y=ENGLISH)) +
+  geom_point() +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+p
+```
+
+
+### Plot Marginal Density Function
+
+```{r}
+ggMarginal(p, type = "histogram",
+           col = "grey45", 
+           fill = "grey90")
+```
+
+
+
+```{r}
+pp <- ggMarginal(p, type = "boxplot",
+           col = "grey45", 
+           fill = "grey90")
+pp
+```
+
+
+
+
+```{r}
+#| fig-height: 6
+#| fig-width: 6
+p2 <- ggplot(data=exam_data, 
+            aes(x= MATHS, 
+                y=ENGLISH, 
+                color=GENDER)) +
+  geom_point() +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+p2
+```
+
+```{r}
+ggMarginal(p2, type = "boxplot",
+           groupColour = TRUE, 
+           groupFill = TRUE)
+```
+
+
+
+
+
+
+
+
+```{r}
+#| fig-height: 6
+#| fig-width: 6
+p3 <- ggplot(data=exam_data, 
+            aes(x= MATHS, 
+                y=ENGLISH, 
+                color=GENDER)) +
+  geom_point() +
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100)) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+p3
+```
+
+```{r}
+p4 <-ggMarginal(p3, type = "boxplot",
+           groupColour = TRUE, 
+           groupFill = TRUE)
+```
+
+```{r}
+#| fig-height: 6
+#| fig-width: 6
+p3 <- ggplot(data=exam_data, 
+            aes(x= MATHS, 
+                y=ENGLISH, 
+                color=GENDER)) +
+  geom_point_interactive(
+    aes(tooltip = ID, 
+        data_id = ID), 
+    size = 1, 
+    hover_nearest = TRUE)
+  coord_cartesian(xlim=c(0,100),
+                  ylim=c(0,100))
+```
+    
+```{r}    
+p4 <- ggMarginal(p3, type = "boxplot",
+           groupColour = TRUE, 
+           groupFill = TRUE)
+```
+
+
+girafe(ggobj = p4)
+```
+
+
 

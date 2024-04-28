@@ -1,12 +1,13 @@
 ---
 title: "Visual Statistical Analysis"
 date: "12/4/2023"
-date-modified: "`r Sys.Date()`"
+date-modified: "last-modified"
 format: html
 execute: 
   echo: true
   eval: true
   warning: false
+  freeze: true
 ---
 
 ## Learning Outcome
@@ -21,13 +22,12 @@ In this hands-on exercise, you will gain hands-on experience on using:
 
 ## Visual Statistical Analysis with **ggstatsplot**
 
-![](chap09/img/image1.jpg){width="47" height="49"}
+[**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) ![](chap10/img/image1.jpg){width="47" height="49"} is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
 
--   [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
     -   To provide alternative statistical inference methods by default.
     -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test:
 
-![](chap09/img/image2.jpg)
+![](chap10/img/image2.jpg)
 
 ## Getting Started
 
@@ -79,7 +79,7 @@ Default information: - statistical details - Bayes Factor - sample sizes - distr
 
 -   When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as
 
-![](chap09/img/image5.jpg)
+![](chap10/img/image5.jpg)
 
 -   The [**Schwarz criterion**](https://www.statisticshowto.com/bayesian-information-criterion/) is one of the easiest ways to calculate rough approximation of the Bayes Factor.
 
@@ -87,7 +87,7 @@ Default information: - statistical details - Bayes Factor - sample sizes - distr
 
 A **Bayes Factor** can be any positive number. One of the most common interpretations is this one---first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
 
-![](chap09/img/image6.jpg){width="480"}
+![](chap10/img/image6.jpg){width="480"}
 
 ### Two-sample mean test: *ggbetweenstats()*
 
@@ -129,11 +129,11 @@ ggbetweenstats(
 
 #### ggbetweenstats - Summary of tests
 
-![](chap09/img/image7.jpg)
+![](chap10/img/image7.jpg)
 
-![](chap09/img/image8.jpg)
+![](chap10/img/image8.jpg)
 
-![](chap09/img/image9.jpg)
+![](chap10/img/image9.jpg)
 
 ### Significant Test of Correlation: *ggscatterstats()*
 
@@ -174,7 +174,7 @@ In this section, you will learn how to visualise model diagnostic and model para
 
 -   Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.
 
-![](chap09/img/image4.jpg)
+![](chap10/img/image4.jpg)
 
 ## Getting Started
 
