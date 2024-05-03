@@ -63,9 +63,10 @@ The code chunk below plots a funnel plot.
 
 ```{r}
 funnel_plot(
-  numerator = covid19$Positive,
-  denominator = covid19$Death,
-  group = covid19$`Sub-district`
+  .data = covid19,
+  numerator = Positive,
+  denominator = Death,
+  group = `Sub-district`
 )
 ```
 
@@ -81,9 +82,10 @@ The code chunk below plots a funnel plot.
 
 ```{r}
 funnel_plot(
-  numerator = covid19$Death,
-  denominator = covid19$Positive,
-  group = covid19$`Sub-district`,
+  .data = covid19,
+  numerator = Death,
+  denominator = Positive,
+  group = `Sub-district`,
   data_type = "PR",     #<<
   xrange = c(0, 6500),  #<<
   yrange = c(0, 0.05)   #<<
@@ -98,9 +100,10 @@ The code chunk below plots a funnel plot.
 
 ```{r}
 funnel_plot(
-  numerator = covid19$Death,
-  denominator = covid19$Positive,
-  group = covid19$`Sub-district`,
+  .data = covid19,
+  numerator = Death,
+  denominator = Positive,
+  group = `Sub-district`,
   data_type = "PR",   
   xrange = c(0, 6500),  
   yrange = c(0, 0.05),
