@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-12-04">
 
-<title>R for Visual Analytics - 16&nbsp; Treemap Visualisation with R</title>
+<title>16&nbsp; Treemap Visualisation with R – R for Visual Analytics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -82,7 +82,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -91,15 +97,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
 <script src="site_libs/d3-3.5.5/d3.min.js"></script>
+
 <link href="site_libs/d3tree-0.1/d3tree.css" rel="stylesheet">
+
 <script src="site_libs/d3tree-binding-0.1/d3tree.js"></script>
+
 
 
 </head>
@@ -110,13 +123,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap13.html">Visualising and Analysing Multivariate Data</a></li><li class="breadcrumb-item"><a href="./chap16.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap13.html">Visualising and Analysing Multivariate Data</a></li><li class="breadcrumb-item"><a href="./chap16.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -125,7 +138,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for Visual Analytics</a> 
@@ -146,9 +159,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">The Building Block</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -181,9 +194,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Not So Common Chart</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -203,7 +216,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Scatterplot with Marginal Distribution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -216,9 +229,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Visual Analytics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -251,9 +264,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Multivariate Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -286,9 +299,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Time-series Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -321,9 +334,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Geographical Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -356,9 +369,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Spatio-temporal Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -379,9 +392,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Network Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -402,9 +415,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
  <span class="menu-text">Visualising and Analysing Text Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,9 +438,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
  <span class="menu-text">Information Dashboard Design with R</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -461,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -505,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap13.html">Visualising and Analysing Multivariate Data</a></li><li class="breadcrumb-item"><a href="./chap16.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Treemap Visualisation with R</span></h1>
 </div>
@@ -525,14 +538,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">June 14, 2023</p>
+      <p class="date-modified">January 9, 2025</p>
     </div>
   </div>
     
   </div>
   
 
+
 </header>
+
 
 <section id="overview" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">16.1</span> Overview</h2>
@@ -670,7 +685,11 @@ Recommendation
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Things to learn from the three arguments used:</p>
@@ -702,7 +721,11 @@ Recommendation
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Thinking to learn from the conde chunk above.</p>
@@ -730,7 +753,11 @@ Recommendation
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Thing to learn from the code chunk above:</p>
@@ -754,7 +781,11 @@ Recommendation
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Things to learn from the code chunk above:</p>
@@ -773,7 +804,11 @@ Recommendation
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -797,7 +832,11 @@ Recommendation
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -817,7 +856,11 @@ Recommendation
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -836,7 +879,11 @@ Recommendation
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>() <span class="sc">+</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"light blue"</span>, <span class="at">high =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -851,7 +898,11 @@ Recommendation
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">start =</span> <span class="st">"topleft"</span>) <span class="sc">+</span> </span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Group by Planning Area</p>
@@ -863,7 +914,11 @@ Recommendation
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">subgroup2 =</span> <span class="st">`</span><span class="at">Planning Area</span><span class="st">`</span>)) <span class="sc">+</span> </span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Adding boundary line</p>
@@ -878,7 +933,11 @@ Recommendation
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_subgroup_border</span>(<span class="at">colour =</span> <span class="st">"gray20"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -924,7 +983,11 @@ Recommendation
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title.legend =</span> <span class="st">"Median Unit Price (S$ per sq. m)"</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="chap16_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="chap16_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ol start="2" type="1">
@@ -933,8 +996,8 @@ Recommendation
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">d3tree</span>(tm,<span class="at">rootname =</span> <span class="st">"Singapore"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="d3tree html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-628a12fe4a57490ce209" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-628a12fe4a57490ce209">{"x":{"data":{"name":"Singapore","id":1,"size":null,"children":[{"name":"Central Region","color":"#006837","h":1,"id":2,"size":10825,"stdErr":10825,"vColor":20978846.5,"vColorValue":20978846.5,"vSize":10825,"w":0.466494290023702,"x0":0,"y0":0,"children":[{"name":"Bishan","color":"#D9EF8B","h":0.216561104744203,"id":3,"size":698,"stdErr":698,"vColor":749211.5,"vColorValue":749211.5,"vSize":698,"w":0.138897168228343,"x0":0.327597121795359,"y0":0.397388086941709},{"name":"Bukit Merah","color":"#DCF090","h":0.216561104744203,"id":4,"size":708,"stdErr":708,"vColor":689448,"vColorValue":689448,"vSize":708,"w":0.140887099005253,"x0":0.186710022790106,"y0":0.397388086941709},{"name":"Bukit Timah","color":"#219B51","h":0.270276129121881,"id":5,"size":1171,"stdErr":1171,"vColor":2823552.5,"vColorValue":2823552.5,"vSize":1171,"w":0.186710022790106,"x0":0,"y0":0.343673062564031},{"name":"Downtown Core","color":"#E0F295","h":0.225794694775928,"id":6,"size":439,"stdErr":439,"vColor":570894,"vColorValue":570894,"vSize":439,"w":0.0837855671683048,"x0":0.303503687832968,"y0":0.171593392165781},{"name":"Geylang","color":"#66BD63","h":0.386050808314088,"id":7,"size":1489,"stdErr":1489,"vColor":2140814.5,"vColorValue":2140814.5,"vSize":1489,"w":0.16621440484453,"x0":0,"y0":0.613949191685912},{"name":"Kallang","color":"#A6D96A","h":0.174721630867006,"id":8,"size":757,"stdErr":757,"vColor":1415268,"vColorValue":1415268,"vSize":757,"w":0.186710022790106,"x0":0,"y0":0.168951431697025},{"name":"Marine Parade","color":"#ABDB6D","h":0.180798665368094,"id":9,"size":490,"stdErr":490,"vColor":1397529.5,"vColorValue":1397529.5,"vSize":490,"w":0.116793665042861,"x0":0.186710022790106,"y0":0},{"name":"Museum","color":"#FBFDB9","h":0.0351116940585223,"id":10,"size":28,"stdErr":28,"vColor":135893,"vColorValue":135893,"vSize":28,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0.028841748690929},{"name":"Newton","color":"#B0DD70","h":0.171593392165781,"id":11,"size":268,"stdErr":268,"vColor":1306816,"vColorValue":1306816,"vSize":268,"w":0.0673058264824603,"x0":0.303503687832968,"y0":0},{"name":"Novena","color":"#40AA59","h":0.168951431697025,"id":12,"size":732,"stdErr":732,"vColor":2483944.5,"vColorValue":2483944.5,"vSize":732,"w":0.186710022790106,"x0":0,"y0":0},{"name":"Orchard","color":"#F3FAAF","h":0.0639534427494513,"id":13,"size":42,"stdErr":42,"vColor":251834.5,"vColorValue":251834.5,"vSize":42,"w":0.0283011308432922,"x0":0.403827500299269,"y0":0},{"name":"Outram","color":"#FBFDB9","h":0.028841748690929,"id":14,"size":23,"stdErr":23,"vColor":130671,"vColorValue":130671,"vSize":23,"w":0.0343656588811406,"x0":0.432128631142561,"y0":0},{"name":"Queenstown","color":"#C9E881","h":0.386050808314088,"id":15,"size":1432,"stdErr":1432,"vColor":953979.5,"vColorValue":953979.5,"vSize":1432,"w":0.159851596868615,"x0":0.16621440484453,"y0":0.613949191685912},{"name":"River Valley","color":"#72C264","h":0.216589421573615,"id":16,"size":587,"stdErr":587,"vColor":1998014,"vColorValue":1998014,"vSize":587,"w":0.116793665042861,"x0":0.186710022790106,"y0":0.180798665368094},{"name":"Rochor","color":"#E4F39A","h":0.10763994941633,"id":17,"size":132,"stdErr":132,"vColor":520971,"vColorValue":520971,"vSize":132,"w":0.0528468217300926,"x0":0.370809514315428,"y0":0.0639534427494513},{"name":"Singapore River","color":"#ECF7A4","h":0.10763994941633,"id":18,"size":107,"stdErr":107,"vColor":378001,"vColorValue":378001,"vSize":107,"w":0.0428379539781812,"x0":0.423656336045521,"y0":0.0639534427494513},{"name":"Southern Islands","color":"#F7FBB4","h":0.0639534427494513,"id":19,"size":49,"stdErr":49,"vColor":173903,"vColorValue":173903,"vSize":49,"w":0.033017985983841,"x0":0.370809514315428,"y0":0},{"name":"Tanglin","color":"#66BD63","h":0.225794694775928,"id":20,"size":415,"stdErr":415,"vColor":2187332,"vColorValue":2187332,"vSize":415,"w":0.0792050350224293,"x0":0.387289255001273,"y0":0.171593392165781},{"name":"Toa Payoh","color":"#DCF090","h":0.386050808314088,"id":21,"size":1258,"stdErr":1258,"vColor":670769,"vColorValue":670769,"vSize":1258,"w":0.140428288310557,"x0":0.326066001713145,"y0":0.613949191685912}]},{"name":"East Region","color":"#006837","h":0.695476575121163,"id":22,"size":3775,"stdErr":3775,"vColor":4616987.5,"vColorValue":4616987.5,"vSize":3775,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.304523424878837,"children":[{"name":"Bedok","color":"#006837","h":0.333460291647498,"id":23,"size":1810,"stdErr":1810,"vColor":3529868.5,"vColorValue":3529868.5,"vSize":1810,"w":0.233912201528516,"x0":0.766087798471484,"y0":0.666539708352502},{"name":"Changi","color":"#FFFFBF","h":0.00189537321190402,"id":24,"size":5,"stdErr":5,"vColor":20564,"vColorValue":20564,"vSize":5,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.304523424878837},{"name":"Pasir Ris","color":"#DCF090","h":0.360120910261761,"id":25,"size":950,"stdErr":950,"vColor":669171,"vColorValue":669171,"vSize":950,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.306418798090741},{"name":"Tampines","color":"#ECF7A4","h":0.362016283473665,"id":26,"size":1010,"stdErr":1010,"vColor":397384,"vColorValue":397384,"vSize":1010,"w":0.120229681192774,"x0":0.766087798471484,"y0":0.304523424878837}]},{"name":"North East Region","color":"#006837","h":0.695476575121163,"id":27,"size":4835,"stdErr":4835,"vColor":4208661,"vColorValue":4208661,"vSize":4835,"w":0.299593508447782,"x0":0.466494290023702,"y0":0.304523424878837,"children":[{"name":"Ang Mo Kio","color":"#DCF090","h":0.124005157714565,"id":28,"size":316,"stdErr":316,"vColor":640722.5,"vColorValue":640722.5,"vSize":316,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.427351318437884},{"name":"Hougang","color":"#99D368","h":0.448643523847551,"id":29,"size":1875,"stdErr":1875,"vColor":1617014.5,"vColorValue":1617014.5,"vSize":1875,"w":0.180101900718048,"x0":0.466494290023702,"y0":0.551356476152449},{"name":"Punggol","color":"#FBFDB9","h":0.122827893559047,"id":30,"size":313,"stdErr":313,"vColor":126110,"vColorValue":126110,"vSize":313,"w":0.109816035439193,"x0":0.656271763032291,"y0":0.304523424878837},{"name":"Sengkang","color":"#EFF8AA","h":0.448643523847551,"id":31,"size":1244,"stdErr":1244,"vColor":348343.5,"vColorValue":348343.5,"vSize":1244,"w":0.119491607729734,"x0":0.64659619074175,"y0":0.551356476152449},{"name":"Serangoon","color":"#A6D96A","h":0.246833051273612,"id":32,"size":1087,"stdErr":1087,"vColor":1476470.5,"vColorValue":1476470.5,"vSize":1087,"w":0.189777473008589,"x0":0.466494290023702,"y0":0.304523424878837}]},{"name":"North Region","color":"#CEEA84","h":0.304523424878837,"id":33,"size":1117,"stdErr":1117,"vColor":866745,"vColorValue":866745,"vSize":1117,"w":0.15807052467998,"x0":0.84192947532002,"y0":0,"children":[{"name":"Mandai","color":"#FFFFBF","h":0.0295271724097004,"id":34,"size":29,"stdErr":29,"vColor":62025,"vColorValue":62025,"vSize":29,"w":0.0423247659530311,"x0":0.950377860606791,"y0":0},{"name":"Sembawang","color":"#F3FAAF","h":0.196836090208165,"id":35,"size":286,"stdErr":286,"vColor":244075,"vColorValue":244075,"vSize":286,"w":0.0626151939868065,"x0":0.937384806013194,"y0":0.107687334670672},{"name":"Sungei Kadut","color":"#FFFFBF","h":0.0295271724097003,"id":36,"size":5,"stdErr":5,"vColor":24359,"vColorValue":24359,"vSize":5,"w":0.00729737344017779,"x0":0.992702626559822,"y0":0},{"name":"Woodlands","color":"#F7FBB4","h":0.107687334670672,"id":37,"size":271,"stdErr":271,"vColor":164195,"vColorValue":164195,"vSize":271,"w":0.108448385286771,"x0":0.84192947532002,"y0":0},{"name":"Yishun","color":"#EFF8AA","h":0.196836090208165,"id":38,"size":436,"stdErr":436,"vColor":313496,"vColorValue":313496,"vSize":436,"w":0.0954553306931736,"x0":0.84192947532002,"y0":0.107687334670672},{"name":"YISHUN","color":"#FFFFBF","h":0.0781601622609715,"id":39,"size":90,"stdErr":90,"vColor":58595,"vColorValue":58595,"vSize":90,"w":0.0496221393932089,"x0":0.950377860606791,"y0":0.0295271724097003}]},{"name":"West Region","color":"#79C565","h":0.304523424878837,"id":40,"size":2653,"stdErr":2653,"vColor":1919890.5,"vColorValue":1919890.5,"vSize":2653,"w":0.375435185296318,"x0":0.466494290023702,"y0":0,"children":[{"name":"Bukit Batok","color":"#E0F295","h":0.204535894820693,"id":41,"size":583,"stdErr":583,"vColor":618812.5,"vColorValue":618812.5,"vSize":583,"w":0.122833675400378,"x0":0.631640487249787,"y0":0.0999875300581435},{"name":"Bukit Panjang","color":"#ECF7A4","h":0.0999875300581435,"id":42,"size":285,"stdErr":285,"vColor":374543.5,"vColorValue":374543.5,"vSize":285,"w":0.122833675400379,"x0":0.631640487249787,"y0":0},{"name":"Choa Chu Kang","color":"#FBFDB9","h":0.132058702051017,"id":43,"size":268,"stdErr":268,"vColor":125114,"vColorValue":125114,"vSize":268,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.0349857009165007},{"name":"Clementi","color":"#E4F39A","h":0.304523424878837,"id":44,"size":1167,"stdErr":1167,"vColor":531398.5,"vColorValue":531398.5,"vSize":1167,"w":0.165146197226085,"x0":0.466494290023702,"y0":0},{"name":"Jurong East","color":"#FFFFBF","h":0.0349857009165007,"id":45,"size":71,"stdErr":71,"vColor":65122,"vColorValue":65122,"vSize":71,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0},{"name":"Jurong West","color":"#F7FBB4","h":0.13747902191132,"id":46,"size":279,"stdErr":279,"vColor":204900,"vColorValue":204900,"vSize":279,"w":0.0874553126698547,"x0":0.754474162650165,"y0":0.167044402967517}]}]},"meta":{"type":"value","vSize":"Total Unit Sold","vColor":"Median Unit Price ($ psm)","stdErr":"Total Unit Sold","algorithm":"pivotSize","vpCoorX":[0.0281214848143982,0.971878515185602],"vpCoorY":[0.171685039370079,0.910314960629921],"aspRatio":1.78879815790035,"range":[0,3500000],"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
+<div class="d3tree html-widget html-fill-item" id="htmlwidget-8f2e82f18cb1264f2b40" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-8f2e82f18cb1264f2b40">{"x":{"data":{"name":"Singapore","id":1,"size":null,"children":[{"name":"Central Region","color":"#006837","h":1,"id":2,"size":10825,"stdErr":10825,"vColor":20978846.5,"vColorValue":20978846.5,"vSize":10825,"w":0.4664942900237018,"x0":0,"y0":0,"children":[{"name":"Bishan","color":"#D9EF8B","h":0.2165611047442029,"id":3,"size":698,"stdErr":698,"vColor":749211.5,"vColorValue":749211.5,"vSize":698,"w":0.1388971682283426,"x0":0.3275971217953593,"y0":0.3973880869417094},{"name":"Bukit Merah","color":"#DCF090","h":0.2165611047442029,"id":4,"size":708,"stdErr":708,"vColor":689448,"vColorValue":689448,"vSize":708,"w":0.1408870990052529,"x0":0.1867100227901064,"y0":0.3973880869417094},{"name":"Bukit Timah","color":"#219B51","h":0.2702761291218809,"id":5,"size":1171,"stdErr":1171,"vColor":2823552.5,"vColorValue":2823552.5,"vSize":1171,"w":0.1867100227901064,"x0":0,"y0":0.3436730625640314},{"name":"Downtown Core","color":"#E0F295","h":0.225794694775928,"id":6,"size":439,"stdErr":439,"vColor":570894,"vColorValue":570894,"vSize":439,"w":0.08378556716830476,"x0":0.3035036878329677,"y0":0.1715933921657813},{"name":"Geylang","color":"#66BD63","h":0.3860508083140878,"id":7,"size":1489,"stdErr":1489,"vColor":2140814.5,"vColorValue":2140814.5,"vSize":1489,"w":0.1662144048445302,"x0":0,"y0":0.6139491916859122},{"name":"Kallang","color":"#A6D96A","h":0.1747216308670059,"id":8,"size":757,"stdErr":757,"vColor":1415268,"vColorValue":1415268,"vSize":757,"w":0.1867100227901064,"x0":0,"y0":0.1689514316970255},{"name":"Marine Parade","color":"#ABDB6D","h":0.1807986653680943,"id":9,"size":490,"stdErr":490,"vColor":1397529.5,"vColorValue":1397529.5,"vSize":490,"w":0.1167936650428614,"x0":0.1867100227901064,"y0":0},{"name":"Museum","color":"#FBFDB9","h":0.0351116940585223,"id":10,"size":28,"stdErr":28,"vColor":135893,"vColorValue":135893,"vSize":28,"w":0.03436565888114059,"x0":0.4321286311425612,"y0":0.02884174869092903},{"name":"Newton","color":"#B0DD70","h":0.1715933921657813,"id":11,"size":268,"stdErr":268,"vColor":1306816,"vColorValue":1306816,"vSize":268,"w":0.06730582648246029,"x0":0.3035036878329677,"y0":0},{"name":"Novena","color":"#40AA59","h":0.1689514316970255,"id":12,"size":732,"stdErr":732,"vColor":2483944.5,"vColorValue":2483944.5,"vSize":732,"w":0.1867100227901064,"x0":0,"y0":0},{"name":"Orchard","color":"#F3FAAF","h":0.06395344274945129,"id":13,"size":42,"stdErr":42,"vColor":251834.5,"vColorValue":251834.5,"vSize":42,"w":0.02830113084329224,"x0":0.403827500299269,"y0":0},{"name":"Outram","color":"#FBFDB9","h":0.02884174869092899,"id":14,"size":23,"stdErr":23,"vColor":130671,"vColorValue":130671,"vSize":23,"w":0.03436565888114063,"x0":0.4321286311425612,"y0":0},{"name":"Queenstown","color":"#C9E881","h":0.3860508083140878,"id":15,"size":1432,"stdErr":1432,"vColor":953979.5,"vColorValue":953979.5,"vSize":1432,"w":0.1598515968686147,"x0":0.1662144048445302,"y0":0.6139491916859122},{"name":"River Valley","color":"#72C264","h":0.216589421573615,"id":16,"size":587,"stdErr":587,"vColor":1998014,"vColorValue":1998014,"vSize":587,"w":0.1167936650428614,"x0":0.1867100227901064,"y0":0.1807986653680943},{"name":"Rochor","color":"#E4F39A","h":0.1076399494163301,"id":17,"size":132,"stdErr":132,"vColor":520971,"vColorValue":520971,"vSize":132,"w":0.05284682173009263,"x0":0.3708095143154281,"y0":0.06395344274945132},{"name":"Singapore River","color":"#ECF7A4","h":0.10763994941633,"id":18,"size":107,"stdErr":107,"vColor":378001,"vColorValue":378001,"vSize":107,"w":0.04283795397818115,"x0":0.4236563360455207,"y0":0.06395344274945133},{"name":"Southern Islands","color":"#F7FBB4","h":0.06395344274945129,"id":19,"size":49,"stdErr":49,"vColor":173903,"vColorValue":173903,"vSize":49,"w":0.03301798598384095,"x0":0.3708095143154281,"y0":0},{"name":"Tanglin","color":"#66BD63","h":0.225794694775928,"id":20,"size":415,"stdErr":415,"vColor":2187332,"vColorValue":2187332,"vSize":415,"w":0.07920503502242932,"x0":0.3872892550012725,"y0":0.1715933921657814},{"name":"Toa Payoh","color":"#DCF090","h":0.3860508083140878,"id":21,"size":1258,"stdErr":1258,"vColor":670769,"vColorValue":670769,"vSize":1258,"w":0.1404282883105568,"x0":0.326066001713145,"y0":0.6139491916859122}]},{"name":"East Region","color":"#006837","h":0.6954765751211631,"id":22,"size":3775,"stdErr":3775,"vColor":4616987.5,"vColorValue":4616987.5,"vSize":3775,"w":0.2339122015285163,"x0":0.7660877984714837,"y0":0.3045234248788369,"children":[{"name":"Bedok","color":"#006837","h":0.3334602916474981,"id":23,"size":1810,"stdErr":1810,"vColor":3529868.5,"vColorValue":3529868.5,"vSize":1810,"w":0.2339122015285163,"x0":0.7660877984714837,"y0":0.666539708352502},{"name":"Changi","color":"#FFFFBF","h":0.001895373211904017,"id":24,"size":5,"stdErr":5,"vColor":20564,"vColorValue":20564,"vSize":5,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.3045234248788369},{"name":"Pasir Ris","color":"#DCF090","h":0.360120910261761,"id":25,"size":950,"stdErr":950,"vColor":669171,"vColorValue":669171,"vSize":950,"w":0.113682520335742,"x0":0.886317479664258,"y0":0.306418798090741},{"name":"Tampines","color":"#ECF7A4","h":0.362016283473665,"id":26,"size":1010,"stdErr":1010,"vColor":397384,"vColorValue":397384,"vSize":1010,"w":0.1202296811927743,"x0":0.7660877984714837,"y0":0.304523424878837}]},{"name":"North East Region","color":"#006837","h":0.6954765751211631,"id":27,"size":4835,"stdErr":4835,"vColor":4208661,"vColorValue":4208661,"vSize":4835,"w":0.2995935084477819,"x0":0.4664942900237018,"y0":0.3045234248788369,"children":[{"name":"Ang Mo Kio","color":"#DCF090","h":0.1240051577145652,"id":28,"size":316,"stdErr":316,"vColor":640722.5,"vColorValue":640722.5,"vSize":316,"w":0.1098160354391928,"x0":0.656271763032291,"y0":0.427351318437884},{"name":"Hougang","color":"#99D368","h":0.4486435238475507,"id":29,"size":1875,"stdErr":1875,"vColor":1617014.5,"vColorValue":1617014.5,"vSize":1875,"w":0.1801019007180478,"x0":0.4664942900237018,"y0":0.5513564761524492},{"name":"Punggol","color":"#FBFDB9","h":0.1228278935590471,"id":30,"size":313,"stdErr":313,"vColor":126110,"vColorValue":126110,"vSize":313,"w":0.1098160354391928,"x0":0.656271763032291,"y0":0.3045234248788369},{"name":"Sengkang","color":"#EFF8AA","h":0.4486435238475507,"id":31,"size":1244,"stdErr":1244,"vColor":348343.5,"vColorValue":348343.5,"vSize":1244,"w":0.1194916077297341,"x0":0.6465961907417496,"y0":0.5513564761524492},{"name":"Serangoon","color":"#A6D96A","h":0.2468330512736124,"id":32,"size":1087,"stdErr":1087,"vColor":1476470.5,"vColorValue":1476470.5,"vSize":1087,"w":0.1897774730085891,"x0":0.4664942900237018,"y0":0.3045234248788368}]},{"name":"North Region","color":"#CEEA84","h":0.3045234248788368,"id":33,"size":1117,"stdErr":1117,"vColor":866745,"vColorValue":866745,"vSize":1117,"w":0.1580705246799801,"x0":0.8419294753200199,"y0":0,"children":[{"name":"Mandai","color":"#FFFFBF","h":0.02952717240970038,"id":34,"size":29,"stdErr":29,"vColor":62025,"vColorValue":62025,"vSize":29,"w":0.04232476595303115,"x0":0.9503778606067911,"y0":0},{"name":"Sembawang","color":"#F3FAAF","h":0.1968360902081649,"id":35,"size":286,"stdErr":286,"vColor":244075,"vColorValue":244075,"vSize":286,"w":0.06261519398680651,"x0":0.9373848060131935,"y0":0.1076873346706719},{"name":"Sungei Kadut","color":"#FFFFBF","h":0.02952717240970027,"id":36,"size":5,"stdErr":5,"vColor":24359,"vColorValue":24359,"vSize":5,"w":0.007297373440177785,"x0":0.9927026265598221,"y0":0},{"name":"Woodlands","color":"#F7FBB4","h":0.1076873346706719,"id":37,"size":271,"stdErr":271,"vColor":164195,"vColorValue":164195,"vSize":271,"w":0.1084483852867712,"x0":0.8419294753200199,"y0":0},{"name":"Yishun","color":"#EFF8AA","h":0.1968360902081649,"id":38,"size":436,"stdErr":436,"vColor":313496,"vColorValue":313496,"vSize":436,"w":0.09545533069317358,"x0":0.8419294753200199,"y0":0.1076873346706719},{"name":"YISHUN","color":"#FFFFBF","h":0.07816016226097153,"id":39,"size":90,"stdErr":90,"vColor":58595,"vColorValue":58595,"vSize":90,"w":0.04962213939320893,"x0":0.9503778606067911,"y0":0.02952717240970034}]},{"name":"West Region","color":"#79C565","h":0.3045234248788369,"id":40,"size":2653,"stdErr":2653,"vColor":1919890.5,"vColorValue":1919890.5,"vSize":2653,"w":0.3754351852963181,"x0":0.4664942900237018,"y0":0,"children":[{"name":"Bukit Batok","color":"#E0F295","h":0.2045358948206935,"id":41,"size":583,"stdErr":583,"vColor":618812.5,"vColorValue":618812.5,"vSize":583,"w":0.1228336754003785,"x0":0.6316404872497866,"y0":0.09998753005814345},{"name":"Bukit Panjang","color":"#ECF7A4","h":0.09998753005814345,"id":42,"size":285,"stdErr":285,"vColor":374543.5,"vColorValue":374543.5,"vSize":285,"w":0.1228336754003785,"x0":0.6316404872497866,"y0":0},{"name":"Choa Chu Kang","color":"#FBFDB9","h":0.1320587020510166,"id":43,"size":268,"stdErr":268,"vColor":125114,"vColorValue":125114,"vSize":268,"w":0.08745531266985472,"x0":0.7544741626501652,"y0":0.03498570091650066},{"name":"Clementi","color":"#E4F39A","h":0.3045234248788369,"id":44,"size":1167,"stdErr":1167,"vColor":531398.5,"vColorValue":531398.5,"vSize":1167,"w":0.1651461972260849,"x0":0.4664942900237018,"y0":0},{"name":"Jurong East","color":"#FFFFBF","h":0.03498570091650072,"id":45,"size":71,"stdErr":71,"vColor":65122,"vColorValue":65122,"vSize":71,"w":0.08745531266985475,"x0":0.7544741626501652,"y0":0},{"name":"Jurong West","color":"#F7FBB4","h":0.1374790219113196,"id":46,"size":279,"stdErr":279,"vColor":204900,"vColorValue":204900,"vSize":279,"w":0.08745531266985472,"x0":0.7544741626501652,"y0":0.1670444029675173}]}]},"meta":{"type":"value","vSize":"Total Unit Sold","vColor":"Median Unit Price ($ psm)","stdErr":"Total Unit Sold","algorithm":"pivotSize","vpCoorX":[0.02812148481439815,0.9718785151856019],"vpCoorY":[0.1716850393700787,0.9103149606299213],"aspRatio":1.788798157900348,"range":[0,3500000],"mapping":[null,null,null],"draw":true},"options":{"id":"id","celltext":"name","valueField":"size"}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -978,18 +1041,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1021,11 +1073,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1035,8 +1126,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1048,7 +1148,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1092,6 +1315,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1117,6 +1341,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1178,17 +1428,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chap15.html" class="pagination-link">
+      <a href="./chap15.html" class="pagination-link" aria-label="Visual Multivariate Analysis with Parallel Coordinates Plot">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Visual Multivariate Analysis with Parallel Coordinates Plot</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap17.html" class="pagination-link">
+      <a href="./chap17.html" class="pagination-link" aria-label="Visualising and Analysing Time-oriented Data">
         <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Visualising and Analysing Time-oriented Data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

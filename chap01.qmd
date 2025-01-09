@@ -407,7 +407,7 @@ ggplot(data=exam_data,
        aes(y = MATHS, x= GENDER)) +
   geom_boxplot() +
   stat_summary(geom = "point",       
-               fun.y="mean",         
+               fun = "mean",         
                colour ="red",        
                size=4)               
 ```
@@ -422,8 +422,8 @@ ggplot(data=exam_data,
        aes(y = MATHS, x= GENDER)) +
   geom_boxplot() +
   geom_point(stat="summary",        
-             fun.y="mean",           
-             colour ="red",          
+             fun="mean",           
+             colour="red",          
              size=4)          
 ```
 
@@ -463,7 +463,7 @@ ggplot(data=exam_data,
            y=ENGLISH)) +
   geom_point() +
   geom_smooth(method=lm, 
-              size=0.5)
+              linewidth=0.5)
 ```
 
 ## Essential Grammatical Elements in ggplot2: Facets
