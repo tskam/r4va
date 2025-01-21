@@ -7,6 +7,7 @@ execute:
   echo: true
   eval: true
   warning: false
+  freeze: true
 ---
 
 ## Overview
@@ -178,7 +179,7 @@ In **Plotly R** package, both `ggplotly()` and `plot_ly()` support key frame ani
 
 In this sub-section, you will learn how to create an animated bubble plot by using `ggplotly()` method.
 
-::: panel-tabset
+:::: panel-tabset
 ## The plot
 
 ```{r}
@@ -229,7 +230,7 @@ ggplotly(gg)
 -   Appropriate ggplot2 functions are used to create a static bubble plot. The output is then saved as an R object called *gg*.
 -   `ggplotly()` is then used to convert the R graphic object into an animated svg object.
 :::
-:::
+::::
 
 Notice that although `show.legend = FALSE` argument was used, the legend still appears on the plot. To overcome this problem, `theme(legend.position='none')` should be used as shown in the plot and code chunk below.
 

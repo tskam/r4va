@@ -466,6 +466,6 @@ reactable(
 ```{r}
 #| echo: false
 #| eval: false
-renderthis::to_pdf(from = "https://r4va.netlify.app/chap31.html",
-                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap31.pdf")
+renderthis::to_pdf(from = "C://tskam/r4va/_book/chap31.html",
+                   to = "C://ISSS608_AY2024-25Jan/20-r4va/chap31.pdf")
 ```

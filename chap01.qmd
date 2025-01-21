@@ -1,12 +1,8 @@
 ---
 title: "A Layered Grammar of Graphics: ggplot2 methods"
 date: "12/4/2023"
-date-modified: "`r Sys.Date()`"
-format:
-  html:
-    theme: materia
-    fontsize: 1.2em
-    toc-font-size: 0.8em
+date-modified: "last-modified"
+format: html
 execute: 
   echo: true
   eval: true
@@ -610,8 +606,10 @@ ggplot(data=exam_data,
 -   [Learning ggplot2 on Paper -- Layer](https://henrywang.nl/learning-ggplot2-on-paper-layer/)
 -   [Learning ggplot2 on Paper -- Scale](https://henrywang.nl/tag/learning-ggplot2-on-paper/)
 
+
 ```{r}
-#| eval: false
 #| echo: false
-renderthis::to_pdf(from = "https://r4va.netlify.app/chap01.html")
+#| eval: false
+renderthis::to_pdf(from = "C://tskam/r4va/_book/chap01.html",
+                   to = "C://ISSS608_AY2024-25Jan/20-r4va/chap01.pdf")
 ```
