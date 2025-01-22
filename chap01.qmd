@@ -606,7 +606,6 @@ ggplot(data=exam_data,
 -   [Learning ggplot2 on Paper -- Layer](https://henrywang.nl/learning-ggplot2-on-paper-layer/)
 -   [Learning ggplot2 on Paper -- Scale](https://henrywang.nl/tag/learning-ggplot2-on-paper/)
 
-
 ```{r}
 #| echo: false
 #| eval: false
