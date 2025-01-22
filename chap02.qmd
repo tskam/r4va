@@ -228,7 +228,7 @@ It also provides some extra geoms and scales for 'ggplot2'. Consult [this vignet
 
 ### Working with hrbthems package
 
-[**hrbrthemes**](https://cinc.rud.is/web/packages/hrbrthemes/) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
+[**hrbrthemes**](https://cran.r-project.org/web/packages/hrbrthemes/index.html) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
 
 :::: panel-tabset
 ## The plot
