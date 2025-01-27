@@ -1,0 +1,11 @@
+---
+title: "Printing"
+author: "Dr. Kam Tin Seong"
+---
+
+```{r}
+#| echo: false
+#| eval: false
+renderthis::to_pdf(from = "D://tskam/r4va/_book/chap12.html",
+                   to = "D://ISSS608_AY2024-25Jan/Hands-on_Ex/pdf/Hands-on_Ex04d.pdf")
+```
