@@ -55,7 +55,7 @@ Interactive is made with [**ggplot geometries**](https://davidgohel.github.io/gg
 -   **Onclick**: a column of data-sets that contain a JavaScript function to be executed when elements are clicked.
 -   **Data_id**: a column of data-sets that contain an id to be associated with elements.
 
-If it used within a shiny application, elements associated with an id (data_id) can be selected and manipulated on client and server sides. Refer to this [article](https://davidgohel.github.io/ggiraph/articles/offcran/shiny.html) for more detail explanation.
+If it used within a shiny application, elements associated with an id (data_id) can be selected and manipulated on client and server sides. Refer to this [article](https://www.ardata.fr/ggiraph-book/selections.html) for more detail explanation.
 
 ### Tooltip effect with *tooltip* aesthetic
 
@@ -213,7 +213,7 @@ girafe(
 )                                        
 ```
 
--   Refer to [Customizing girafe objects](https://davidgohel.github.io/ggiraph/articles/offcran/customizing.html) to learn more about how to customise ggiraph objects.
+-   Refer to [Customizing girafe objects](https://2%20%20Customizing%20girafe%20animations) to learn more about how to customise ggiraph objects.
 
 ### Displaying statistics on tooltip
 
