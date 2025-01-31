@@ -213,7 +213,7 @@ girafe(
 )                                        
 ```
 
--   Refer to [Customizing girafe objects](https://2%20%20Customizing%20girafe%20animations) to learn more about how to customise ggiraph objects.
+-   Refer to [Customizing girafe objects](https://www.ardata.fr/ggiraph-book/customize.html) to learn more about how to customise ggiraph objects.
 
 ### Displaying statistics on tooltip
 
