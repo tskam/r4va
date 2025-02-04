@@ -227,9 +227,4 @@ fp_ggplotly
 
 -   [ggplot2](https://ggplot2.tidyverse.org/) package.
 
-```{r}
-#| eval: false
-#| echo: false
-renderthis::to_pdf(from = "https://r4va.netlify.app/chap11.html",
-                   to = "D://ISSS608_AY2022-23Apr/20-r4va/chap11.pdf")
-```
+
