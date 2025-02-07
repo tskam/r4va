@@ -87,8 +87,8 @@ Since `ggparcoord()` is developed by extending **ggplot2** package, we can combi
 In the code chunk below, `facet_wrap()` of **ggplot2** is used to plot 10 small multiple parallel coordinates plots. Each plot represent one geographical region such as East Asia.
 
 ```{r}
-#| fig-width: 18
-#| fig-height: 8
+#| fig-width: 16
+#| fig-height: 12
 ggparcoord(data = wh, 
            columns = c(7:12), 
            groupColumn = 2,
@@ -106,8 +106,8 @@ One of the aesthetic defect of the current design is that some of the variable n
 To make the x-axis text label easy to read, let us rotate the labels by 30 degrees. We can rotate axis text labels using `theme()` function in ggplot2 as shown in the code chunk below
 
 ```{r}
-#| fig-width: 18
-#| fig-height: 8
+#| fig-width: 16
+#| fig-height: 12
 ggparcoord(data = wh, 
            columns = c(7:12), 
            groupColumn = 2,
@@ -128,8 +128,8 @@ Thing to learn from the code chunk above:
 Rotating x-axis text labels to 30 degrees makes the label overlap with the plot and we can avoid this by adjusting the text location using `hjust` argument to theme's text element with `element_text()`. We use `axis.text.x` as we want to change the look of x-axis text.
 
 ```{r}
-#| fig-width: 18
-#| fig-height: 8
+#| fig-width: 16
+#| fig-height: 12
 ggparcoord(data = wh, 
            columns = c(7:12), 
            groupColumn = 2,
@@ -211,5 +211,3 @@ parallelPlot(wh,
 renderthis::to_pdf(from = "https://r4va.netlify.app/chap15.html",
                    to = "D://ISSS608_AY2022-23Apr/20-r4va/chap15.pdf")
 ```
-
-
