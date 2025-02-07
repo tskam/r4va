@@ -6,6 +6,6 @@ author: "Dr. Kam Tin Seong"
 ```{r}
 #| echo: false
 #| eval: false
-renderthis::to_pdf(from = "D://tskam/r4va/_book/chap12.html",
-                   to = "D://ISSS608_AY2024-25Jan/Hands-on_Ex/pdf/Hands-on_Ex04d.pdf")
+renderthis::to_pdf(from = "C://tskam/r4va/_book/chap12.html",
+                   to = "C://ISSS608_AY2024-25Jan/03-Hands-on_Ex/Hands-on_Ex12.pdf")
 ```
