@@ -1874,7 +1874,7 @@
     "href": "chap08.html#installing-and-launching-r-packages",
     "title": "8  Funnel Plots for Fair Comparisons",
     "section": "8.2 Installing and Launching R Packages",
-    "text": "8.2 Installing and Launching R Packages\nIn this exercise, four R packages will be used. They are:\n\nreadr for importing csv into R.\nFunnelPlotR for creating funnel plot.\nggplot2 for creating funnel plot manually.\nknitr for building static html table.\nplotly for creating interactive funnel plot.\n\n\npacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)\n\npackage 'FunnelPlotR' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\tskam\\AppData\\Local\\Temp\\Rtmp670TSc\\downloaded_packages",
+    "text": "8.2 Installing and Launching R Packages\nIn this exercise, four R packages will be used. They are:\n\nreadr for importing csv into R.\nFunnelPlotR for creating funnel plot.\nggplot2 for creating funnel plot manually.\nknitr for building static html table.\nplotly for creating interactive funnel plot.\n\n\npacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)",
     "crumbs": [
       "Not So Common Chart",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Funnel Plots for Fair Comparisons</span>"
