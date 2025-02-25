@@ -400,7 +400,7 @@
     "href": "chap05.html#data-preparation",
     "title": "5  Visualising Likert Scale Data with Divergining Stacked Bar Chart",
     "section": "5.2 Data Preparation",
-    "text": "5.2 Data Preparation\n\n5.2.1 Installing and launching R packages\nFor this exercise, the HH R package will be used. You are also need to ensure that the tidyverse family packages also used install.\nThe code chunks below will accomplish the task.\n\npacman::p_load(HH, tidyverse)\n\n\n\n5.2.2 Importing Data\nFirst, important the data into R by using the code below.\n\nraw &lt;- read_csv(\"chap04/data/SurveyData.csv\")\n\nNotice that all the variables are categorical data type.",
+    "text": "5.2 Data Preparation\n\n5.2.1 Installing and launching R packages\nFor this exercise, the HH R package will be used. You are also need to ensure that the tidyverse family packages also used install.\nThe code chunks below will accomplish the task.\n\npacman::p_load(HH, tidyverse)\n\npackage 'interp' successfully unpacked and MD5 sums checked\npackage 'latticeExtra' successfully unpacked and MD5 sums checked\npackage 'HH' successfully unpacked and MD5 sums checked\n\nThe downloaded binary packages are in\n    C:\\Users\\tskam\\AppData\\Local\\Temp\\Rtmp0ckIRW\\downloaded_packages\n\n\n\n\n5.2.2 Importing Data\nFirst, important the data into R by using the code below.\n\nraw &lt;- read_csv(\"chap04/data/SurveyData.csv\")\n\nNotice that all the variables are categorical data type.",
     "crumbs": [
       "Not So Common Chart",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Visualising Likert Scale Data with Divergining Stacked Bar Chart</span>"
