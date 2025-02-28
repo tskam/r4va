@@ -1213,7 +1213,7 @@
     "href": "chap20.html",
     "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
     "section": "",
-    "text": "20.1 Learning Outcome\nIn this chapter, you will learn how to use timetk and model time packages to visualise, analyse and forescast time-series data. timetk provides a collection of functions for visualising and analysing time-series data. On the other hands, modeltime provides a collection of functions for time-series forecasting, both statistical learning and machine learning methods including deep learning and netsted forecasting methods.",
+    "text": "20.1 Learning Outcome\nIn this chapter, you will learn how to use timetk and model time packages to visualise, analyse and forescast time-series data. timetk provides a collection of functions for visualising and analysing time-series data. On the other hands, modeltime provides a collection of functions for time-series forecasting, both statistical learning and machine learning methods including deep learning and netsted forecasting methods.\nIn this topic, we are going to explore the tidymodels approach in time series forecasting.",
     "crumbs": [
       "Visualising and Analysing Time-series Data",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
@@ -1998,6 +1998,61 @@
     "crumbs": [
       "Visualising and Analysing Time-series Data",
       "<span class='chapter-number'>19</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: tidyverts methods</span>"
+    ]
+  },
+  {
+    "objectID": "chap20.html#learning-outcome",
+    "href": "chap20.html#learning-outcome",
+    "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
+    "section": "",
+    "text": "import and wrangling time-series data by using appropriate tidyverse methods,\nvisualise and analyse time-series data,\ncalibrate time-series forecasting models by using exponential smoothing and ARIMA techniques, and\ncompare and evaluate the performance of forecasting models.",
+    "crumbs": [
+      "Visualising and Analysing Time-series Data",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
+    ]
+  },
+  {
+    "objectID": "chap20.html#setting-up-r-environment",
+    "href": "chap20.html#setting-up-r-environment",
+    "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
+    "section": "20.2 Setting Up R Environment",
+    "text": "20.2 Setting Up R Environment\nFor the purpose of this hands-on exercise, the following R packages will be used.\n\npacman::p_load(tidyverse, tidymodels, \n               timetk, modeltime)\n\n\ntidyverse provides a collection of commonly used functions for importing, wrangling and visualising data. In this hands-on exercise the main packages used are readr, dplyr, tidyr and ggplot2.\nmodeltime a new time series forecasting package designed to speed up model evaluation, selection, and forecasting. modeltime does this by integrating the tidymodels machine learning ecosystem of packages into a streamlined workflow for tidyverse forecasting.",
+    "crumbs": [
+      "Visualising and Analysing Time-series Data",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
+    ]
+  },
+  {
+    "objectID": "chap20.html#introducing-modeltime-workflow",
+    "href": "chap20.html#introducing-modeltime-workflow",
+    "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
+    "section": "20.3 Introducing modeltime workflow",
+    "text": "20.3 Introducing modeltime workflow\n\n.small[ Source: Getting Started with Modeltime]",
+    "crumbs": [
+      "Visualising and Analysing Time-series Data",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
+    ]
+  },
+  {
+    "objectID": "chap20.html#the-data",
+    "href": "chap20.html#the-data",
+    "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
+    "section": "20.4 The data",
+    "text": "20.4 The data\nIn this sharing, Store Sales - Time Series Forecasting: Use machine learning to predict grocery sales from Kaggle competition will be used. For the purpose of this sharing, the main data set used is train.csv. It consists of six columns. They are:\n\nid contains unique id for each records.\ndate gives the sales dates.\nstore_nbr identifies the store at which the products are sold.\nfamily identifies the type of product sold.\nsales gives the total sales for a product family at a particular store at a given date. Fractional values are possible since products can be sold in fractional units (1.5 kg of cheese, for instance, as opposed to 1 bag of chips).\nonpromotion gives the total number of items in a product family that were being promoted at a store at a given date.\n\nFor the purpose of this sharing, I will focus of grocery sales instead of all products. Code chunk below is used to extract grocery sales from train.csv and saved the output into an rds file format for subsequent used.\n\nstore_sales &lt;- read_csv(\n  \"data/store_sales/train.csv\") %&gt;%\n  filter(family == \"GROCERY I\") %&gt;%\n  write_rds(\"data/store_sales/grocery.rds\")",
+    "crumbs": [
+      "Visualising and Analysing Time-series Data",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
+    ]
+  },
+  {
+    "objectID": "chap20.html#time-series-forecasting-process",
+    "href": "chap20.html#time-series-forecasting-process",
+    "title": "20  Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods",
+    "section": "20.5 Time Series Forecasting Process",
+    "text": "20.5 Time Series Forecasting Process\n\nCollect data and split into training and test sets\nCreate & Fit Multiple Models\nAdd fitted models to a Model Table\nCalibrate the models to a testing set.\nPerform Testing Set Forecast & Accuracy Evaluation\nRefit the models to Full Dataset & Forecast Forward\n\n\n20.5.1 Step 1: Data Import and Sampling\nIn the code chunk below, read_rds() of readr package is used to import both data sets into R environment.\n\ngrocery &lt;- read_rds(\n  \"data/store_sales/grocery.rds\") %&gt;%\n  mutate(across(c(1, 3, 4), \n                as.factor)) %&gt;%\n  group_by(family, date) %&gt;%\n  summarise(sum_sales = sum(sales)) %&gt;%\n  ungroup()\n\nOptionally, you can also import the rest of the data sets provided at Kaggle by using the code chunk below.\n\nholidays_events &lt;- read_csv(\n  \"data/store_sales/holidays_events.csv\")\noil &lt;- read_csv(\n  \"data/store_sales/oil.csv\")\nstores &lt;- read_csv(\n  \"data/store_sales/stores.csv\")\ntransactions &lt;- read_csv(\n  \"data/store_sales/transactions.csv\")\n\n\n\n20.5.2 Step 1: Data Import and Sampling\ngrocery tibble data frame consists of 1684 days of daily sales data starts from 1st January 2013. We will split the data set into training and hold-out data sets by using initial_time_split() of rsample package, a member of the tidymodels family.\n\nsplits &lt;- grocery %&gt;%\n  initial_time_split(prop = 0.955)\n\nFor checking purposes, the code chunk below can be used save the split sample data sets into training and holdout tibble data tables respectively.\n\ntraining &lt;- training(splits)\nholdout &lt;- testing(splits)\n\n\n\n20.5.3 Step 2: Create & Fit Multiple Models\nIn this step, we will build and fit four models using the code chunks below:\nModel 1: Exponential Smoothing (Modeltime)\nAn Error-Trend-Season (ETS) model by using exp_smoothing().\n\nmodel_fit_ets &lt;- exp_smoothing() %&gt;%\n    set_engine(engine = \"ets\") %&gt;%\n    fit(sum_sales ~ `date`, \n        data = training(splits))\n\nModel 2: Auto ARIMA (Modeltime)\nAn auto ARIMA model by using arima_reg().\n\nmodel_fit_arima &lt;- arima_reg() %&gt;%\n  set_engine(engine = \"auto_arima\") %&gt;%\n  fit(sum_sales ~ `date`, \n      data = training(splits))\n\nModel 3: Boosted Auto ARIMA (Modeltime)\nAn Boosted auto ARIMA model by using arima_boost().\n\nmodel_fit_arima_boosted &lt;- arima_boost(\n  min_n = 2,\n  learn_rate = 0.015) %&gt;%\n  set_engine(\n    engine = \"auto_arima_xgboost\") %&gt;%\n  fit(sum_sales ~ `date`, \n      data = training(splits))\n\nModel 4: prophet (Modeltime)\nA prophet model using prophet_reg().\n\nmodel_fit_prophet &lt;- prophet_reg() %&gt;%\n  set_engine(engine = \"prophet\") %&gt;%\n  fit(sum_sales ~ `date`, \n      data = training(splits))\n\n\n\n20.5.4 Step 3: Add fitted models to a Model Table\nNext, modeltime_table() of modeltime package is used to add each of the models to a Modeltime Table.\n\nmodels_tbl &lt;- modeltime_table(\n  model_fit_ets,\n  model_fit_arima,\n  model_fit_arima_boosted,\n  model_fit_prophet)\n\nmodels_tbl\n\n# Modeltime Table\n# A tibble: 4 × 3\n  .model_id .model   .model_desc           \n      &lt;int&gt; &lt;list&gt;   &lt;chr&gt;                 \n1         1 &lt;fit[+]&gt; ETS(M,N,M)            \n2         2 &lt;fit[+]&gt; ARIMA(3,0,0)(1,1,2)[7]\n3         3 &lt;fit[+]&gt; ARIMA(1,0,3)(2,1,2)[7]\n4         4 &lt;fit[+]&gt; PROPHET               \n\n\n\n\n20.5.5 Step 4 - Calibrate the model to a testing set\nIn the code chunk below, modeltime_caibrate() is used to add a new column called .calibrate_data into the newly created models_tbl tibble data table.\n\ncalibration_tbl &lt;- models_tbl %&gt;%\n    modeltime_calibrate(new_data = testing(splits))\n\ncalibration_tbl\n\n# Modeltime Table\n# A tibble: 4 × 5\n  .model_id .model   .model_desc            .type .calibration_data\n      &lt;int&gt; &lt;list&gt;   &lt;chr&gt;                  &lt;chr&gt; &lt;list&gt;           \n1         1 &lt;fit[+]&gt; ETS(M,N,M)             Test  &lt;tibble [76 × 4]&gt;\n2         2 &lt;fit[+]&gt; ARIMA(3,0,0)(1,1,2)[7] Test  &lt;tibble [76 × 4]&gt;\n3         3 &lt;fit[+]&gt; ARIMA(1,0,3)(2,1,2)[7] Test  &lt;tibble [76 × 4]&gt;\n4         4 &lt;fit[+]&gt; PROPHET                Test  &lt;tibble [76 × 4]&gt;\n\n\nNote that Calibration Data is simply forecasting predictions and residuals that are calculated from the hold-out data (also know as test data in machine learning)\n\n\n20.5.6 Step 5: Model Accuracy Assessment\nIn general, there are two ways to assess accuracy of the models. They are by means of accuracy metrics or visualisation.\nIn the code chunk below, modeltime_accuracy() of modeltime package is used compute the accuracy metrics. Then, table_modeltime_accuracy() is used to present the accuracy metrics in tabular form.\n\ncalibration_tbl %&gt;%\n  modeltime_accuracy %&gt;%\n  table_modeltime_accuracy(\n    .interactive = FALSE)\n\n\n\n\n\n\n\nAccuracy Table\n\n\n.model_id\n.model_desc\n.type\nmae\nmape\nmase\nsmape\nrmse\nrsq\n\n\n\n\n1\nETS(M,N,M)\nTest\n25250.52\n9.86\n0.65\n9.61\n31554.80\n0.64\n\n\n2\nARIMA(3,0,0)(1,1,2)[7]\nTest\n23087.67\n8.90\n0.59\n8.79\n29863.72\n0.66\n\n\n3\nARIMA(1,0,3)(2,1,2)[7]\nTest\n23049.21\n8.89\n0.59\n8.78\n29829.18\n0.66\n\n\n4\nPROPHET\nTest\n22356.01\n8.54\n0.57\n8.60\n30521.52\n0.66\n\n\n\n\n\n\n\nVisualizing the Test Error is easy to do using the interactive plotly visualization (just toggle the visibility of the models using the Legend).\n\ncalibration_tbl %&gt;%\n  modeltime_forecast(\n    new_data = testing(splits),\n    actual_data = grocery) %&gt;%\n  plot_modeltime_forecast(\n    .legend_max_width = 25, \n    .interactive = TRUE,\n    .plotly_slider = TRUE)\n\n\n\n\n\n\n\n\n\n20.5.7 Step 6 - Refit to Full Dataset & Forecast Forward\nThe final step is to refit the models to the full dataset using modeltime_refit() and forecast them forward.\nThe code chunk below uses modeltime_refit() to refit the forecasting models with the full data.\n\nrefit_tbl &lt;- calibration_tbl %&gt;%\n    modeltime_refit(data = grocery)\n\nThen, modeltime_forecast() is used to forecast to a selected future time period, in this example 6 weeks.\n\nforecast_tbl &lt;- refit_tbl %&gt;%\n  modeltime_forecast(\n    h = \"6 weeks\",\n    actual_data = grocery,\n    keep_data = TRUE) \n\nNotice that this newly derived forecast_tbl consists of 1852 rows (1684 rows for the original grocery sales data plus 7 days x 6 weeks x 4 models forecasted data)\n\nforecast_tbl %&gt;%\n  plot_modeltime_forecast(\n    .legend_max_width = 25, \n    .interactive = TRUE,\n    .plotly_slider = TRUE)\n\n\n\n\n\nLet us also examine the model accuracy metrics after refitting the full data set.\n\nrefit_tbl %&gt;%\n  modeltime_accuracy() %&gt;%\n  table_modeltime_accuracy(\n    .interactive = FALSE)\n\n\n\n\n\n\n\nAccuracy Table\n\n\n.model_id\n.model_desc\n.type\nmae\nmape\nmase\nsmape\nrmse\nrsq\n\n\n\n\n1\nETS(M,N,M)\nTest\n25250.52\n9.86\n0.65\n9.61\n31554.80\n0.64\n\n\n2\nARIMA(3,0,0)(1,1,2)[7]\nTest\n23087.67\n8.90\n0.59\n8.79\n29863.72\n0.66\n\n\n3\nUPDATE: ARIMA(4,0,4)(1,1,2)[7] WITH DRIFT\nTest\n23049.21\n8.89\n0.59\n8.78\n29829.18\n0.66\n\n\n4\nPROPHET\nTest\n22356.01\n8.54\n0.57\n8.60\n30521.52\n0.66",
+    "crumbs": [
+      "Visualising and Analysing Time-series Data",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span>"
     ]
   }
 ]
