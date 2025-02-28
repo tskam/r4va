@@ -8,7 +8,7 @@
 
 <meta name="dcterms.date" content="2023-12-04">
 
-<title>19&nbsp; R for Data Science: Tidyverse principles and methods – R for Visual Analytics</title>
+<title>19&nbsp; Visualising, Analysing and Forecasting Time-series Data: tidyverts methods – R for Visual Analytics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -82,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap17.html">Visualising and Analysing Time-series Data</a></li><li class="breadcrumb-item"><a href="./chap19.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap17.html">Visualising and Analysing Time-series Data</a></li><li class="breadcrumb-item"><a href="./chap19.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: tidyverts methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -277,13 +311,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap19.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: tidyverts methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap20.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Time on the Horizon: ggHoriPlot methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span></span></a>
   </div>
 </li>
       </ul>
@@ -438,15 +472,77 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#learning-outcome" id="toc-learning-outcome" class="nav-link active" data-scroll-target="#learning-outcome"><span class="header-section-number">19.1</span> Learning Outcome</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">19.2</span> Getting Started</a>
+  <ul class="collapse">
+  <li><a href="#importing-the-data" id="toc-importing-the-data" class="nav-link" data-scroll-target="#importing-the-data"><span class="header-section-number">19.2.1</span> Importing the data</a></li>
+  <li><a href="#conventional-base-ts-object-versus-tibble-object" id="toc-conventional-base-ts-object-versus-tibble-object" class="nav-link" data-scroll-target="#conventional-base-ts-object-versus-tibble-object"><span class="header-section-number">19.2.2</span> Conventional base <code>ts</code> object versus <code>tibble</code> object</a></li>
+  <li><a href="#conventional-base-ts-object-versus-tibble-object-1" id="toc-conventional-base-ts-object-versus-tibble-object-1" class="nav-link" data-scroll-target="#conventional-base-ts-object-versus-tibble-object-1"><span class="header-section-number">19.2.3</span> Conventional base <code>ts</code> object versus <code>tibble</code> object</a></li>
+  <li><a href="#converting-tibble-object-to-tsibble-object" id="toc-converting-tibble-object-to-tsibble-object" class="nav-link" data-scroll-target="#converting-tibble-object-to-tsibble-object"><span class="header-section-number">19.2.4</span> Converting <code>tibble</code> object to <code>tsibble</code> object</a></li>
+  <li><a href="#tsibble-object" id="toc-tsibble-object" class="nav-link" data-scroll-target="#tsibble-object"><span class="header-section-number">19.2.5</span> tsibble object</a></li>
+  </ul></li>
+  <li><a href="#visualising-time-series-data" id="toc-visualising-time-series-data" class="nav-link" data-scroll-target="#visualising-time-series-data"><span class="header-section-number">19.3</span> Visualising Time-series Data</a>
+  <ul class="collapse">
+  <li><a href="#visualising-single-time-series-ggplot2-methods" id="toc-visualising-single-time-series-ggplot2-methods" class="nav-link" data-scroll-target="#visualising-single-time-series-ggplot2-methods"><span class="header-section-number">19.3.1</span> Visualising single time-series: ggplot2 methods</a></li>
+  <li><a href="#plotting-multiple-time-series-data-with-ggplot2-methods" id="toc-plotting-multiple-time-series-data-with-ggplot2-methods" class="nav-link" data-scroll-target="#plotting-multiple-time-series-data-with-ggplot2-methods"><span class="header-section-number">19.3.2</span> Plotting multiple time-series data with ggplot2 methods</a></li>
+  </ul></li>
+  <li><a href="#visual-analysis-of-time-series-data" id="toc-visual-analysis-of-time-series-data" class="nav-link" data-scroll-target="#visual-analysis-of-time-series-data"><span class="header-section-number">19.4</span> Visual Analysis of Time-series Data</a>
+  <ul class="collapse">
+  <li><a href="#visual-analysis-of-seasonality-with-seasonal-plot" id="toc-visual-analysis-of-seasonality-with-seasonal-plot" class="nav-link" data-scroll-target="#visual-analysis-of-seasonality-with-seasonal-plot"><span class="header-section-number">19.4.1</span> Visual Analysis of Seasonality with Seasonal Plot</a></li>
+  <li><a href="#visual-analysis-of-seasonality-with-cycle-plot" id="toc-visual-analysis-of-seasonality-with-cycle-plot" class="nav-link" data-scroll-target="#visual-analysis-of-seasonality-with-cycle-plot"><span class="header-section-number">19.4.2</span> Visual Analysis of Seasonality with Cycle Plot</a></li>
+  </ul></li>
+  <li><a href="#time-series-decomposition" id="toc-time-series-decomposition" class="nav-link" data-scroll-target="#time-series-decomposition"><span class="header-section-number">19.5</span> Time series decomposition</a>
+  <ul class="collapse">
+  <li><a href="#single-time-series-decomposition" id="toc-single-time-series-decomposition" class="nav-link" data-scroll-target="#single-time-series-decomposition"><span class="header-section-number">19.5.1</span> Single time series decomposition</a></li>
+  <li><a href="#multiple-time-series-decomposition" id="toc-multiple-time-series-decomposition" class="nav-link" data-scroll-target="#multiple-time-series-decomposition"><span class="header-section-number">19.5.2</span> Multiple time-series decomposition</a></li>
+  <li><a href="#composite-plot-of-time-series-decomposition" id="toc-composite-plot-of-time-series-decomposition" class="nav-link" data-scroll-target="#composite-plot-of-time-series-decomposition"><span class="header-section-number">19.5.3</span> Composite plot of time series decomposition</a></li>
+  </ul></li>
+  <li><a href="#visual-stl-diagnostics" id="toc-visual-stl-diagnostics" class="nav-link" data-scroll-target="#visual-stl-diagnostics"><span class="header-section-number">19.6</span> Visual STL Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#visual-stl-diagnostics-with-feasts" id="toc-visual-stl-diagnostics-with-feasts" class="nav-link" data-scroll-target="#visual-stl-diagnostics-with-feasts"><span class="header-section-number">19.6.1</span> Visual STL diagnostics with feasts</a></li>
+  <li><a href="#classical-decomposition-with-feasts" id="toc-classical-decomposition-with-feasts" class="nav-link" data-scroll-target="#classical-decomposition-with-feasts"><span class="header-section-number">19.6.2</span> Classical Decomposition with feasts</a></li>
+  </ul></li>
+  <li><a href="#visual-forecasting" id="toc-visual-forecasting" class="nav-link" data-scroll-target="#visual-forecasting"><span class="header-section-number">19.7</span> Visual Forecasting</a>
+  <ul class="collapse">
+  <li><a href="#time-series-data-sampling" id="toc-time-series-data-sampling" class="nav-link" data-scroll-target="#time-series-data-sampling"><span class="header-section-number">19.7.1</span> Time Series Data Sampling</a></li>
+  <li><a href="#exploratory-data-analysis-eda-time-series-data" id="toc-exploratory-data-analysis-eda-time-series-data" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda-time-series-data"><span class="header-section-number">19.7.2</span> Exploratory Data Analysis (EDA): Time Series Data</a></li>
+  <li><a href="#fitting-forecasting-models" id="toc-fitting-forecasting-models" class="nav-link" data-scroll-target="#fitting-forecasting-models"><span class="header-section-number">19.7.3</span> Fitting forecasting models</a></li>
+  <li><a href="#fitting-ets-methods-with-season-holt-winters" id="toc-fitting-ets-methods-with-season-holt-winters" class="nav-link" data-scroll-target="#fitting-ets-methods-with-season-holt-winters"><span class="header-section-number">19.7.4</span> Fitting ETS Methods with Season: Holt-Winters</a></li>
+  <li><a href="#fitting-multiple-ets-models" id="toc-fitting-multiple-ets-models" class="nav-link" data-scroll-target="#fitting-multiple-ets-models"><span class="header-section-number">19.7.5</span> Fitting multiple ETS Models</a></li>
+  <li><a href="#the-model-coefficient" id="toc-the-model-coefficient" class="nav-link" data-scroll-target="#the-model-coefficient"><span class="header-section-number">19.7.6</span> The model coefficient</a></li>
+  <li><a href="#step-4-model-comparison" id="toc-step-4-model-comparison" class="nav-link" data-scroll-target="#step-4-model-comparison"><span class="header-section-number">19.7.7</span> Step 4: Model Comparison</a></li>
+  <li><a href="#step-5-forecasting-future-values" id="toc-step-5-forecasting-future-values" class="nav-link" data-scroll-target="#step-5-forecasting-future-values"><span class="header-section-number">19.7.8</span> Step 5: Forecasting future values</a></li>
+  <li><a href="#fitting-ets-automatically" id="toc-fitting-ets-automatically" class="nav-link" data-scroll-target="#fitting-ets-automatically"><span class="header-section-number">19.7.9</span> Fitting ETS Automatically</a></li>
+  <li><a href="#fitting-fitting-ets-automatically" id="toc-fitting-fitting-ets-automatically" class="nav-link" data-scroll-target="#fitting-fitting-ets-automatically"><span class="header-section-number">19.7.10</span> Fitting Fitting ETS Automatically</a></li>
+  <li><a href="#forecast-the-future-values" id="toc-forecast-the-future-values" class="nav-link" data-scroll-target="#forecast-the-future-values"><span class="header-section-number">19.7.11</span> Forecast the future values</a></li>
+  <li><a href="#visualising-autoets-model-with-ggplot2" id="toc-visualising-autoets-model-with-ggplot2" class="nav-link" data-scroll-target="#visualising-autoets-model-with-ggplot2"><span class="header-section-number">19.7.12</span> Visualising AutoETS model with ggplot2</a></li>
+  <li><a href="#visualising-autoets-model-with-ggplot2-1" id="toc-visualising-autoets-model-with-ggplot2-1" class="nav-link" data-scroll-target="#visualising-autoets-model-with-ggplot2-1"><span class="header-section-number">19.7.13</span> Visualising AutoETS model with ggplot2</a></li>
+  </ul></li>
+  <li><a href="#autoregressive-integrated-moving-averagearima-methods-for-time-series-forecasting-fable-tidyverts-methods" id="toc-autoregressive-integrated-moving-averagearima-methods-for-time-series-forecasting-fable-tidyverts-methods" class="nav-link" data-scroll-target="#autoregressive-integrated-moving-averagearima-methods-for-time-series-forecasting-fable-tidyverts-methods"><span class="header-section-number">19.8</span> AutoRegressive Integrated Moving Average(ARIMA) Methods for Time Series Forecasting: fable (tidyverts) methods</a>
+  <ul class="collapse">
+  <li><a href="#visualising-autocorrelations-feasts-methods" id="toc-visualising-autocorrelations-feasts-methods" class="nav-link" data-scroll-target="#visualising-autocorrelations-feasts-methods"><span class="header-section-number">19.8.1</span> Visualising Autocorrelations: feasts methods</a></li>
+  <li><a href="#visualising-autocorrelations-feasts-methods-1" id="toc-visualising-autocorrelations-feasts-methods-1" class="nav-link" data-scroll-target="#visualising-autocorrelations-feasts-methods-1"><span class="header-section-number">19.8.2</span> Visualising Autocorrelations: feasts methods</a></li>
+  <li><a href="#differencing-fable-methods" id="toc-differencing-fable-methods" class="nav-link" data-scroll-target="#differencing-fable-methods"><span class="header-section-number">19.8.3</span> Differencing: fable methods</a></li>
+  <li><a href="#fitting-arima-models-manually-fable-methods" id="toc-fitting-arima-models-manually-fable-methods" class="nav-link" data-scroll-target="#fitting-arima-models-manually-fable-methods"><span class="header-section-number">19.8.4</span> Fitting ARIMA models manually: fable methods</a></li>
+  <li><a href="#fitting-arima-models-automatically-fable-methods" id="toc-fitting-arima-models-automatically-fable-methods" class="nav-link" data-scroll-target="#fitting-arima-models-automatically-fable-methods"><span class="header-section-number">19.8.5</span> Fitting ARIMA models automatically: fable methods</a></li>
+  <li><a href="#model-comparison" id="toc-model-comparison" class="nav-link" data-scroll-target="#model-comparison"><span class="header-section-number">19.8.6</span> Model Comparison</a></li>
+  <li><a href="#forecast-multiple-time-series" id="toc-forecast-multiple-time-series" class="nav-link" data-scroll-target="#forecast-multiple-time-series"><span class="header-section-number">19.8.7</span> Forecast Multiple Time Series</a></li>
+  <li><a href="#fitting-mulltiple-time-series" id="toc-fitting-mulltiple-time-series" class="nav-link" data-scroll-target="#fitting-mulltiple-time-series"><span class="header-section-number">19.8.8</span> Fitting Mulltiple Time Series</a></li>
+  <li><a href="#examining-models" id="toc-examining-models" class="nav-link" data-scroll-target="#examining-models"><span class="header-section-number">19.8.9</span> Examining Models</a></li>
+  <li><a href="#extracintg-fitted-and-residual-values" id="toc-extracintg-fitted-and-residual-values" class="nav-link" data-scroll-target="#extracintg-fitted-and-residual-values"><span class="header-section-number">19.8.10</span> Extracintg fitted and residual values</a></li>
+  <li><a href="#comparing-fit-models" id="toc-comparing-fit-models" class="nav-link" data-scroll-target="#comparing-fit-models"><span class="header-section-number">19.8.11</span> Comparing Fit Models</a></li>
+  <li><a href="#forecast-future-values" id="toc-forecast-future-values" class="nav-link" data-scroll-target="#forecast-future-values"><span class="header-section-number">19.8.12</span> Forecast Future Values</a></li>
+  <li><a href="#visualising-the-forecasted-values" id="toc-visualising-the-forecasted-values" class="nav-link" data-scroll-target="#visualising-the-forecasted-values"><span class="header-section-number">19.8.13</span> Visualising the forecasted values</a></li>
+  </ul></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference"><span class="header-section-number">19.9</span> Reference</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap17.html">Visualising and Analysing Time-series Data</a></li><li class="breadcrumb-item"><a href="./chap19.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chap17.html">Visualising and Analysing Time-series Data</a></li><li class="breadcrumb-item"><a href="./chap19.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: tidyverts methods</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">R for Data Science: Tidyverse principles and methods</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: tidyverts methods</span></h1>
 </div>
 
 
@@ -464,7 +560,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">Invalid Date</p>
+      <p class="date-modified">February 28, 2025</p>
     </div>
   </div>
     
@@ -477,6 +573,1124 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="learning-outcome" class="level2" data-number="19.1">
 <h2 data-number="19.1" class="anchored" data-anchor-id="learning-outcome"><span class="header-section-number">19.1</span> Learning Outcome</h2>
+<p><a href="https://tidyverts.org/">tidyverts</a> is a family of R packages specially designed for visualising, analysing and forecasting time-series data conforming to tidyverse framework. It is the work of <a href="https://robjhyndman.com/">Dr.&nbsp;Rob Hyndman</a>, professor of statistics at Monash University, and his team. The family of R packages are intended to be the next-generation replacement for the very popular <a href="https://pkg.robjhyndman.com/forecast/">forecast</a> package, and is currently under active development.</p>
+<p>The main reference for tidyverts is the textbook <a href="https://otexts.com/fpp3/">Forecasting: Principles and Practice, 3rd Edition</a>, by Hyndman and Athanasopoulos. It’s highly recommended to read that in conjunction with working through the notebooks here.</p>
+<p>By the end of this session, you will be able to:</p>
+<ul>
+<li>import and wrangling time-series data by using appropriate tidyverse methods,</li>
+<li>visualise and analyse time-series data,</li>
+<li>calibrate time-series forecasting models by using exponential smoothing and ARIMA techniques, and</li>
+<li>compare and evaluate the performance of forecasting models.</li>
+</ul>
+</section>
+<section id="getting-started" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">19.2</span> Getting Started</h2>
+<p>For the purpose of this hands-on exercise, the following R packages will be used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, tsibble, feasts, fable, seasonal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><a href="https://lubridate.tidyverse.org/"><strong>lubridate</strong></a> provides a collection to functions to parse and wrangle time and date data.</li>
+<li>tsibble, feasts, fable and fable.prophet are belong to <a href="https://tidyverts.org/"><strong>tidyverts</strong></a>, a family of tidy tools for time series data handling, analysis and forecasting.
+<ul>
+<li><a href="https://tsibble.tidyverts.org/"><strong>tsibble</strong></a> provides a data infrastructure for tidy temporal data with wrangling tools. Adapting the tidy data principles, tsibble is a data- and model-oriented object.</li>
+<li><a href="https://feasts.tidyverts.org/"><strong>feasts</strong></a> provides a collection of tools for the analysis of time series data. The package name is an acronym comprising of its key features: Feature Extraction And Statistics for Time Series.</li>
+</ul></li>
+</ul>
+<section id="importing-the-data" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="importing-the-data"><span class="header-section-number">19.2.1</span> Importing the data</h3>
+<p>First, <code>read_csv()</code> of <strong>readr</strong> package is used to import <em>visitor_arrivals_by_air.csv</em> file into R environment. The imported file is saved an tibble object called <em>ts_data</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ts_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data/visitor_arrivals_by_air.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the code chunk below, <code>dmy()</code> of <strong>lubridate</strong> package is used to convert data type of Month-Year field from Character to Date.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ts_data<span class="sc">$</span><span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">dmy</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  ts_data<span class="sc">$</span><span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conventional-base-ts-object-versus-tibble-object" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="conventional-base-ts-object-versus-tibble-object"><span class="header-section-number">19.2.2</span> Conventional base <code>ts</code> object versus <code>tibble</code> object</h3>
+<p>tibble object</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ts_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 144 × 34
+   `Month-Year` `Republic of South Africa` Canada   USA Bangladesh Brunei China
+   &lt;date&gt;                            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 2008-01-01                         3680   6972 31155       6786   3729 79599
+ 2 2008-02-01                         1662   6056 27738       6314   3070 82074
+ 3 2008-03-01                         3394   6220 31349       7502   4805 72546
+ 4 2008-04-01                         3337   4764 26376       7333   3096 76112
+ 5 2008-05-01                         2089   4460 26788       7988   3586 64808
+ 6 2008-06-01                         2515   3888 29725       8301   5284 55238
+ 7 2008-07-01                         2919   5313 33183       9004   4070 80747
+ 8 2008-08-01                         2471   4519 27427       7913   4183 66625
+ 9 2008-09-01                         2492   3421 21588       7549   3160 52649
+10 2008-10-01                         3023   4756 25112       7527   2983 54423
+# ℹ 134 more rows
+# ℹ 27 more variables: `Hong Kong SAR (China)` &lt;dbl&gt;, India &lt;dbl&gt;,
+#   Indonesia &lt;dbl&gt;, Japan &lt;dbl&gt;, `South Korea` &lt;dbl&gt;, Kuwait &lt;dbl&gt;,
+#   Malaysia &lt;dbl&gt;, Myanmar &lt;dbl&gt;, Pakistan &lt;dbl&gt;, Philippines &lt;dbl&gt;,
+#   `Saudi Arabia` &lt;dbl&gt;, `Sri Lanka` &lt;dbl&gt;, Taiwan &lt;dbl&gt;, Thailand &lt;dbl&gt;,
+#   `United Arab Emirates` &lt;dbl&gt;, Vietnam &lt;dbl&gt;, `Belgium &amp; Luxembourg` &lt;dbl&gt;,
+#   Finland &lt;dbl&gt;, France &lt;dbl&gt;, Germany &lt;dbl&gt;, Italy &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="conventional-base-ts-object-versus-tibble-object-1" class="level3" data-number="19.2.3">
+<h3 data-number="19.2.3" class="anchored" data-anchor-id="conventional-base-ts-object-versus-tibble-object-1"><span class="header-section-number">19.2.3</span> Conventional base <code>ts</code> object versus <code>tibble</code> object</h3>
+<p>ts object</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ts_data_ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(ts_data)       </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ts_data_ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Month-Year Republic of South Africa Canada   USA Bangladesh Brunei China
+[1,]      13879                     3680   6972 31155       6786   3729 79599
+[2,]      13910                     1662   6056 27738       6314   3070 82074
+[3,]      13939                     3394   6220 31349       7502   4805 72546
+[4,]      13970                     3337   4764 26376       7333   3096 76112
+[5,]      14000                     2089   4460 26788       7988   3586 64808
+[6,]      14031                     2515   3888 29725       8301   5284 55238
+     Hong Kong SAR (China) India Indonesia Japan South Korea Kuwait Malaysia
+[1,]                 17103 41639     62683 37673       27937    284    31352
+[2,]                 21089 37170     47834 35297       22633    241    35030
+[3,]                 23230 44815     64688 42575       22876    206    37629
+[4,]                 17688 49527     58074 26839       20634    193    37521
+[5,]                 19340 67754     57089 30814       22785    140    38044
+[6,]                 19152 57380     70118 31001       22575    354    40419
+     Myanmar Pakistan Philippines Saudi Arabia Sri Lanka Taiwan Thailand
+[1,]    5269     1395       18622          406      5289  13757    18370
+[2,]    4643     1027       21609          591      4767  13921    16400
+[3,]    6218     1635       28464          626      4988  11181    23387
+[4,]    7324     1232       30131          644      7639  11665    24469
+[5,]    5395     1306       30193          470      5125  11436    21935
+[6,]    5542     1996       25800          772      4791  10689    19900
+     United Arab Emirates Vietnam Belgium &amp; Luxembourg Finland France Germany
+[1,]                 2652   10315                 1341    1179   6918   11982
+[2,]                 2230   13415                 1449    1207   7876   13256
+[3,]                 3353   14320                 1674    1071   8066   15185
+[4,]                 3245   15413                 1426     768   8312   11604
+[5,]                 2856   14424                 1243     690   7066    9853
+[6,]                 4292   21368                 1255     624   5926    9347
+     Italy Netherlands Spain Switzerland United Kingdom Australia New Zealand
+[1,]  2953        4938  1668        4450          41934     71260        7806
+[2,]  2704        4885  1568        4381          44029     45595        4729
+[3,]  2822        5015  2254        5015          49489     53191        6106
+[4,]  3018        4902  1503        5434          35771     56514        7560
+[5,]  2165        4397  1365        4427          24464     57808        9090
+[6,]  2022        4166  1446        3359          22473     63350        9681</code></pre>
+</div>
+</div>
+</section>
+<section id="converting-tibble-object-to-tsibble-object" class="level3" data-number="19.2.4">
+<h3 data-number="19.2.4" class="anchored" data-anchor-id="converting-tibble-object-to-tsibble-object"><span class="header-section-number">19.2.4</span> Converting <code>tibble</code> object to <code>tsibble</code> object</h3>
+<p>Built on top of the tibble, a <strong>tsibble</strong> (or tbl_ts) is a data- and model-oriented object. Compared to the conventional time series objects in R, for example ts, zoo, and xts, the tsibble preserves time indices as the essential data column and makes heterogeneous data structures possible. Beyond the tibble-like representation, key comprised of single or multiple variables is introduced to uniquely identify observational units over time (index).</p>
+<p>The code chunk below converting ts_data from tibble object into tsibble object by using <a href="https://tsibble.tidyverts.org/reference/as-tsibble.html"><code>as_tsibble()</code></a> of <strong>tsibble</strong> R package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ts_tsibble <span class="ot">&lt;-</span> ts_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">yearmonth</span>(<span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> <span class="st">`</span><span class="at">Month</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What can we learn from the code chunk above? + <a href=""><code>mutate()</code></a> of <strong>dplyr</strong> package is used to derive a new field by transforming the data values in Month-Year field into month-year format. The transformation is performed by using <a href="https://tsibble.tidyverts.org/reference/year-month.html"><code>yearmonth()</code></a> of <strong>tsibble</strong> package. + <a href="https://tsibble.tidyverts.org/reference/as-tibble.html"><code>as_tsibble()</code></a> is used to convert the tibble data frame into tsibble data frame.</p>
+</section>
+<section id="tsibble-object" class="level3" data-number="19.2.5">
+<h3 data-number="19.2.5" class="anchored" data-anchor-id="tsibble-object"><span class="header-section-number">19.2.5</span> tsibble object</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ts_tsibble</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 144 x 35 [1M]
+   `Month-Year` `Republic of South Africa` Canada   USA Bangladesh Brunei China
+   &lt;date&gt;                            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+ 1 2008-01-01                         3680   6972 31155       6786   3729 79599
+ 2 2008-02-01                         1662   6056 27738       6314   3070 82074
+ 3 2008-03-01                         3394   6220 31349       7502   4805 72546
+ 4 2008-04-01                         3337   4764 26376       7333   3096 76112
+ 5 2008-05-01                         2089   4460 26788       7988   3586 64808
+ 6 2008-06-01                         2515   3888 29725       8301   5284 55238
+ 7 2008-07-01                         2919   5313 33183       9004   4070 80747
+ 8 2008-08-01                         2471   4519 27427       7913   4183 66625
+ 9 2008-09-01                         2492   3421 21588       7549   3160 52649
+10 2008-10-01                         3023   4756 25112       7527   2983 54423
+# ℹ 134 more rows
+# ℹ 28 more variables: `Hong Kong SAR (China)` &lt;dbl&gt;, India &lt;dbl&gt;,
+#   Indonesia &lt;dbl&gt;, Japan &lt;dbl&gt;, `South Korea` &lt;dbl&gt;, Kuwait &lt;dbl&gt;,
+#   Malaysia &lt;dbl&gt;, Myanmar &lt;dbl&gt;, Pakistan &lt;dbl&gt;, Philippines &lt;dbl&gt;,
+#   `Saudi Arabia` &lt;dbl&gt;, `Sri Lanka` &lt;dbl&gt;, Taiwan &lt;dbl&gt;, Thailand &lt;dbl&gt;,
+#   `United Arab Emirates` &lt;dbl&gt;, Vietnam &lt;dbl&gt;, `Belgium &amp; Luxembourg` &lt;dbl&gt;,
+#   Finland &lt;dbl&gt;, France &lt;dbl&gt;, Germany &lt;dbl&gt;, Italy &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="visualising-time-series-data" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="visualising-time-series-data"><span class="header-section-number">19.3</span> Visualising Time-series Data</h2>
+<p>In order to visualise the time-series data effectively, we need to organise the data frame from wide to long format by using <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> of <strong>tidyr</strong> package as shown below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ts_longer <span class="ot">&lt;-</span> ts_data <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">34</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Country"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Arrivals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="visualising-single-time-series-ggplot2-methods" class="level3" data-number="19.3.1">
+<h3 data-number="19.3.1" class="anchored" data-anchor-id="visualising-single-time-series-ggplot2-methods"><span class="header-section-number">19.3.1</span> Visualising single time-series: ggplot2 methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ts_longer <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> Arrivals))<span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What can we learn from the code chunk above?</p>
+<ul>
+<li><a href="https://dplyr.tidyverse.org/reference/filter.html"><code>filter()</code></a> of <a href="https://dplyr.tidyverse.org/index.html"><strong>dplyr</strong></a> package is used to select records belong to Vietnam.</li>
+<li><a href="https://ggplot2.tidyverse.org/reference/geom_path.html"><code>geom_line()</code></a> of <a href="https://ggplot2.tidyverse.org/index.html"><strong>ggplot2</strong></a> package is used to plot the time-series line graph. ]</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="plotting-multiple-time-series-data-with-ggplot2-methods" class="level3" data-number="19.3.2">
+<h3 data-number="19.3.2" class="anchored" data-anchor-id="plotting-multiple-time-series-data-with-ggplot2-methods"><span class="header-section-number">19.3.2</span> Plotting multiple time-series data with ggplot2 methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ts_longer, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Arrivals,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Country))<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.box.spacing =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In order to provide effective comparison, <a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html"><code>facet_wrap()</code></a> of <strong>ggplot2</strong> package is used to create small multiple line graph also known as trellis plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ts_longer, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Arrivals))<span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Country,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">3</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visual-analysis-of-time-series-data" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="visual-analysis-of-time-series-data"><span class="header-section-number">19.4</span> Visual Analysis of Time-series Data</h2>
+<ul>
+<li><p>Time series datasets can contain a seasonal component.</p></li>
+<li><p>This is a cycle that repeats over time, such as monthly or yearly. This repeating cycle may obscure the signal that we wish to model when forecasting, and in turn may provide a strong signal to our predictive models.</p></li>
+</ul>
+<p>In this section, you will discover how to identify seasonality in time series data by using functions provides by <strong>feasts</strong> packages.</p>
+<p>In order to visualise the time-series data effectively, we need to organise the data frame from wide to long format by using <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> of <strong>tidyr</strong> package as shown below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="ot">&lt;-</span> ts_tsibble <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">34</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Country"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Arrivals"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="visual-analysis-of-seasonality-with-seasonal-plot" class="level3" data-number="19.4.1">
+<h3 data-number="19.4.1" class="anchored" data-anchor-id="visual-analysis-of-seasonality-with-seasonal-plot"><span class="header-section-number">19.4.1</span> Visual Analysis of Seasonality with Seasonal Plot</h3>
+<p>A <strong>seasonal plot</strong> is similar to a time plot except that the data are plotted against the individual <strong>seasons</strong> in which the data were observed.</p>
+<p>A season plot is created by using <a href="https://feasts.tidyverts.org/reference/gg_season.html"><code>gg_season()</code></a> of <strong>feasts</strong> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Italy"</span> <span class="sc">|</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"United Kingdom"</span> <span class="sc">|</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Germany"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_season</span>(Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visual-analysis-of-seasonality-with-cycle-plot" class="level3" data-number="19.4.2">
+<h3 data-number="19.4.2" class="anchored" data-anchor-id="visual-analysis-of-seasonality-with-cycle-plot"><span class="header-section-number">19.4.2</span> Visual Analysis of Seasonality with Cycle Plot</h3>
+<p>A <strong>cycle plot</strong> shows how a trend or cycle changes over time. We can use them to see seasonal patterns. Typically, a cycle plot shows a measure on the Y-axis and then shows a time period (such as months or seasons) along the X-axis. For each time period, there is a trend line across a number of years.</p>
+<p>Figure below shows two time-series lines of visitor arrivals from Vietnam and Italy. Both lines reveal clear sign of seasonal patterns but not the trend.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Italy"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(Arrivals) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Country <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the code chunk below, cycle plots using <a href="https://feasts.tidyverts.org/reference/gg_subseries.html"><code>gg_subseries()</code></a> of feasts package are created. Notice that the cycle plots show not only seasonal patterns but also trend.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Italy"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_subseries</span>(Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="time-series-decomposition" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="time-series-decomposition"><span class="header-section-number">19.5</span> Time series decomposition</h2>
+<p>Time series decomposition allows us to isolate structural components such as trend and seasonality from the time-series data.</p>
+<p><img src="chap19/image1.jpg" class="img-fluid"></p>
+<section id="single-time-series-decomposition" class="level3" data-number="19.5.1">
+<h3 data-number="19.5.1" class="anchored" data-anchor-id="single-time-series-decomposition"><span class="header-section-number">19.5.1</span> Single time series decomposition</h3>
+<p>In <strong>feasts</strong> package, time series decomposition is supported by <a href="https://feasts.tidyverts.org/reference/ACF.html"><code>ACF()</code></a>, <code>PACF()</code>, <code>CCF()</code>, <a href="https://feasts.tidyverts.org/reference/feat_acf.html"><code>feat_acf()</code></a>, and <a href="https://feasts.tidyverts.org/reference/feat_acf.html"><code>feat_pacf()</code></a>. The output can then be plotted by using <code>autoplot()</code> of <strong>feasts</strong> package.</p>
+<p>In the code chunk below, <code>ACF()</code> of <strong>feasts</strong> package is used to plot the ACF curve of visitor arrival from Vietnam.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(Arrivals) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the code chunk below, <code>PACF()</code> of <strong>feasts</strong> package is used to plot the Partial ACF curve of visitor arrival from Vietnam.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">PACF</span>(Arrivals) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-time-series-decomposition" class="level3" data-number="19.5.2">
+<h3 data-number="19.5.2" class="anchored" data-anchor-id="multiple-time-series-decomposition"><span class="header-section-number">19.5.2</span> Multiple time-series decomposition</h3>
+<p>Code chunk below is used to prepare a trellis plot of ACFs for visitor arrivals from Vietnam, Italy, United Kingdom and China.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Italy"</span> <span class="sc">|</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"United Kingdom"</span> <span class="sc">|</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(Arrivals) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On the other hand, code chunk below is used to prepare a trellis plot of PACFs for visitor arrivals from Vietnam, Italy, United Kingdom and China.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Italy"</span> <span class="sc">|</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"United Kingdom"</span> <span class="sc">|</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">PACF</span>(Arrivals) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="composite-plot-of-time-series-decomposition" class="level3" data-number="19.5.3">
+<h3 data-number="19.5.3" class="anchored" data-anchor-id="composite-plot-of-time-series-decomposition"><span class="header-section-number">19.5.3</span> Composite plot of time series decomposition</h3>
+<p>One of the interesting function of feasts package time series decomposition is <a href="https://feasts.tidyverts.org/reference/gg_tsdisplay.html"><code>gg_tsdisplay()</code></a>. It provides a composite plot by showing the original line graph on the top pane follow by the ACF on the left and seasonal plot on the right.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsdisplay</span>(Arrivals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visual-stl-diagnostics" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="visual-stl-diagnostics"><span class="header-section-number">19.6</span> Visual STL Diagnostics</h2>
+<p>STL is an acronym for “Seasonal and Trend decomposition using Loess”, while Loess is a method for estimating nonlinear relationships. It was developed by R. B. Cleveland, Cleveland, McRae, &amp; Terpenning (1990).</p>
+<p>STL is a robust method of time series decomposition often used in economic and environmental analyses. The STL method uses locally fitted regression models to decompose a time series into trend, seasonal, and remainder components.</p>
+<p>The STL algorithm performs smoothing on the time series using LOESS in two loops; the inner loop iterates between seasonal and trend smoothing and the outer loop minimizes the effect of outliers. During the inner loop, the seasonal component is calculated first and removed to calculate the trend component. The remainder is calculated by subtracting the seasonal and trend components from the time series.</p>
+<p>STL has several advantages over the classical, SEATS and X11 decomposition methods:</p>
+<ul>
+<li>Unlike SEATS and X11, STL will handle any type of seasonality, not only monthly and quarterly data.</li>
+<li>The seasonal component is allowed to change over time, and the rate of change can be controlled by the user.</li>
+<li>The smoothness of the trend-cycle can also be controlled by the user.</li>
+<li>It can be robust to outliers (i.e., the user can specify a robust decomposition), so that occasional unusual observations will not affect the estimates of the trend-cycle and seasonal components. They will, however, affect the remainder component.</li>
+</ul>
+<section id="visual-stl-diagnostics-with-feasts" class="level3" data-number="19.6.1">
+<h3 data-number="19.6.1" class="anchored" data-anchor-id="visual-stl-diagnostics-with-feasts"><span class="header-section-number">19.6.1</span> Visual STL diagnostics with feasts</h3>
+<p>In the code chunk below, <code>STL()</code> of <strong>feasts</strong> package is used to decomposite visitor arrivals from Vietnam data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Arrivals)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The grey bars to the left of each panel show the relative scales of the components. Each grey bar represents the same length but because the plots are on different scales, the bars vary in size. The large grey bar in the bottom panel shows that the variation in the remainder component is smallest compared to the variation in the data. If we shrank the bottom three panels until their bars became the same size as that in the data panel, then all the panels would be on the same scale.</p>
+</section>
+<section id="classical-decomposition-with-feasts" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="classical-decomposition-with-feasts"><span class="header-section-number">19.6.2</span> Classical Decomposition with feasts</h3>
+<p>In the code chunk below, <code>classical_decomposition()</code> of <strong>feasts</strong> package is used to decompose a time series into seasonal, trend and irregular components using moving averages. THe function is able to deal with both additive or multiplicative seasonal component.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">classical_decomposition</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>      Arrivals, <span class="at">type =</span> <span class="st">"additive"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visual-forecasting" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="visual-forecasting"><span class="header-section-number">19.7</span> Visual Forecasting</h2>
+<p>In this section, two R packages belong to tidyverts family will be used they are:</p>
+<ul>
+<li><p><a href="https://lubridate.tidyverse.org/"><strong>fable</strong></a> provides a collection of commonly used univariate and multivariate time series forecasting models including exponential smoothing via state space models and automatic ARIMA modelling. It is a tidy version of the popular <a href="https://cran.r-project.org/web/packages/forecast/index.html"><strong>forecast</strong></a> package and a member of <a href="https://tidyverts.org/"><strong>tidyverts</strong></a>.</p></li>
+<li><p><a href="https://fabletools.tidyverts.org/index.html"><strong>fabletools</strong></a> provides tools for building modelling packages, with a focus on time series forecasting. This package allows package developers to extend fable with additional models, without needing to depend on the models supported by fable.</p></li>
+</ul>
+<p>Figure below shows a typical flow of a time-series forecasting process.</p>
+<p><img src="chap19/image5.jpg" class="img-fluid" width="250"></p>
+<section id="time-series-data-sampling" class="level3" data-number="19.7.1">
+<h3 data-number="19.7.1" class="anchored" data-anchor-id="time-series-data-sampling"><span class="header-section-number">19.7.1</span> Time Series Data Sampling</h3>
+<p>A good practice in forecasting is to split the original data set into a training and a hold-out data sets. The first part is called <strong>estimate sample</strong> (also known as training data). It will be used to estimate the starting values and the smoothing parameters. This sample typically contains 75-80 percent of the observation, although the forecaster may choose to use a smaller percentage for longer series.</p>
+<p>The second part of the time series is called <strong>hold-out sample</strong>. It is used to check the forecasting performance. No matter how many parameters are estimated with the estimation sample, each method under consideration can be evaluated with the use of the “new” observation contained in the hold-out sample.</p>
+<p><img src="chap19/image6.jpg" class="img-fluid" width="640"></p>
+<p>In this example we will use the last 12 months for hold-out and the rest for training.</p>
+<p>First, an extra column called <em>Type</em> indicating training or hold-out will be created by using <code>mutate()</code> of <strong>dplyr</strong> package. It will be extremely useful for subsequent data visualisation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vietnam_ts <span class="ot">&lt;-</span> tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="fu">if_else</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="st">"2019-01-01"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hold-out"</span>, <span class="st">"Training"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, a training data set is extracted from the original data set by using <code>filter()</code> of <strong>dplyr</strong> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>vietnam_train <span class="ot">&lt;-</span> vietnam_ts <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span> <span class="sc">&lt;</span> <span class="st">"2019-01-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exploratory-data-analysis-eda-time-series-data" class="level3" data-number="19.7.2">
+<h3 data-number="19.7.2" class="anchored" data-anchor-id="exploratory-data-analysis-eda-time-series-data"><span class="header-section-number">19.7.2</span> Exploratory Data Analysis (EDA): Time Series Data</h3>
+<p>Before fitting forecasting models, it is a good practice to analysis the time series data by using EDA methods.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(Arrivals)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">components</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-forecasting-models" class="level3" data-number="19.7.3">
+<h3 data-number="19.7.3" class="anchored" data-anchor-id="fitting-forecasting-models"><span class="header-section-number">19.7.3</span> Fitting forecasting models</h3>
+<section id="fitting-exponential-smoothing-state-space-ets-models-fable-methods" class="level4" data-number="19.7.3.1">
+<h4 data-number="19.7.3.1" class="anchored" data-anchor-id="fitting-exponential-smoothing-state-space-ets-models-fable-methods"><span class="header-section-number">19.7.3.1</span> Fitting Exponential Smoothing State Space (ETS) Models: fable methods</h4>
+<p>In fable, Exponential Smoothing State Space Models are supported by <a href="https://fable.tidyverts.org/reference/ETS.html"><code>ETS()</code></a>. The combinations are specified through the formula:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ETS</span>(y <span class="sc">~</span> <span class="fu">error</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"M"</span>)) </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">trend</span>(<span class="fu">c</span>(<span class="st">"N"</span>, <span class="st">"A"</span>, <span class="st">"Ad"</span>)) </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">+</span> <span class="fu">season</span>(<span class="fu">c</span>(<span class="st">"N"</span>, <span class="st">"A"</span>, <span class="st">"M"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fitting-a-simple-exponential-smoothing-ses" class="level4" data-number="19.7.3.2">
+<h4 data-number="19.7.3.2" class="anchored" data-anchor-id="fitting-a-simple-exponential-smoothing-ses"><span class="header-section-number">19.7.3.2</span> Fitting a simple exponential smoothing (SES)</h4>
+<p>.pull-left[</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fit_ses <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>fit_ses</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A mable: 1 x 2
+# Key:     Country [1]
+  Country `ETS(Arrivals ~ error("A") + trend("N") + season("N"))`
+  &lt;chr&gt;                                                   &lt;model&gt;
+1 Vietnam                                            &lt;ETS(A,N,N)&gt;</code></pre>
+</div>
+</div>
+<p>Notice that <code>model()</code> of fable package is used to estimate the ETS model on a particular dataset, and returns a <strong>mable</strong> (model table) object.</p>
+<p>A mable contains a row for each time series (uniquely identified by the key variables), and a column for each model specification. A model is contained within the cells of each model column.</p>
+</section>
+<section id="examine-model-assumptions" class="level4" data-number="19.7.3.3">
+<h4 data-number="19.7.3.3" class="anchored" data-anchor-id="examine-model-assumptions"><span class="header-section-number">19.7.3.3</span> Examine Model Assumptions</h4>
+<p>Next, <code>gg_tsresiduals()</code> of <strong>feasts</strong> package is used to check the model assumptions with residuals plots.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit_ses)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-model-details" class="level4" data-number="19.7.3.4">
+<h4 data-number="19.7.3.4" class="anchored" data-anchor-id="the-model-details"><span class="header-section-number">19.7.3.4</span> The model details</h4>
+<p><a href="https://fabletools.tidyverts.org/reference/report.html"><code>report()</code></a> of fabletools is be used to reveal the model details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fit_ses <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Arrivals 
+Model: ETS(A,N,N) 
+  Smoothing parameters:
+    alpha = 0.9998995 
+
+  Initial states:
+     l[0]
+ 10312.99
+
+  sigma^2:  27939164
+
+     AIC     AICc      BIC 
+2911.726 2911.913 2920.374 </code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-ets-methods-with-trend-holts-linear" class="level4" data-number="19.7.3.5">
+<h4 data-number="19.7.3.5" class="anchored" data-anchor-id="fitting-ets-methods-with-trend-holts-linear"><span class="header-section-number">19.7.3.5</span> Fitting ETS Methods with Trend: Holt’s Linear</h4>
+</section>
+<section id="trend-methods" class="level4" data-number="19.7.3.6">
+<h4 data-number="19.7.3.6" class="anchored" data-anchor-id="trend-methods"><span class="header-section-number">19.7.3.6</span> Trend methods</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>vietnam_H <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="st">`</span><span class="at">Holt's method</span><span class="st">`</span> <span class="ot">=</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>vietnam_H <span class="sc">%&gt;%</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Arrivals 
+Model: ETS(A,A,N) 
+  Smoothing parameters:
+    alpha = 0.9998995 
+    beta  = 0.0001004625 
+
+  Initial states:
+     l[0]     b[0]
+ 13673.29 525.8859
+
+  sigma^2:  28584805
+
+     AIC     AICc      BIC 
+2916.695 2917.171 2931.109 </code></pre>
+</div>
+</div>
+</section>
+<section id="damped-trend-methods" class="level4" data-number="19.7.3.7">
+<h4 data-number="19.7.3.7" class="anchored" data-anchor-id="damped-trend-methods"><span class="header-section-number">19.7.3.7</span> Damped Trend methods</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>vietnam_HAd <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="st">`</span><span class="at">Holt's method</span><span class="st">`</span> <span class="ot">=</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>vietnam_HAd <span class="sc">%&gt;%</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Arrivals 
+Model: ETS(A,Ad,N) 
+  Smoothing parameters:
+    alpha = 0.9998999 
+    beta  = 0.0001098602 
+    phi   = 0.9784562 
+
+  Initial states:
+     l[0]   b[0]
+ 13257.28 523.54
+
+  sigma^2:  28641536
+
+     AIC     AICc      BIC 
+2917.921 2918.593 2935.218 </code></pre>
+</div>
+</div>
+</section>
+<section id="checking-for-results" class="level4" data-number="19.7.3.8">
+<h4 data-number="19.7.3.8" class="anchored" data-anchor-id="checking-for-results"><span class="header-section-number">19.7.3.8</span> Checking for results</h4>
+<p>Check the model assumptions with residuals plots.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(vietnam_H)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(vietnam_HAd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fitting-ets-methods-with-season-holt-winters" class="level3" data-number="19.7.4">
+<h3 data-number="19.7.4" class="anchored" data-anchor-id="fitting-ets-methods-with-season-holt-winters"><span class="header-section-number">19.7.4</span> Fitting ETS Methods with Season: Holt-Winters</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Vietnam_WH <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Additive =</span> <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                   <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                   <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>)),</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Multiplicative =</span> <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) </span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>))</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>Vietnam_WH <span class="sc">%&gt;%</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 10
+  Country .model          sigma2 log_lik   AIC  AICc   BIC    MSE   AMSE     MAE
+  &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 Vietnam Additive       5.33e+6  -1336. 2706. 2711. 2755. 4.68e6 8.56e6 1.72e+3
+2 Vietnam Multiplicative 4.55e-3  -1300. 2635. 2640. 2684. 3.05e6 3.42e6 5.20e-2</code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-multiple-ets-models" class="level3" data-number="19.7.5">
+<h3 data-number="19.7.5" class="anchored" data-anchor-id="fitting-multiple-ets-models"><span class="header-section-number">19.7.5</span> Fitting multiple ETS Models</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fit_ETS <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="st">`</span><span class="at">SES</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">Holt</span><span class="st">`</span><span class="ot">=</span> <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">damped Holt</span><span class="st">`</span> <span class="ot">=</span> </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">trend</span>(<span class="st">"Ad"</span>) <span class="sc">+</span> </span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">WH_A</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ETS</span>(</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>          Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> </span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> </span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">season</span>(<span class="st">"A"</span>)),</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">`</span><span class="at">WH_M</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ETS</span>(Arrivals <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) </span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) </span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>))</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-model-coefficient" class="level3" data-number="19.7.6">
+<h3 data-number="19.7.6" class="anchored" data-anchor-id="the-model-coefficient"><span class="header-section-number">19.7.6</span> The model coefficient</h3>
+<p><a href=""><code>tidy()</code></a> of fabletools is be used to extract model coefficients from a mable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fit_ETS <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 45 × 4
+   Country .model      term      estimate
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;        &lt;dbl&gt;
+ 1 Vietnam SES         alpha     1.00    
+ 2 Vietnam SES         l[0]  10313.      
+ 3 Vietnam Holt        alpha     1.00    
+ 4 Vietnam Holt        beta      0.000100
+ 5 Vietnam Holt        l[0]  13673.      
+ 6 Vietnam Holt        b[0]    526.      
+ 7 Vietnam damped Holt alpha     1.00    
+ 8 Vietnam damped Holt beta      0.000110
+ 9 Vietnam damped Holt phi       0.978   
+10 Vietnam damped Holt l[0]  13257.      
+# ℹ 35 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="step-4-model-comparison" class="level3" data-number="19.7.7">
+<h3 data-number="19.7.7" class="anchored" data-anchor-id="step-4-model-comparison"><span class="header-section-number">19.7.7</span> Step 4: Model Comparison</h3>
+<p><code>glance()</code> of fabletool</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fit_ETS <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  Country .model       sigma2 log_lik   AIC  AICc   BIC       MSE   AMSE     MAE
+  &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 Vietnam SES         2.79e+7  -1453. 2912. 2912. 2920. 27515844. 5.99e7 3.91e+3
+2 Vietnam Holt        2.86e+7  -1453. 2917. 2917. 2931. 27718599. 6.03e7 3.92e+3
+3 Vietnam damped Holt 2.86e+7  -1453. 2918. 2919. 2935. 27556629. 5.97e7 3.92e+3
+4 Vietnam WH_A        5.33e+6  -1336. 2706. 2711. 2755.  4684271. 8.56e6 1.72e+3
+5 Vietnam WH_M        4.55e-3  -1300. 2635. 2640. 2684.  3046059. 3.42e6 5.20e-2</code></pre>
+</div>
+</div>
+</section>
+<section id="step-5-forecasting-future-values" class="level3" data-number="19.7.8">
+<h3 data-number="19.7.8" class="anchored" data-anchor-id="step-5-forecasting-future-values"><span class="header-section-number">19.7.8</span> Step 5: Forecasting future values</h3>
+<p>To forecast the future values, <code>forecast()</code> of fable will be used. Notice that the forecast period is 12 months.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>fit_ETS <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"12 months"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vietnam_ts, </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">level =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-ets-automatically" class="level3" data-number="19.7.9">
+<h3 data-number="19.7.9" class="anchored" data-anchor-id="fitting-ets-automatically"><span class="header-section-number">19.7.9</span> Fitting ETS Automatically</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>fit_autoETS <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ETS</span>(Arrivals))</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>fit_autoETS <span class="sc">%&gt;%</span> <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Arrivals 
+Model: ETS(M,A,M) 
+  Smoothing parameters:
+    alpha = 0.1613503 
+    beta  = 0.0001021811 
+    gamma = 0.0001030996 
+
+  Initial states:
+     l[0]     b[0]      s[0]     s[-1]     s[-2]     s[-3]    s[-4]    s[-5]
+ 15001.12 212.3552 0.9167302 0.8311728 0.8739287 0.8690543 1.104668 1.485584
+    s[-6]     s[-7]    s[-8]     s[-9]    s[-10]    s[-11]
+ 1.311207 0.9917759 1.014187 0.8973028 0.8816768 0.8227129
+
+  sigma^2:  0.0046
+
+     AIC     AICc      BIC 
+2634.751 2640.119 2683.759 </code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-fitting-ets-automatically" class="level3" data-number="19.7.10">
+<h3 data-number="19.7.10" class="anchored" data-anchor-id="fitting-fitting-ets-automatically"><span class="header-section-number">19.7.10</span> Fitting Fitting ETS Automatically</h3>
+<p>Next, we will check the model assumptions with residuals plots by using <code>gg_tsresiduals()</code> of <strong>feasts</strong> package</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gg_tsresiduals</span>(fit_autoETS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="forecast-the-future-values" class="level3" data-number="19.7.11">
+<h3 data-number="19.7.11" class="anchored" data-anchor-id="forecast-the-future-values"><span class="header-section-number">19.7.11</span> Forecast the future values</h3>
+<p>In the code chunk below, <code>forecast()</code> of <strong>fable</strong> package is used to forecast the future values. Then, <code>autoplot()</code> of <strong>feasts</strong> package is used to see the training data along with the forecast values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit_autoETS <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"12 months"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(vietnam_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualising-autoets-model-with-ggplot2" class="level3" data-number="19.7.12">
+<h3 data-number="19.7.12" class="anchored" data-anchor-id="visualising-autoets-model-with-ggplot2"><span class="header-section-number">19.7.12</span> Visualising AutoETS model with ggplot2</h3>
+<p>There are time that we are interested to visualise relationship between training data and fit data and forecasted values versus the hold-out data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualising-autoets-model-with-ggplot2-1" class="level3" data-number="19.7.13">
+<h3 data-number="19.7.13" class="anchored" data-anchor-id="visualising-autoets-model-with-ggplot2-1"><span class="header-section-number">19.7.13</span> Visualising AutoETS model with ggplot2</h3>
+<p>Code chunk below is used to create the data visualisation in previous slide.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>fc_autoETS <span class="ot">&lt;-</span> fit_autoETS <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"12 months"</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>vietnam_ts <span class="sc">%&gt;%</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">Month</span><span class="st">`</span>, </span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">y=</span>Arrivals)) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(fc_autoETS, </span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> Type), </span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> .mean, </span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Forecast"</span>), </span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> fc_autoETS) <span class="sc">+</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> .fitted, </span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Fitted"</span>), </span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">augment</span>(fit_autoETS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="autoregressive-integrated-moving-averagearima-methods-for-time-series-forecasting-fable-tidyverts-methods" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="autoregressive-integrated-moving-averagearima-methods-for-time-series-forecasting-fable-tidyverts-methods"><span class="header-section-number">19.8</span> AutoRegressive Integrated Moving Average(ARIMA) Methods for Time Series Forecasting: fable (tidyverts) methods</h2>
+<section id="visualising-autocorrelations-feasts-methods" class="level3" data-number="19.8.1">
+<h3 data-number="19.8.1" class="anchored" data-anchor-id="visualising-autocorrelations-feasts-methods"><span class="header-section-number">19.8.1</span> Visualising Autocorrelations: feasts methods</h3>
+<p><strong>feasts</strong> package provides a very handy function for visualising ACF and PACF of a time series called <a href="https://feasts.tidyverts.org/reference/gg_tsdisplay.html"><code>gg_tsdiaply()</code></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsdisplay</span>(<span class="at">plot_type=</span><span class="st">'partial'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="visualising-autocorrelations-feasts-methods-1" class="level3" data-number="19.8.2">
+<h3 data-number="19.8.2" class="anchored" data-anchor-id="visualising-autocorrelations-feasts-methods-1"><span class="header-section-number">19.8.2</span> Visualising Autocorrelations: feasts methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(Arrivals) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Country</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"United Kingdom"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ACF</span>(Arrivals) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>By comparing both ACF plots, it is clear that visitor arrivals from United Kingdom were very seasonal and relatively weaker trend as compare to visitor arrivals from Vietnam.</p>
+</section>
+<section id="differencing-fable-methods" class="level3" data-number="19.8.3">
+<h3 data-number="19.8.3" class="anchored" data-anchor-id="differencing-fable-methods"><span class="header-section-number">19.8.3</span> Differencing: fable methods</h3>
+<section id="trend-differencing" class="level4" data-number="19.8.3.1">
+<h4 data-number="19.8.3.1" class="anchored" data-anchor-id="trend-differencing"><span class="header-section-number">19.8.3.1</span> Trend differencing</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    Arrivals,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">lag =</span> <span class="dv">1</span>), </span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot_type=</span><span class="st">'partial'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="seasonal-differencing" class="level4" data-number="19.8.3.2">
+<h4 data-number="19.8.3.2" class="anchored" data-anchor-id="seasonal-differencing"><span class="header-section-number">19.8.3.2</span> Seasonal differencing</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    Arrivals,</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">difference =</span> <span class="dv">12</span>), </span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot_type=</span><span class="st">'partial'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The PACF is suggestive of an AR(1) model; so an initial candidate model is an ARIMA(1,1,0). The ACF suggests an MA(1) model; so an alternative candidate is an ARIMA(0,1,1).</p>
+</section>
+</section>
+<section id="fitting-arima-models-manually-fable-methods" class="level3" data-number="19.8.4">
+<h3 data-number="19.8.4" class="anchored" data-anchor-id="fitting-arima-models-manually-fable-methods"><span class="header-section-number">19.8.4</span> Fitting ARIMA models manually: fable methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>fit_arima <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">arima200 =</span> <span class="fu">ARIMA</span>(Arrivals <span class="sc">~</span> <span class="fu">pdq</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>)),</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sarima210 =</span> <span class="fu">ARIMA</span>(Arrivals <span class="sc">~</span> <span class="fu">pdq</span>(<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">PDQ</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_arima)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 9
+  Country .model      sigma2 log_lik   AIC  AICc   BIC ar_roots   ma_roots 
+  &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;list&gt;     &lt;list&gt;   
+1 Vietnam arima200  4173906.  -1085. 2181. 2182. 2198. &lt;cpl [26]&gt; &lt;cpl [0]&gt;
+2 Vietnam sarima210 4173906.  -1085. 2181. 2182. 2198. &lt;cpl [26]&gt; &lt;cpl [0]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-arima-models-automatically-fable-methods" class="level3" data-number="19.8.5">
+<h3 data-number="19.8.5" class="anchored" data-anchor-id="fitting-arima-models-automatically-fable-methods"><span class="header-section-number">19.8.5</span> Fitting ARIMA models automatically: fable methods</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>fit_autoARIMA <span class="ot">&lt;-</span> vietnam_train <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(<span class="fu">ARIMA</span>(Arrivals))</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(fit_autoARIMA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: Arrivals 
+Model: ARIMA(2,0,0)(2,1,0)[12] w/ drift 
+
+Coefficients:
+         ar1     ar2     sar1     sar2   constant
+      0.4748  0.1892  -0.5723  -0.1578  1443.2068
+s.e.  0.0924  0.0903   0.0989   0.1032   188.9468
+
+sigma^2 estimated as 4173906:  log likelihood=-1084.6
+AIC=2181.19   AICc=2181.94   BIC=2197.92</code></pre>
+</div>
+</div>
+</section>
+<section id="model-comparison" class="level3" data-number="19.8.6">
+<h3 data-number="19.8.6" class="anchored" data-anchor-id="model-comparison"><span class="header-section-number">19.8.6</span> Model Comparison</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>    fit_autoARIMA <span class="sc">%&gt;%</span> <span class="fu">accuracy</span>(),</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    fit_autoETS <span class="sc">%&gt;%</span> <span class="fu">accuracy</span>(),</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    fit_autoARIMA <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">accuracy</span>(vietnam_ts),</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    fit_autoETS <span class="sc">%&gt;%</span> </span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">accuracy</span>(vietnam_ts)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ME, <span class="sc">-</span>MPE, <span class="sc">-</span>ACF1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 8
+  Country .model          .type     RMSE   MAE  MAPE  MASE RMSSE
+  &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Vietnam ARIMA(Arrivals) Training 1907. 1458.  5.37 0.491 0.517
+2 Vietnam ETS(Arrivals)   Training 1745. 1386.  5.29 0.467 0.473
+3 Vietnam ARIMA(Arrivals) Test     2647. 2136.  5.17 0.720 0.717
+4 Vietnam ETS(Arrivals)   Test     3163. 2636.  6.64 0.889 0.857</code></pre>
+</div>
+</div>
+</section>
+<section id="forecast-multiple-time-series" class="level3" data-number="19.8.7">
+<h3 data-number="19.8.7" class="anchored" data-anchor-id="forecast-multiple-time-series"><span class="header-section-number">19.8.7</span> Forecast Multiple Time Series</h3>
+<p>In this section, we will perform time series forecasting on multiple time series at one goal. For the purpose of the hand-on exercise, visitor arrivals from five selected ASEAN countries will be used.</p>
+<p>First, <code>filter()</code> is used to extract the selected countries’ data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>ASEAN <span class="ot">&lt;-</span> tsibble_longer <span class="sc">%&gt;%</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Vietnam"</span> <span class="sc">|</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Malaysia"</span> <span class="sc">|</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Indonesia"</span> <span class="sc">|</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Thailand"</span> <span class="sc">|</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>         Country <span class="sc">==</span> <span class="st">"Philippines"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, <code>mutate()</code> is used to create a new field called Type and populates their respective values. Lastly, <code>filter()</code> is used to extract the training data set and save it as a tsibble object called <em>ASEAN_train</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>ASEAN_train <span class="ot">&lt;-</span> ASEAN <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="fu">if_else</span>(</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Month-Year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="st">"2019-01-01"</span>, </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hold-out"</span>, <span class="st">"Training"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Type <span class="sc">==</span> <span class="st">"Training"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fitting-mulltiple-time-series" class="level3" data-number="19.8.8">
+<h3 data-number="19.8.8" class="anchored" data-anchor-id="fitting-mulltiple-time-series"><span class="header-section-number">19.8.8</span> Fitting Mulltiple Time Series</h3>
+<p>In the code chunk below auto ETS and ARIMA models are fitted by using <code>model()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fit <span class="ot">&lt;-</span> ASEAN_train <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model</span>(</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ets =</span> <span class="fu">ETS</span>(Arrivals),</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">arima =</span> <span class="fu">ARIMA</span>(Arrivals)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="examining-models" class="level3" data-number="19.8.9">
+<h3 data-number="19.8.9" class="anchored" data-anchor-id="examining-models"><span class="header-section-number">19.8.9</span> Examining Models</h3>
+<p>The <code>glance()</code> of <strong>fabletools</strong> provides a one-row summary of each model, and commonly includes descriptions of the model’s fit such as the residual variance and information criteria.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fit <span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 12
+   Country     .model  sigma2 log_lik   AIC  AICc   BIC      MSE    AMSE     MAE
+   &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Indonesia   ets    1.02e-2  -1561. 3156. 3161. 3205.   1.74e8  1.80e8  0.0732
+ 2 Indonesia   arima  1.48e+8  -1290. 2589. 2590. 2603.  NA      NA      NA     
+ 3 Malaysia    ets    4.67e-3  -1430. 2894. 2899. 2943.   2.04e7  2.00e7  0.0506
+ 4 Malaysia    arima  2.62e+7  -1185. 2378. 2379. 2390.  NA      NA      NA     
+ 5 Philippines ets    3.56e-3  -1343. 2722. 2728. 2774.   5.28e6  7.58e6  0.0461
+ 6 Philippines arima  8.04e+6  -1122. 2260. 2262. 2283.  NA      NA      NA     
+ 7 Thailand    ets    6.63e-3  -1343. 2722. 2728. 2774.   5.40e6  6.33e6  0.0584
+ 8 Thailand    arima  8.51e+6  -1127. 2269. 2270. 2288.  NA      NA      NA     
+ 9 Vietnam     ets    4.55e-3  -1300. 2635. 2640. 2684.   3.05e6  3.42e6  0.0520
+10 Vietnam     arima  4.17e+6  -1085. 2181. 2182. 2198.  NA      NA      NA     
+# ℹ 2 more variables: ar_roots &lt;list&gt;, ma_roots &lt;list&gt;</code></pre>
+</div>
+</div>
+<p><strong>Be wary though</strong>, as information criteria (AIC, AICc, BIC) are only comparable between the same model class and only if those models share the same response (after transformations and differencing).</p>
+</section>
+<section id="extracintg-fitted-and-residual-values" class="level3" data-number="19.8.10">
+<h3 data-number="19.8.10" class="anchored" data-anchor-id="extracintg-fitted-and-residual-values"><span class="header-section-number">19.8.10</span> Extracintg fitted and residual values</h3>
+<p>The fitted values and residuals from a model can obtained using fitted() and residuals() respectively. Additionally, the augment() function may be more convenient, which provides the original data along with both fitted values and their residuals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fit <span class="sc">%&gt;%</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 1,320 x 7 [1M]
+# Key:       Country, .model [10]
+   Country   .model    Month Arrivals .fitted  .resid  .innov
+   &lt;chr&gt;     &lt;chr&gt;     &lt;mth&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Indonesia ets    2008 Jan    62683  56534.   6149.  0.109 
+ 2 Indonesia ets    2008 Feb    47834  46417.   1417.  0.0305
+ 3 Indonesia ets    2008 Mar    64688  62660.   2028.  0.0324
+ 4 Indonesia ets    2008 Apr    58074  61045.  -2971. -0.0487
+ 5 Indonesia ets    2008 May    57089  62280.  -5191. -0.0833
+ 6 Indonesia ets    2008 Jun    70118  75791.  -5673. -0.0749
+ 7 Indonesia ets    2008 Jul    73805  78691.  -4886. -0.0621
+ 8 Indonesia ets    2008 Aug    58015  61910.  -3895. -0.0629
+ 9 Indonesia ets    2008 Sep    63730  74518. -10788. -0.145 
+10 Indonesia ets    2008 Oct    71206  67869.   3337.  0.0492
+# ℹ 1,310 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-fit-models" class="level3" data-number="19.8.11">
+<h3 data-number="19.8.11" class="anchored" data-anchor-id="comparing-fit-models"><span class="header-section-number">19.8.11</span> Comparing Fit Models</h3>
+<p>In the code chunk below, <code>accuracy()</code> is used to compare the performances of the models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fit <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 11
+   Country   .model .type      ME   RMSE   MAE    MPE  MAPE  MASE RMSSE     ACF1
+   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+ 1 Indonesia ets    Trai… -1.81e3 13187. 9665. -1.83   7.57 0.556 0.619 -0.236  
+ 2 Indonesia arima  Trai… -9.54e1 11351. 8382. -0.136  6.38 0.482 0.533 -0.00802
+ 3 Malaysia  ets    Trai… -6.78e2  4515. 3538. -1.25   5.15 0.529 0.527 -0.288  
+ 4 Malaysia  arima  Trai… -2.33e1  4801. 3684. -0.109  5.20 0.551 0.561 -0.00933
+ 5 Philippi… ets    Trai… -2.35e0  2298. 1897. -0.334  4.64 0.464 0.408  0.0400 
+ 6 Philippi… arima  Trai…  9.53e0  2624. 1934. -0.269  4.60 0.473 0.466  0.00717
+ 7 Thailand  ets    Trai…  1.97e1  2323. 1773. -0.511  5.89 0.489 0.485 -0.0812 
+ 8 Thailand  arima  Trai…  5.88e1  2710. 1932. -0.562  6.16 0.532 0.565 -0.0112 
+ 9 Vietnam   ets    Trai… -3.52e1  1745. 1386. -0.728  5.29 0.467 0.473  0.279  
+10 Vietnam   arima  Trai…  1.95e0  1907. 1458. -0.671  5.37 0.491 0.517  0.0136 </code></pre>
+</div>
+</div>
+</section>
+<section id="forecast-future-values" class="level3" data-number="19.8.12">
+<h3 data-number="19.8.12" class="anchored" data-anchor-id="forecast-future-values"><span class="header-section-number">19.8.12</span> Forecast Future Values</h3>
+<p>Forecasts from these models can be produced directly as our specified models do not require any additional data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fc <span class="ot">&lt;-</span> ASEAN_fit <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="st">"12 months"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualising-the-forecasted-values" class="level3" data-number="19.8.13">
+<h3 data-number="19.8.13" class="anchored" data-anchor-id="visualising-the-forecasted-values"><span class="header-section-number">19.8.13</span> Visualising the forecasted values</h3>
+<p>In the code chunk below <code>autoplot()</code> of feasts package is used to plot the raw and fitted values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>ASEAN_fc <span class="sc">%&gt;%</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(ASEAN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap19_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="reference" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="reference"><span class="header-section-number">19.9</span> Reference</h2>
+<p>Rob J Hyndman and George Athanasopoulos (2022) <a href="https://otexts.com/fpp3/"><strong>Forecasting: Principles and Practice (3rd ed)</strong></a>, online version.</p>
 
 
 </section>
@@ -906,8 +2120,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap20.html" class="pagination-link" aria-label="Time on the Horizon: ggHoriPlot methods">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Time on the Horizon: ggHoriPlot methods</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chap20.html" class="pagination-link" aria-label="Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

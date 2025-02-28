@@ -34,7 +34,9 @@ Write a code chunk to check, install and launch the following R packages: scales
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-pacman::p_load(scales, viridis, lubridate, ggthemes, gridExtra, readxl, knitr, data.table, CGPfunctions, ggHoriPlot, tidyverse)
+pacman::p_load(scales, viridis, lubridate, ggthemes,
+               gridExtra, readxl, knitr, data.table,
+               CGPfunctions, ggHoriPlot, tidyverse)
 ```
 
 ## Plotting Calendar Heatmap

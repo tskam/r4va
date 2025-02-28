@@ -1,13 +1,19 @@
 ---
-title: "R for Data Science: Tidyverse principles and methods"
+title: "Visualising, Analysing and Forecasting Time-series Data: timetk and modeltime methods"
 date: "12/4/2023"
-date-modified: "`r Sys.Date()`"
+date-modified: "last-modified"
 format: html
 execute: 
   echo: true
   eval: true
   warning: false
+  freeze: true
 ---
 
 ## Learning Outcome
+
+In this chapter, you will learn how to use timetk and model time packages to visualise, analyse and forescast time-series data.  timetk provides a collection of functions for visualising and analysing time-series data.  On the other hands, modeltime provides a collection of functions for time-series forecasting, both statistical learning and machine learning methods including deep learning and netsted forecasting methods.
+
+
+
 
