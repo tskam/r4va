@@ -220,12 +220,12 @@ tsibble_longer %>%
 
 In the code chunk below, cycle plots using [`gg_subseries()`](https://feasts.tidyverts.org/reference/gg_subseries.html) of feasts package are created. Notice that the cycle plots show not only seasonal patterns but also trend.
 
-```{r fig.height=6}
+```{r}
+#| fig-height: 6
 tsibble_longer %>%
   filter(Country == "Vietnam" |
          Country == "Italy") %>% 
   gg_subseries(Arrivals)
-
 ```
 
 ## Time series decomposition
@@ -349,7 +349,7 @@ Figure below shows a typical flow of a time-series forecasting process.
 
 ### Time Series Data Sampling
 
-A good practice in forecasting is to split the original data set into a training and a hold-out data sets.  The first part is called **estimate sample** (also known as training data). It will be used to estimate the starting values and the smoothing parameters. This sample typically contains 75-80 percent of the observation, although the forecaster may choose to use a smaller percentage for longer series.
+A good practice in forecasting is to split the original data set into a training and a hold-out data sets. The first part is called **estimate sample** (also known as training data). It will be used to estimate the starting values and the smoothing parameters. This sample typically contains 75-80 percent of the observation, although the forecaster may choose to use a smaller percentage for longer series.
 
 The second part of the time series is called **hold-out sample**. It is used to check the forecasting performance. No matter how many parameters are estimated with the estimation sample, each method under consideration can be evaluated with the use of the “new” observation contained in the hold-out sample.
 
@@ -614,13 +614,11 @@ vietnam_ts %>%
     data = augment(fit_autoETS))
 ```
 
-## Fitting AutoRegressive Integrated Moving Average(ARIMA) Methods 
+## Fitting AutoRegressive Integrated Moving Average(ARIMA) Methods
 
 Fable package provides functions to support both automatic and manual fitting of ARIMA model.
 
-
 ### Fitting ARIMA models manually: fable methods
-
 
 **feasts** package provides a very handy function for visualising ACF and PACF of a time series called [`gg_tsdiaply()`](https://feasts.tidyverts.org/reference/gg_tsdisplay.html).
 
@@ -672,8 +670,6 @@ tsibble_longer %>%
 ```
 
 The PACF is suggestive of an AR(1) model; so an initial candidate model is an ARIMA(1,1,0). The ACF suggests an MA(1) model; so an alternative candidate is an ARIMA(0,1,1).
-
-
 
 ```{r}
 fit_arima <- vietnam_train %>%
