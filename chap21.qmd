@@ -15,7 +15,7 @@ editor: visual
 
 Choropleth mapping involves the symbolisation of enumeration units, such as countries, provinces, states, counties or census units, using area patterns or graduated colors. For example, a social scientist may need to use a choropleth map to portray the spatial distribution of aged population of Singapore by Master Plan 2014 Subzone Boundary.
 
-In this chapter, you will learn how to plot functional and truthful choropleth maps by using an R package called [**tmap**](https://cran.r-project.org/web/packages/tmap/) package.
+In this chapter, you will learn how to plot functional and truthful choropleth maps by using an R package called [**tmap**](https://r-tmap.github.io/tmap/) package.
 
 ::: callout-tip
 It is advisable for you to read the functional description of each function before using them.
@@ -173,19 +173,17 @@ Despite its usefulness of drawing a choropleth map quickly and easily, the disad
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY", 
-          style = "quantile", 
-          palette = "Blues",
-          title = "Dependency ratio") +
-  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone",
-            main.title.position = "center",
-            main.title.size = 1.2,
-            legend.height = 0.45, 
-            legend.width = 0.35,
-            frame = TRUE) +
-  tm_borders(alpha = 0.5) +
+  tm_polygons(fill = "DEPENDENCY", 
+              fill.scale = tm_scale_intervals(
+                style = "quantile",
+                n = 5,
+                values = "brewer.blues"),
+              fill.legend = tm_legend(
+                title = "Dependency ratio")) +
+  tm_title("Distribution of Dependency Ratio by planning subzone") +
+  tm_layout(frame = TRUE) +
+  tm_borders(fill_alpha = 0.5) +
   tm_compass(type="8star", size = 2) +
-  tm_scale_bar() +
   tm_grid(alpha =0.2) +
   tm_credits("Source: Planning Sub-zone boundary from Urban Redevelopment Authorithy (URA)\n and Population data from Department of Statistics DOS", 
              position = c("left", "bottom"))
@@ -390,20 +388,18 @@ In the code chunk below, *tm_compass()*, *tm_scale_bar()* and *tm_grid()* are us
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY", 
-          style = "quantile", 
-          palette = "Blues",
-          title = "No. of persons") +
-  tm_layout(main.title = "Distribution of Dependency Ratio \nby planning subzone",
-            main.title.position = "center",
-            main.title.size = 1.2,
-            legend.height = 0.45, 
-            legend.width = 0.35,
-            frame = TRUE) +
-  tm_borders(alpha = 0.5) +
+  tm_polygons(fill = "DEPENDENCY", 
+              fill.scale = tm_scale_intervals(
+                style = "quantile",
+                n = 5,
+                values = "brewer.blues"),
+              fill.legend = tm_legend(
+                title = "Dependency ratio")) +
+  tm_title("Distribution of Dependency Ratio by planning subzone") +
+  tm_layout(frame = TRUE) +
+  tm_borders(fill_alpha = 0.5) +
   tm_compass(type="8star", size = 2) +
-  tm_scale_bar(width = 0.15) +
-  tm_grid(lwd = 0.1, alpha = 0.2) +
+  tm_grid(alpha =0.2) +
   tm_credits("Source: Planning Sub-zone boundary from Urban Redevelopment Authorithy (URA)\n and Population data from Department of Statistics DOS", 
              position = c("left", "bottom"))
 ```
@@ -459,8 +455,7 @@ tm_shape(mpsz_pop2020) +
           palette = "Blues",
           thres.poly = 0) + 
   tm_facets(by="REGION_N", 
-            free.coords=TRUE, 
-            drop.shapes=FALSE) +
+            free.coords=TRUE) +
   tm_layout(legend.show = FALSE,
             title.position = c("center", "center"), 
             title.size = 20) +
