@@ -1345,7 +1345,7 @@
     "href": "chap22.html#it-all-started-with-an-interactive-point-symbol-map",
     "title": "22  Visualising Geospatial Point Data",
     "section": "26.1 It all started with an interactive point symbol map",
-    "text": "26.1 It all started with an interactive point symbol map\nThe code chunks below are used to create an interactive point symbol map.\n\ntm_shape(sgpools_sf)+\ntm_bubbles(col = \"red\",\n           size = 1,\n           border.col = \"black\",\n           border.lwd = 1)",
+    "text": "26.1 It all started with an interactive point symbol map\nThe code chunks below are used to create an interactive point symbol map.\n\ntm_shape(sgpools_sf) + \n  tm_bubbles(fill = \"red\",\n           size = 1,\n           col = \"black\",\n           lwd = 1)",
     "crumbs": [
       "Visualising and Analysing Geographical Data",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Visualising Geospatial Point Data</span>"
@@ -1356,7 +1356,7 @@
     "href": "chap22.html#lets-make-it-proportional",
     "title": "22  Visualising Geospatial Point Data",
     "section": "26.2 Lets make it proportional",
-    "text": "26.2 Lets make it proportional\nTo draw a proportional symbol map, we need to assign a numerical variable to the size visual attribute. The code chunks below show that the variable Gp1Gp2Winnings is assigned to size visual attribute.\n\ntm_shape(sgpools_sf)+\ntm_bubbles(col = \"red\",\n           size = \"Gp1Gp2 Winnings\",\n           border.col = \"black\",\n           border.lwd = 1)",
+    "text": "26.2 Lets make it proportional\nTo draw a proportional symbol map, we need to assign a numerical variable to the size visual attribute. The code chunks below show that the variable Gp1Gp2Winnings is assigned to size visual attribute.\n\ntm_shape(sgpools_sf) + \n  tm_bubbles(fill = \"red\",\n             size = \"Gp1Gp2 Winnings\",\n             col = \"black\",\n             lwd = 1)",
     "crumbs": [
       "Visualising and Analysing Geographical Data",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Visualising Geospatial Point Data</span>"
@@ -1367,7 +1367,7 @@
     "href": "chap22.html#lets-give-it-a-different-colour",
     "title": "22  Visualising Geospatial Point Data",
     "section": "26.3 Lets give it a different colour",
-    "text": "26.3 Lets give it a different colour\nThe proportional symbol map can be further improved by using the colour visual attribute. In the code chunks below, OUTLET_TYPE variable is used as the colour attribute variable.\n\ntm_shape(sgpools_sf)+\ntm_bubbles(col = \"OUTLET TYPE\", \n          size = \"Gp1Gp2 Winnings\",\n          border.col = \"black\",\n          border.lwd = 1)",
+    "text": "26.3 Lets give it a different colour\nThe proportional symbol map can be further improved by using the colour visual attribute. In the code chunks below, OUTLET_TYPE variable is used as the colour attribute variable.\n\ntm_shape(sgpools_sf) + \n  tm_bubbles(fill = \"OUTLET TYPE\", \n             size = \"Gp1Gp2 Winnings\",\n             col = \"black\",\n             lwd = 1)",
     "crumbs": [
       "Visualising and Analysing Geographical Data",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Visualising Geospatial Point Data</span>"
@@ -1378,7 +1378,7 @@
     "href": "chap22.html#i-have-a-twin-brothers",
     "title": "22  Visualising Geospatial Point Data",
     "section": "26.4 I have a twin brothers :)",
-    "text": "26.4 I have a twin brothers :)\nAn impressive and little-know feature of tmap’s view mode is that it also works with faceted plots. The argument sync in tm_facets() can be used in this case to produce multiple maps with synchronised zoom and pan settings.\n\ntm_shape(sgpools_sf) +\n  tm_bubbles(col = \"OUTLET TYPE\", \n          size = \"Gp1Gp2 Winnings\",\n          border.col = \"black\",\n          border.lwd = 1) +\n  tm_facets(by= \"OUTLET TYPE\",\n            nrow = 1,\n            sync = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nBefore you end the session, it is wiser to switch tmap’s Viewer back to plot mode by using the code chunk below.\n\ntmap_mode(\"plot\")",
+    "text": "26.4 I have a twin brothers :)\nAn impressive and little-know feature of tmap’s view mode is that it also works with faceted plots. The argument sync in tm_facets() can be used in this case to produce multiple maps with synchronised zoom and pan settings.\n\ntm_shape(sgpools_sf) + \n  tm_bubbles(fill = \"OUTLET TYPE\", \n             size = \"Gp1Gp2 Winnings\",\n             col = \"black\",\n             lwd = 1) + \n  tm_facets(by= \"OUTLET TYPE\",\n            nrow = 1,\n            sync = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBefore you end the session, it is wiser to switch tmap’s Viewer back to plot mode by using the code chunk below.\n\ntmap_mode(\"plot\")",
     "crumbs": [
       "Visualising and Analysing Geographical Data",
       "<span class='chapter-number'>22</span>  <span class='chapter-title'>Visualising Geospatial Point Data</span>"
