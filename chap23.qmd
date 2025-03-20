@@ -78,14 +78,16 @@ Plot a choropleth map showing the distribution of non-function water point by LG
 #| code-fold: true
 #| code-summary: "Show the code"
 p1 <- tm_shape(NGA_wp) +
-  tm_fill("wp_functional",
-          n = 10,
-          style = "equal",
-          palette = "Blues") +
+  tm_polygons(fill = "wp_functional",
+             fill.scale = tm_scale_intervals(
+               style = "equal",
+               n = 10,
+               values = "brewer.blues"),
+             fill.legend = tm_legend(
+               position = c("right", "bottom"))) +
   tm_borders(lwd = 0.1,
-             alpha = 1) +
-  tm_layout(main.title = "Distribution of functional water point by LGAs",
-            legend.outside = FALSE)
+             fill_alpha = 1) +
+  tm_title("Distribution of functional water point by LGAs")
 ```
 :::
 
@@ -93,15 +95,17 @@ p1 <- tm_shape(NGA_wp) +
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-p2 <- tm_shape(NGA_wp) +
-  tm_fill("total_wp",
-          n = 10,
-          style = "equal",
-          palette = "Blues") +
-  tm_borders(lwd = 0.1,
-             alpha = 1) +
-  tm_layout(main.title = "Distribution of total  water point by LGAs",
-            legend.outside = FALSE)
+p2 <- tm_shape(NGA_wp) + 
+  tm_polygons(fill = "total_wp", 
+              fill.scale = tm_scale_intervals(
+                style = "equal",
+                n = 10,
+                values = "brewer.blues"),
+              fill.legend = tm_legend(
+                position = c("right", "bottom"))) +
+  tm_borders(lwd = 0.1, 
+             fill_alpha = 1) + 
+  tm_title("Distribution of total  water point by LGAs")
 ```
 :::
 
@@ -140,16 +144,18 @@ Plot a choropleth map showing the distribution of percentage functional water po
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
+#| fig-height: 10
 tm_shape(NGA_wp) +
-  tm_fill("pct_functional",
-          n = 10,
-          style = "equal",
-          palette = "Blues",
-          legend.hist = TRUE) +
+  tm_polygons("pct_functional",
+              fill.scale = tm_scale_intervals(
+                style = "equal",
+                n = 10,
+                values = "brewer.blues"),
+              fill.legend = tm_legend(
+                position = c("right", "bottom"))) + 
   tm_borders(lwd = 0.1,
-             alpha = 1) +
-  tm_layout(main.title = "Rate map of functional water point by LGAs",
-            legend.outside = TRUE)
+             fill_alpha = 1) +
+  tm_title("Rate map of functional water point by LGAs")
 ```
 :::
 
