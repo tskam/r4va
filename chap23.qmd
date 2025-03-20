@@ -232,7 +232,7 @@ percentmap <- function(vnam, df, legtitle=NA, mtitle="Percentile Map"){
   tm_shape(df) +
   tm_polygons() +
   tm_shape(df) +
-     tm_fill(vnam,
+     tm_polygons(vnam,
              title=legtitle,
              breaks=bperc,
              palette="Blues",
