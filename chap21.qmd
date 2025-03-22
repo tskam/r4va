@@ -234,8 +234,9 @@ To add the boundary of the planning subzones, tm_borders will be used as shown i
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY") +
-  tm_borders(lwd = 0.1,  alpha = 1)
+  tm_polygons(fill = "DEPENDENCY") +
+  tm_borders(lwd = 0.01,  
+             fill_alpha = 0.1)
 ```
 
 Notice that light-gray border lines have been added on the choropleth map.
@@ -262,20 +263,22 @@ The code chunk below shows a quantile data classification that used 5 classes.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY",
-          n = 5,
-          style = "jenks") +
-  tm_borders(alpha = 0.5)
+  tm_polygons("DEPENDENCY",
+      fill.scale = tm_scale_intervals(
+        style = "jenks",
+        n = 5)) +
+  tm_borders(fill_alpha = 0.5)
 ```
 
 In the code chunk below, *equal* data classification method is used.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY",
-          n = 5,
-          style = "equal") +
-  tm_borders(alpha = 0.5)
+  tm_polygons("DEPENDENCY",
+      fill.scale = tm_scale_intervals(
+        style = "equal",
+        n = 5)) +
+  tm_borders(fill_alpha = 0.5)
 ```
 
 Notice that the distribution of quantile data classification method are more evenly distributed then equal data classification method.
@@ -302,9 +305,9 @@ Now, we will plot the choropleth map by using the code chunk below.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY",
+  tm_polygons("DEPENDENCY",
           breaks = c(0, 0.60, 0.70, 0.80, 0.90, 1.00)) +
-  tm_borders(alpha = 0.5)
+  tm_borders(fill_alpha = 0.5)
 ```
 
 ### Colour Scheme
@@ -317,11 +320,12 @@ To change the colour, we assign the preferred colour to *palette* argument of *t
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY",
-          n = 6,
-          style = "quantile",
-          palette = "Blues") +
-  tm_borders(alpha = 0.5)
+  tm_polygons("DEPENDENCY",
+      fill.scale = tm_scale_intervals(
+        style = "quantile",
+        n = 5,
+        values = "brewer.greens")) +
+  tm_borders(fill_alpha = 0.5)
 ```
 
 Notice that the choropleth map is shaded in green.
@@ -330,10 +334,12 @@ To reverse the colour shading, add a "-" prefix.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY",
-          style = "quantile",
-          palette = "-Greens") +
-  tm_borders(alpha = 0.5)
+  tm_polygons("DEPENDENCY",
+      fill.scale = tm_scale_intervals(
+        style = "quantile",
+        n = 5,
+        values = "-brewer.greens")) +
+  tm_borders(fill_alpha = 0.5)
 ```
 
 Notice that the colour scheme has been reversed.
@@ -348,21 +354,15 @@ In **tmap**, several *legend* options are provided to change the placement, form
 
 ```{r}
 tm_shape(mpsz_pop2020)+
-  tm_fill("DEPENDENCY", 
-          style = "jenks", 
-          palette = "Blues", 
-          legend.hist = TRUE, 
-          legend.is.portrait = TRUE,
-          legend.hist.z = 0.1) +
-  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone \n(Jenks classification)",
-            main.title.position = "center",
-            main.title.size = 1,
-            legend.height = 0.45, 
-            legend.width = 0.35,
-            legend.outside = FALSE,
-            legend.position = c("right", "bottom"),
-            frame = FALSE) +
-  tm_borders(alpha = 0.5)
+  tm_polygons("DEPENDENCY",
+      fill.scale = tm_scale_intervals(
+        style = "jenks",
+        n = 5,
+        values = "brewer.greens"),
+      fill.legend = tm_legend(
+        title = "Dependency ratio")) +
+  tm_borders(fill_alpha = 0.5) +
+  tm_title("Distribution of Dependency Ratio by planning subzone \n(Jenks classification)")
 ```
 
 #### Map style
