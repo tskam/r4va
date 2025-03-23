@@ -36,7 +36,8 @@ The code chunk:
 ```{r}
 pacman::p_load(igraph, tidygraph, ggraph, 
                visNetwork, lubridate, clock,
-               tidyverse, graphlayouts)
+               tidyverse, graphlayouts, 
+               concaveman, ggforce)
 ```
 
 ## The Data
@@ -470,15 +471,57 @@ In the code chunk below *group_edge_betweenness()* is used.
 
 ```{r}
 g <- GAStech_graph %>%
-  mutate(community = as.factor(group_edge_betweenness(weights = Weight, directed = TRUE))) %>%
+  mutate(community = as.factor(
+    group_edge_betweenness(
+      weights = Weight, 
+      directed = TRUE))) %>%
   ggraph(layout = "fr") + 
-  geom_edge_link(aes(width=Weight), 
-                 alpha=0.2) +
-  scale_edge_width(range = c(0.1, 5)) +
-  geom_node_point(aes(colour = community))  
+  geom_edge_link(
+    aes(
+      width=Weight), 
+    alpha=0.2) +
+  scale_edge_width(
+    range = c(0.1, 5)) +
+  geom_node_point(
+    aes(colour = community))  
 
 g + theme_graph()
 ```
+
+In order to support effective visual investigation, the community network above has been revised by using [`geom_mark_hull()`](https://ggforce.data-imaginist.com/reference/geom_mark_hull.html) of [ggforce](https://ggforce.data-imaginist.com/index.html) package.   
+
+:::{.callout-important}
+Please be reminded that you must to install and include [**ggforce**](https://ggforce.data-imaginist.com/index.html) and [**concaveman**](https://www.rdocumentation.org/packages/concaveman/versions/1.1.0/topics/concaveman) packages before running the code chunk below.
+:::
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+g <- GAStech_graph %>%
+  activate(nodes) %>%
+  mutate(community = as.factor(
+    group_optimal(weights = Weight)),
+         betweenness_measure = centrality_betweenness()) %>%
+  ggraph(layout = "fr") +
+  geom_mark_hull(
+    aes(x, y, 
+        group = community, 
+        fill = community),  
+    alpha = 0.2,  
+    expand = unit(0.3, "cm"),  # Expand
+    radius = unit(0.3, "cm")  # Smoothness
+  ) + 
+  geom_edge_link(aes(width=Weight), 
+                 alpha=0.2) +
+  scale_edge_width(range = c(0.1, 5)) +
+  geom_node_point(aes(fill = Department,
+                      size = betweenness_measure),
+                      color = "black",
+                      shape = 21)
+  
+g + theme_graph()
+```
+
 
 ## Building Interactive Network Graph with visNetwork
 
@@ -577,8 +620,8 @@ Visit [Option](http://datastorm-open.github.io/visNetwork/edges.html) to find ou
 
 In the code chunk below, *visOptions()* is used to incorporate interactivity features in the data visualisation.
 
-- The argument *highlightNearest* highlights nearest when clicking a node.
-- The argument *nodesIdSelection* adds an id node selection creating an HTML select element.
+-   The argument *highlightNearest* highlights nearest when clicking a node.
+-   The argument *nodesIdSelection* adds an id node selection creating an HTML select element.
 
 ```{r}
 visNetwork(GAStech_nodes,
@@ -600,7 +643,3 @@ Visit [Option](http://datastorm-open.github.io/visNetwork/options.html) to find 
 renderthis::to_pdf(from = "https://r4va.netlify.app/chap27.html",
                    to = "D://ISSS608_AY2022-23Apr/20-r4va/chap27.pdf")
 ```
-
-
-
-
