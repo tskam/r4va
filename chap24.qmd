@@ -27,11 +27,9 @@ There are many interpolation methods. In this hands-on exercise, two widely used
 
 By the end of this exercise, you will be able to:
 
-- create a grid data object by using `rast()` of **terra** package,
-- perform spatial interpolation by using Inverse Distance Weighted (IDW) and Ordinary Kriging methods of **gstat** package and auto-fitting kriging method of **automap** package, and
-- mapping the raster layers generated above by using appropriate functions provided by **tmap** package.
-
-
+-   create a grid data object by using `rast()` of **terra** package,
+-   perform spatial interpolation by using Inverse Distance Weighted (IDW) and Ordinary Kriging methods of **gstat** package and auto-fitting kriging method of **automap** package, and
+-   mapping the raster layers generated above by using appropriate functions provided by **tmap** package.
 
 ## Getting Started
 
@@ -447,5 +445,4 @@ tm_shape(kpred) +
 
 Olea, Ricardo A. (2006-07) "A six-step practical approach to semivariogram modeling", *Stochastic Environmental Research and Risk Assessment*, 2006-07, Vol.20 (5), p.307-318. SMU e-journal.
 
-Tommaso Caloiero et. al. (2021)
-"[Comparative Analysis of Different Spatial Interpolation Methods Applied to Monthly Rainfall as Support for Landscape Management](https://www.mdpi.com/2076-3417/11/20/9566)", *Applied Science*, 11, 9566. https://doi.org/10.3390/app11209566.
+Tommaso Caloiero et. al. (2021) "[Comparative Analysis of Different Spatial Interpolation Methods Applied to Monthly Rainfall as Support for Landscape Management](https://www.mdpi.com/2076-3417/11/20/9566)", *Applied Science*, 11, 9566. https://doi.org/10.3390/app11209566.
