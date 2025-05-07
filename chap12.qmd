@@ -14,9 +14,9 @@ execute:
 
 In this section, you will learn how to visualise model diagnostic and model parameters by using parameters package.
 
-## Visual Anaslytics for Building Better Explanatory Models
+## Visual Analytics for Building Better Explanatory Models
 
-### The case 
+### The case
 
 Toyota Corolla case study will be used. The purpose of study is to build a model to discover factors affecting prices of used-cars by taking into consideration a set of explanatory variables.
 
@@ -47,11 +47,12 @@ car_resale
 
 Notice that the output object `car_resale` is a tibble data frame.
 
-### Visualising modelling variables 
+### Visualising modelling variables
 
 ```{r}
-ExpCatStat(car_resale, target = "false")
-
+ExpCatStat(car_resale,
+           Target = "Price",
+           result = "Stat")
 ```
 
 ### Multiple Regression Model using lm()
