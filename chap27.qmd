@@ -342,7 +342,7 @@ Another very useful feature of **ggraph** is faceting. In visualising network da
 
 There are three functions in ggraph to implement faceting, they are:
 
--   [*facet_nodes()*]() whereby edges are only draw in a panel if both terminal nodes are present here,
+-   [*facet_nodes()*](https://ggraph.data-imaginist.com/reference/facet_nodes.html) whereby edges are only draw in a panel if both terminal nodes are present here,
 -   [*facet_edges()*](https://ggraph.data-imaginist.com/reference/facet_edges.html) whereby nodes are always drawn in al panels even if the node data contains an attribute named the same as the one used for the edge facetting, and
 -   [*facet_graph()*](https://ggraph.data-imaginist.com/reference/facet_graph.html) faceting on two variables simultaneously.
 
@@ -488,9 +488,9 @@ g <- GAStech_graph %>%
 g + theme_graph()
 ```
 
-In order to support effective visual investigation, the community network above has been revised by using [`geom_mark_hull()`](https://ggforce.data-imaginist.com/reference/geom_mark_hull.html) of [ggforce](https://ggforce.data-imaginist.com/index.html) package.   
+In order to support effective visual investigation, the community network above has been revised by using [`geom_mark_hull()`](https://ggforce.data-imaginist.com/reference/geom_mark_hull.html) of [ggforce](https://ggforce.data-imaginist.com/index.html) package.
 
-:::{.callout-important}
+::: callout-important
 Please be reminded that you must to install and include [**ggforce**](https://ggforce.data-imaginist.com/index.html) and [**concaveman**](https://www.rdocumentation.org/packages/concaveman/versions/1.1.0/topics/concaveman) packages before running the code chunk below.
 :::
 
@@ -521,7 +521,6 @@ g <- GAStech_graph %>%
   
 g + theme_graph()
 ```
-
 
 ## Building Interactive Network Graph with visNetwork
 
