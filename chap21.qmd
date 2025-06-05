@@ -119,12 +119,11 @@ mutate(`DEPENDENCY` = (`YOUNG` + `AGED`)
 
 #### Joining the attribute data and geospatial data
 
-Before we can perform the georelational join, one extra step is required to convert the values in PA and SZ fields to uppercase. This is because the values of PA and SZ fields are made up of upper- and lowercase. On the other, hand the SUBZONE_N and PLN_AREA_N are in uppercase.
+Before we can perform the georelational join, one extra step is required to convert the values in PA and SZ fields to uppercase. This is because the values of *PA* and *SZ* fields are made up of upper- and lowercase. On the other, hand the *SUBZONE_N* and *PLN_AREA_N* are in uppercase.
 
 ```{r}
 popdata2020 <- popdata2020 %>%
-  mutate_at(.vars = vars(PA, SZ), 
-          .funs = funs(toupper)) %>%
+  mutate(across(c(PA, SZ), toupper)) %>%
   filter(`ECONOMY ACTIVE` > 0)
 ```
 
@@ -316,7 +315,7 @@ tm_shape(mpsz_pop2020)+
 
 #### Using ColourBrewer palette
 
-To change the colour, we assign the preferred colour to *palette* argument of *tm_fill()* as shown in the code chunk below.
+To change the colour, we assign the preferred colour to *values* argument of *tm_scale_intervals()* as shown in the code chunk below.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
@@ -350,7 +349,7 @@ Map layout refers to the combination of all map elements into a cohensive map. M
 
 #### Map Legend
 
-In **tmap**, several *legend* options are provided to change the placement, format and appearance of the legend.
+In **tmap**, several `tm_legend()` options are provided to change the placement, format and appearance of the legend.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
@@ -384,7 +383,7 @@ tm_shape(mpsz_pop2020)+
 
 Beside map style, **tmap** also also provides arguments to draw other map furniture such as compass, scale bar and grid lines.
 
-In the code chunk below, *tm_compass()*, *tm_scale_bar()* and *tm_grid()* are used to add compass, scale bar and grid lines onto the choropleth map.
+In the code chunk below, `tm_compass()`, `tm_scale_bar()` and `tm_grid()` are used to add compass, scale bar and grid lines onto the choropleth map.
 
 ```{r}
 tm_shape(mpsz_pop2020)+
@@ -446,7 +445,7 @@ tm_shape(mpsz_pop2020)+
 
 #### By defining a group-by variable in *tm_facets()*
 
-In this example, multiple small choropleth maps are created by using **tm_facets()**.
+In this example, multiple small choropleth maps are created by using `tm_facets()`.
 
 ```{r}
 tm_shape(mpsz_pop2020) +
@@ -462,9 +461,9 @@ tm_shape(mpsz_pop2020) +
   tm_borders(alpha = 0.5)
 ```
 
-#### By creating multiple stand-alone maps with *tmap_arrange()*
+#### By creating multiple stand-alone maps with `tmap_arrange()`
 
-In this example, multiple small choropleth maps are created by creating multiple stand-alone maps with **tmap_arrange()**.
+In this example, multiple small choropleth maps are created by creating multiple stand-alone maps with `tmap_arrange()`.
 
 ```{r}
 youngmap <- tm_shape(mpsz_pop2020)+ 
