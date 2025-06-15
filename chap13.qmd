@@ -31,8 +31,6 @@ For this exercise, two main R packages will be used in this hands-on exercise, t
 
 We will also need to ensure that selected **tidyverse** family packages namely: **readr**, **dplyr** and **tidyr** are also installed and loaded.
 
-In this exercise, version 3.2.1 of **ggplot2** will be installed instead of the latest version of **ggplot2**. This is because the current version of **ggtern** package is not compatible to the latest version of **ggplot2**.
-
 The code chunks below will accomplish the task.
 
 ```{r}
