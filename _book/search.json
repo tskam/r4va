@@ -960,7 +960,7 @@
     "href": "chap15.html#overview",
     "title": "15  Visual Multivariate Analysis with Parallel Coordinates Plot",
     "section": "",
-    "text": "plotting statistic parallel coordinates plots by using ggparcoord() of GGally package,\nplotting interactive parallel coordinates plots by using parcoords package, and\nplotting interactive parallel coordinates plots by using parallelPlot package.",
+    "text": "plotting statistic parallel coordinates plots by using ggparcoord() of GGally package, and\nplotting interactive parallel coordinates plots by using parallelPlot package.",
     "crumbs": [
       "Visualising and Analysing Multivariate Data",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Visual Multivariate Analysis with Parallel Coordinates Plot</span>"
@@ -971,7 +971,7 @@
     "href": "chap15.html#installing-and-launching-r-packages",
     "title": "15  Visual Multivariate Analysis with Parallel Coordinates Plot",
     "section": "15.2 Installing and Launching R Packages",
-    "text": "15.2 Installing and Launching R Packages\nFor this exercise, the GGally, parcoords, parallelPlot and tidyverse packages will be used.\nThe code chunks below are used to install and load the packages in R.\n\npacman::p_load(GGally, parallelPlot, tidyverse)",
+    "text": "15.2 Installing and Launching R Packages\nFor this exercise, the GGally, parallelPlot and tidyverse packages will be used.\nThe code chunks below are used to install and load the packages in R.\n\npacman::p_load(GGally, parallelPlot, tidyverse)",
     "crumbs": [
       "Visualising and Analysing Multivariate Data",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Visual Multivariate Analysis with Parallel Coordinates Plot</span>"
@@ -1015,7 +1015,7 @@
     "href": "chap15.html#references",
     "title": "15  Visual Multivariate Analysis with Parallel Coordinates Plot",
     "section": "15.6 References",
-    "text": "15.6 References\n\nggparcoord() of GGally package\nparcoords user guide\nparallelPlot",
+    "text": "15.6 References\n\nggparcoord() of GGally package\nparallelPlot",
     "crumbs": [
       "Visualising and Analysing Multivariate Data",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>Visual Multivariate Analysis with Parallel Coordinates Plot</span>"

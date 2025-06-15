@@ -15,13 +15,12 @@ Parallel coordinates plot is a data visualisation specially designed for visuali
 
 By the end of this hands-on exercise, you will gain hands-on experience on:
 
--   plotting statistic parallel coordinates plots by using *ggparcoord()* of **GGally** package,
--   plotting interactive parallel coordinates plots by using **parcoords** package, and
--   plotting interactive parallel coordinates plots by using **parallelPlot** package.
+-   plotting statistic parallel coordinates plots by using [`ggparcoord()`](https://ggobi.github.io/ggally/reference/ggparcoord.html) of [**GGally**]() package, and
+-   plotting interactive parallel coordinates plots by using [**parallelPlot**](https://cran.r-project.org/web/packages/parallelPlot/) package.
 
 ## Installing and Launching R Packages
 
-For this exercise, the **GGally**, **parcoords**, **parallelPlot** and **tidyverse** packages will be used.
+For this exercise, the **GGally**, **parallelPlot** and **tidyverse** packages will be used.
 
 The code chunks below are used to install and load the packages in R.
 
@@ -200,8 +199,6 @@ parallelPlot(wh,
 ## References
 
 -   [*ggparcoord()*](http://ggobi.github.io/ggally/reference/ggparcoord.html) of [**GGally**](http://ggobi.github.io/ggally/index.html) package
-
--   [**parcoords** user guide](https://cran.r-project.org/web/packages/parcoords/parcoords.pdf)
 
 -   [**parallelPlot**](https://cran.r-project.org/web/packages/parallelPlot/parallelPlot.pdf)
 
