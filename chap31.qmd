@@ -317,7 +317,7 @@ sales_data %>%
 
 In this section, you will learn how to create interactive information dashboard by using [reactable](https://glin.github.io/reactable/index.html) and [reactablefmtr](https://kcuilla.github.io/reactablefmtr/index.html) packages. Before getting started, it is highly recommended for you to visit the webpage of these two packages and review all the materials provided on the webpages at least once. You done not have to understand and remember everything provided but at least have an overview of the purposes and functions provided by them.
 
-In order to build an interactive sparklines, we need to install dataui R package by using the code chunk below.
+In order to build an interactive sparklines, we need to install **dataui** R package by using the code chunk below.
 
 ```{r}
 #| eval: false
